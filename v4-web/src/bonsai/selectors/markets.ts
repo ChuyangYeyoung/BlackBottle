@@ -1,0 +1,51 @@
+import { createAppSelector } from '@/state/appTypes';
+import { getCurrentMarketIdIfTradeable } from '@/state/currentMarketSelectors';
+
+import {
+  calculateAllMarkets,
+  calculateMarketsFeeDiscounts,
+  formatSparklineData,
+} from '../calculators/markets';
+import { mergeLoadableStatus } from '../lib/mapLoadable';
+import {
+  selectRawMarketsData,
+  selectRawMarketsFeeDiscounts,
+  selectRawOrderbooks,
+  selectRawSparklines,
+  selectRawSparklinesData,
+} from './base';
+
+export const selectAllMarketsInfo = createAppSelector([selectRawMarketsData], (markets) =>
+  calculateAllMarkets(markets)
+);
+
+export const selectMarketsFeeDiscounts = createAppSelector(
+  [selectRawMarketsFeeDiscounts],
+  (feeDiscounts) => calculateMarketsFeeDiscounts(feeDiscounts)
+);
+
+export const selectSparklinesLoading = createAppSelector(
+  [selectRawSparklines],
+  mergeLoadableStatus
+);
+
+export const selectSparkLinesData = createAppSelector([selectRawSparklinesData], (sparklines) =>
+  formatSparklineData(sparklines)
+);
+
+export const selectCurrentMarketOrderbook = createAppSelector(
+  [selectRawOrderbooks, getCurrentMarketIdIfTradeable],
+  (rawOrderbooks, currentMarketId) => {
+    if (!currentMarketId || !rawOrderbooks[currentMarketId]) {
+      return undefined;
+    }
+
+    return rawOrderbooks[currentMarketId];
+  }
+);
+
+export const selectCurrentMarketOrderbookLoading = createAppSelector(
+  [selectCurrentMarketOrderbook],
+  (currentMarketOrderbook) =>
+    currentMarketOrderbook ? mergeLoadableStatus(currentMarketOrderbook) : 'idle'
+);

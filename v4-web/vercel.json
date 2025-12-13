@@ -1,0 +1,28 @@
+{
+  "headers": [
+    {
+      "source": "/currencies/(.*\\.png)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, s-maxage=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, s-maxage=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/tradingview/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, s-maxage=31536000, immutable" }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/entry-points/index.html"
+    }
+  ]
+}
