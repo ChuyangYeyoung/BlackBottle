@@ -1,6 +1,6 @@
 # Quick Start Guide: Local Database for Offline Access
 
-This guide will help you quickly set up and use the local database system for offline access to your dYdX trading data.
+This guide will help you quickly set up and use the local database system for offline access to your Black Bottle trading data.
 
 ## What Was Built
 
@@ -59,7 +59,7 @@ SQLite file: /path/to/db.sqlite
 
 ### Option A: Export Browser Data (Browser Console)
 
-1. Open dYdX web app in your browser
+1. Open Black Bottle web app in your browser
 2. Press F12 to open Developer Tools
 3. Go to Console tab
 4. Copy and paste the entire contents of `local-api/src/export-browser-data.js`
@@ -77,7 +77,7 @@ If you have Node.js set up, you can sync blockchain data directly:
 ```bash
 cd v4-web/local-api
 
-# Replace with your actual dYdX address
+# Replace with your actual Black Bottle address
 node src/fetch-blockchain-data.js dydx1abc123...
 ```
 
@@ -107,7 +107,7 @@ Get all wallet data:
 curl http://localhost:3001/wallet/dydx1abc123...
 ```
 
-## Integration with dYdX App
+## Integration with Black Bottle App
 
 ### In Your React Components
 
@@ -305,6 +305,6 @@ You now have a complete offline data system that:
 - ✅ Provides fast offline access
 - ✅ Has a clean TypeScript API
 - ✅ Includes automatic sync checking
-- ✅ Works with the existing dYdX app
+- ✅ Works with the existing Black Bottle app
 
 Enjoy your offline-capable trading app! 🚀

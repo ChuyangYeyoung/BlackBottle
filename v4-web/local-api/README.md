@@ -1,6 +1,6 @@
 # Local Database & Offline Access System
 
-This system enables the dYdX web app to store all user data (browser storage and blockchain data) in a local SQLite database for offline access and faster loading times.
+This system enables the Black Bottle web app to store all user data (browser storage and blockchain data) in a local SQLite database for offline access and faster loading times.
 
 ## Overview
 
@@ -9,14 +9,14 @@ The offline data system consists of:
 1. **SQLite Database** - Local storage for all user data
 2. **Express API Server** - REST API to interact with the database
 3. **Browser Data Export** - Extract localStorage and Redux state
-4. **Blockchain Data Fetcher** - Fetch data from dYdX Chain indexer
+4. **Blockchain Data Fetcher** - Fetch data from Black Bottle Chain indexer
 5. **Offline Data Access Layer** - TypeScript API for the frontend
 
 ## Architecture
 
 ```
 ┌─────────────────┐
-│   dYdX Web App  │
+│   Black Bottle Web App  │
 │   (React/TS)    │
 └────────┬────────┘
          │
@@ -30,7 +30,7 @@ The offline data system consists of:
          │ Fetch Blockchain Data
          ▼
 ┌─────────────────┐
-│  dYdX Indexer   │
+│  Black Bottle Indexer   │
 │  API            │
 └─────────────────┘
 ```
@@ -41,7 +41,7 @@ The database includes tables for:
 
 ### User Data
 - `users` - Basic user information
-- `user_wallets` - Wallet addresses (EVM, dYdX, Solana, Cosmos)
+- `user_wallets` - Wallet addresses (EVM, Black Bottle, Solana, Cosmos)
 - `user_preferences` - App preferences and settings
 - `trading_preferences` - Trading-specific settings
 - `dismissed_items` - Dismissed UI elements
@@ -98,10 +98,10 @@ The API will be available at `http://localhost:3001`.
 
 ### 1. Export Browser Data
 
-Run the browser export script in the dYdX web app console:
+Run the browser export script in the Black Bottle web app console:
 
 ```javascript
-// 1. Open the dYdX web app in your browser
+// 1. Open the Black Bottle web app in your browser
 // 2. Open Developer Tools (F12)
 // 3. Go to the Console tab
 // 4. Paste the contents of src/export-browser-data.js
@@ -164,7 +164,7 @@ DELETE /users/:id       - Delete user
 ### Data Synchronization
 ```
 POST /sync/browser-data     - Sync browser data (localStorage + Redux)
-POST /sync/blockchain-data  - Sync blockchain data (dYdX Chain)
+POST /sync/blockchain-data  - Sync blockchain data (Black Bottle Chain)
 GET  /sync/status/:address  - Get sync status for wallet
 ```
 
@@ -179,7 +179,7 @@ GET /markets          - Get markets data
 ### Browser Data
 
 Browser data includes:
-- Wallet addresses (EVM, dYdX, Solana, Cosmos)
+- Wallet addresses (EVM, Black Bottle, Solana, Cosmos)
 - User preferences (locale, network, theme)
 - Trading preferences (slippage, layout, chart settings)
 - Dismissed UI elements
@@ -324,7 +324,7 @@ The API has CORS enabled by default. If you encounter CORS errors:
 If blockchain data sync fails:
 
 1. Check if the indexer URL is correct
-2. Verify the dYdX address format
+2. Verify the Black Bottle address format
 3. Check indexer API status: https://status.v4testnet.dydx.exchange/
 4. Try using testnet indexer first for testing
 
@@ -366,4 +366,4 @@ Potential improvements:
 
 ## License
 
-This local database system is part of the dYdX Chain V4 web application and follows the same AGPL-3.0 license.
+This local database system is part of the Black Bottle Chain V4 web application and follows the same AGPL-3.0 license.

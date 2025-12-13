@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-A comprehensive local database system has been implemented for the dYdX Chain V4 web trading application to enable **offline access** to all user data. The system captures both browser-side data (localStorage, Redux state) and blockchain data (balances, positions, orders, transfers) and stores it in a local SQLite database.
+A comprehensive local database system has been implemented for the Black Bottle Chain V4 web trading application to enable **offline access** to all user data. The system captures both browser-side data (localStorage, Redux state) and blockchain data (balances, positions, orders, transfers) and stores it in a local SQLite database.
 
 ## What Was Built
 
@@ -31,7 +31,7 @@ A comprehensive local database system has been implemented for the dYdX Chain V4
 - **export-browser-data.js**: Browser console script to extract localStorage and Redux state
 - **sync-browser-data.js**: Server-side handler to process and store browser data
 - Captures:
-  - Wallet addresses (EVM, dYdX, Solana, Cosmos)
+  - Wallet addresses (EVM, Black Bottle, Solana, Cosmos)
   - User preferences (locale, network, theme)
   - Trading preferences (slippage, layout, charts)
   - Dismissed UI elements
@@ -39,7 +39,7 @@ A comprehensive local database system has been implemented for the dYdX Chain V4
   - Recent transfers and swaps
 
 ### 5. Blockchain Data Sync (`local-api/src/fetch-blockchain-data.js`)
-- Fetches data from dYdX Indexer API
+- Fetches data from Black Bottle Indexer API
 - Supports both testnet and mainnet
 - Parallel data fetching for performance
 - Captures:
@@ -69,7 +69,7 @@ A comprehensive local database system has been implemented for the dYdX Chain V4
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        dYdX Web Application                      │
+│                        Black Bottle Web Application                      │
 │                         (React + TypeScript)                     │
 └────────────────────────────┬────────────────────────────────────┘
                              │
@@ -97,10 +97,10 @@ A comprehensive local database system has been implemented for the dYdX Chain V4
 └────────┬───────┘    └────────┬──────────┘
          │                     │
          │                     │ Fetch from
-         │                     │ dYdX Indexer
+         │                     │ Black Bottle Indexer
          │                     ▼
          │            ┌───────────────────┐
-         │            │  dYdX Chain       │
+         │            │  Black Bottle Chain       │
          │            │  Indexer API      │
          │            └───────────────────┘
          │
@@ -140,7 +140,7 @@ User Opens App
     │   Store in SQLite
     │
     └─► Fetch Blockchain Data
-        (dYdX Indexer API)
+        (Black Bottle Indexer API)
         │
         ▼
         POST /sync/blockchain-data
@@ -425,7 +425,7 @@ npm run dev  # Watch mode with logs
 
 ## Conclusion
 
-This offline data system provides a robust foundation for local data storage and offline access in the dYdX web application. The system is:
+This offline data system provides a robust foundation for local data storage and offline access in the Black Bottle web application. The system is:
 
 - **Production Ready**: Fully functional with error handling
 - **Well Documented**: Comprehensive guides for all use cases
@@ -446,6 +446,6 @@ The system successfully captures all user data from both browser storage and blo
 
 ---
 
-*Built for: dYdX Chain V4 Web Trading Application*
+*Built for: Black Bottle Chain V4 Web Trading Application*
 *License: AGPL-3.0*
 *Date: December 2025*
