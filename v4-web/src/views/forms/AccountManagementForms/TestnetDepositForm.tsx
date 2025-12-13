@@ -32,7 +32,7 @@ export const TestnetDepositForm = ({ onDeposit, onError }: DepositFormProps) => 
   const { requestFaucetFunds } = useSubaccount();
   const subAccount = useAppSelector(getSubaccount);
   const canAccountTrade = useAppSelector(calculateCanAccountTrade);
-  const blackbottleChainId = useEnvConfig('blackbottleChainId');
+  const dydxChainId = useEnvConfig('dydxChainId');
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -72,7 +72,7 @@ export const TestnetDepositForm = ({ onDeposit, onError }: DepositFormProps) => 
           key: STRING_KEYS.CREDITED_WITH,
           params: {
             AMOUNT_USD:
-              blackbottleChainId === 'blackbottle-testnet-4' || blackbottleChainId === 'dydxprotocol-testnet'
+              dydxChainId === 'blackbottle-testnet-4' || dydxChainId === 'dydxprotocol-testnet'
                 ? 1000
                 : 100,
           },

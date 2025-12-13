@@ -24,7 +24,7 @@ const selectedNetwork = getLocalStorage({
   defaultValue: DEFAULT_APP_ENVIRONMENT,
   validateFn: validateAgainstAvailableEnvironments,
 });
-const blackbottleChainId = ENVIRONMENT_CONFIG_MAP[selectedNetwork].blackbottleChainId;
+const dydxChainId = ENVIRONMENT_CONFIG_MAP[selectedNetwork].dydxChainId;
 
 export const getNobleChainId = () => {
   return isMainnet ? CosmosChainId.Noble : CosmosChainId.NobleTestnet;
@@ -42,12 +42,12 @@ const osmosisChainId = getOsmosisChainId();
 const nobleChainId = getNobleChainId();
 const neutronChainId = getNeutronChainId();
 
-export const SUPPORTED_COSMOS_CHAINS = [blackbottleChainId, osmosisChainId, nobleChainId, neutronChainId];
+export const SUPPORTED_COSMOS_CHAINS = [dydxChainId, osmosisChainId, nobleChainId, neutronChainId];
 
 export const GRAZ_CHAINS = [
   // Black Bottle
   {
-    chainId: blackbottleChainId,
+    chainId: dydxChainId,
     rpc: ENVIRONMENT_CONFIG_MAP[selectedNetwork].endpoints.validators[0],
     bech32Config: {
       bech32PrefixAccAddr: BECH32_PREFIX,

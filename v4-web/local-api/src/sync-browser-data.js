@@ -308,7 +308,7 @@ export function syncBrowserData(db, data) {
  * @param {import('better-sqlite3').Database} db
  * @param {string} filePath - Path to the JSON export file
  */
-export function loadBrowserDataFromFile(db, filePath) {
+export async function loadBrowserDataFromFile(db, filePath) {
   const fs = await import('node:fs/promises');
   const data = JSON.parse(await fs.readFile(filePath, 'utf-8'));
   return syncBrowserData(db, data);

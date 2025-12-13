@@ -54,7 +54,7 @@ function makeCompositeClient({
   if (!networkConfig) {
     throw new Error(`Unknown network: ${network}`);
   }
-  const chainId = networkConfig.blackbottleChainId as DydxChainId;
+  const chainId = networkConfig.dydxChainId as DydxChainId;
   const tokens = TOKEN_CONFIG_MAP[chainId];
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (tokens == null) {

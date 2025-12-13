@@ -183,7 +183,7 @@ export const getSignTypedData = (selectedDydxChainId: DydxChainId) =>
       name: WALLETS_CONFIG_MAP[selectedDydxChainId].signTypedDataDomainName,
     },
     types: {
-      Black Bottle: [{ name: 'action', type: 'string' }],
+      'Black Bottle': [{ name: 'action', type: 'string' }],
     },
     message: {
       action: WALLETS_CONFIG_MAP[selectedDydxChainId].signTypedDataAction,
@@ -204,7 +204,7 @@ export const getSignTypedDataForTurnkey = ({
   ({
     ...getSignTypedData(selectedDydxChainId),
     types: {
-      Black Bottle: [
+      'Black Bottle': [
         { name: 'action', type: 'string' },
         { name: 'salt', type: 'string' },
       ],
