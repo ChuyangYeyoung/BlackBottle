@@ -51,7 +51,7 @@ export const AccountInfoSection = () => {
 
   const { isTablet } = useBreakpoints();
   const { complianceState } = useComplianceState();
-  const { dydxAccounts } = useAccounts();
+  const { blackbottleAccounts } = useAccounts();
 
   const subAccount = orEmptyObj(useAppSelector(BonsaiCore.account.parentSubaccountSummary.data));
   const isLoadingGuards = useAppSelector(calculateIsAccountLoading);
@@ -108,7 +108,7 @@ export const AccountInfoSection = () => {
     </Button>
   );
 
-  const depositWithdrawRow = dydxAccounts && (
+  const depositWithdrawRow = blackbottleAccounts && (
     <div tw="inlineRow gap-0.75 pt-0.25">
       {complianceState === ComplianceStates.FULL_ACCESS ? (
         <>

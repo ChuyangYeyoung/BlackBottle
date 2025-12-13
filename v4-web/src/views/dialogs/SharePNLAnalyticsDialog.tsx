@@ -75,8 +75,8 @@ export const SharePNLAnalyticsDialog = ({
           params: {
             MARKET: symbol,
           },
-        })}\n\n#dYdX #${symbol}\n[${stringGetter({ key: STRING_KEYS.TWEET_PASTE_IMAGE_AND_DELETE_THIS })}]`,
-        related: 'dYdX',
+        })}\n\n#Black Bottle #${symbol}\n[${stringGetter({ key: STRING_KEYS.TWEET_PASTE_IMAGE_AND_DELETE_THIS })}]`,
+        related: 'Black Bottle',
       });
 
       dispatch(closeDialog());

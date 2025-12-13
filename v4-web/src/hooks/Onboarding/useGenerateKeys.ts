@@ -105,15 +105,15 @@ export function useGenerateKeys(generateKeysProps?: GenerateKeysProps) {
           signatureNumber: 1,
         })
       );
-      const { wallet: dydxWallet } = await getWalletFromSignature({ signature });
+      const { wallet: blackbottleWallet } = await getWalletFromSignature({ signature });
 
       // 2. Ensure signature is deterministic
       // Check if subaccounts exist
-      const dydxAddress = dydxWallet.address as DydxAddress;
+      const blackbottleAddress = blackbottleWallet.address as DydxAddress;
       let hasPreviousTransactions = false;
 
       try {
-        const subaccounts = await getSubaccounts({ dydxAddress });
+        const subaccounts = await getSubaccounts({ blackbottleAddress });
         hasPreviousTransactions = subaccounts.length > 0;
 
         track(AnalyticsEvents.OnboardingAccountDerived({ hasPreviousTransactions }));

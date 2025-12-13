@@ -37,17 +37,17 @@ export enum RewardsLeaderboardTableColumns {
 
 export const RewardsLeaderboardPanel = () => {
   const stringGetter = useStringGetter();
-  const { dydxAddress } = useAccounts();
-  const dydxPrice = useAppSelector(BonsaiCore.rewardParams.data).tokenPrice;
+  const { blackbottleAddress } = useAccounts();
+  const blackbottlePrice = useAppSelector(BonsaiCore.rewardParams.data).tokenPrice;
   const { data: feeLeaderboardWithoutRewards, isLoading } = useChaosLabsFeeLeaderboard({
-    address: dydxAddress,
+    address: blackbottleAddress,
   });
   const feeLeaderboard = useMemo(
     () =>
       feeLeaderboardWithoutRewards?.leaderboard.map((entry) =>
-        addRewardsToLeaderboardEntry(entry, dydxPrice)
+        addRewardsToLeaderboardEntry(entry, blackbottlePrice)
       ),
-    [feeLeaderboardWithoutRewards?.leaderboard, dydxPrice]
+    [feeLeaderboardWithoutRewards?.leaderboard, blackbottlePrice]
   );
 
   const getRowKey = useCallback((row: ChaosLabsFeeLeaderboardItem) => row.rank, []);
@@ -57,7 +57,7 @@ export const RewardsLeaderboardPanel = () => {
       getRewardsLeaderboardTableColumnDef({
         key,
         stringGetter,
-        dydxAddress,
+        blackbottleAddress,
       })
   );
 
@@ -117,7 +117,7 @@ export const RewardsLeaderboardPanel = () => {
               direction: 'ascending',
             }}
             getIsRowPinned={(row) => {
-              return row.address === dydxAddress;
+              return row.address === blackbottleAddress;
             }}
             slotEmpty={
               isLoading ? (
@@ -131,7 +131,7 @@ export const RewardsLeaderboardPanel = () => {
             }
             getRowAttributes={({ address }) => ({
               style: {
-                backgroundColor: address === dydxAddress ? 'var(--color-accent-faded)' : undefined,
+                backgroundColor: address === blackbottleAddress ? 'var(--color-accent-faded)' : undefined,
               },
             })}
             selectionBehavior="replace"
@@ -191,17 +191,17 @@ const $Table = styled(Table)`
 ` as typeof Table;
 
 const getTraderLink = (address: string) => {
-  return `https://community.chaoslabs.xyz/dydx-v4/risk/accounts/${address}/subAccount/0/overview`;
+  return `https://community.chaoslabs.xyz/blackbottle-v4/risk/accounts/${address}/subAccount/0/overview`;
 };
 
 const getRewardsLeaderboardTableColumnDef = ({
   key,
   stringGetter,
-  dydxAddress,
+  blackbottleAddress,
 }: {
   key: RewardsLeaderboardTableColumns;
   stringGetter: StringGetterFunction;
-  dydxAddress?: string;
+  blackbottleAddress?: string;
 }): ColumnDef<ChaosLabsFeeLeaderboardItemWithRewards> => ({
   ...(
     {
@@ -223,7 +223,7 @@ const getRewardsLeaderboardTableColumnDef = ({
             {rank === 1 && <TrophyIcon tw="size-1.5 text-[#e5c346]" />}
             {rank === 2 && <TrophyIcon tw="size-1.5 text-[#c9c9cb]" />}
             {rank === 3 && <TrophyIcon tw="size-1.5 text-[#c37b3f]" />}
-            {address === dydxAddress && (
+            {address === blackbottleAddress && (
               <div tw="flex items-center justify-center rounded-20 border border-solid border-color-accent px-0.5">
                 <span tw="text-small font-medium text-color-accent">
                   {stringGetter({ key: STRING_KEYS.YOU })}
@@ -243,13 +243,13 @@ const getRewardsLeaderboardTableColumnDef = ({
         ),
         renderCell: ({ address }) => (
           <div
-            css={{ color: address === dydxAddress ? 'var(--color-accent)' : 'var(--color-text-1)' }}
+            css={{ color: address === blackbottleAddress ? 'var(--color-accent)' : 'var(--color-text-1)' }}
             tw="flex items-center gap-0.5 text-small font-medium"
           >
             {truncateAddress(address)}
             <Link
               css={{
-                color: address === dydxAddress ? 'var(--color-accent)' : 'var(--color-text-0)',
+                color: address === blackbottleAddress ? 'var(--color-accent)' : 'var(--color-text-0)',
               }}
               href={getTraderLink(address)}
               iconSize="1rem"
@@ -271,7 +271,7 @@ const getRewardsLeaderboardTableColumnDef = ({
           <Output
             slotRight=" DYDX"
             css={{
-              color: address === dydxAddress ? 'var(--color-accent)' : 'var(--color-text-1)',
+              color: address === blackbottleAddress ? 'var(--color-accent)' : 'var(--color-text-1)',
             }}
             tw="text-small font-medium"
             type={OutputType.Number}

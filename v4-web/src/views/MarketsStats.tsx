@@ -58,7 +58,7 @@ export const MarketsStats = (props: MarketsStatsProps) => {
           <Button
             action={ButtonAction.Primary}
             type={ButtonType.Link}
-            href="https://dydx.trade/DYDX"
+            href="https://blackbottle.trade/DYDX"
             tw="self-start"
           >
             {stringGetter({ key: STRING_KEYS.LIQUIDATION_REBATES_BANNER_CTA })}

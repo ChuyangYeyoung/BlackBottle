@@ -43,7 +43,7 @@ export const SpotWithdrawForm = ({
 }) => {
   const stringGetter = useStringGetter();
   const dispatch = useAppDispatch();
-  const { dydxAddress, solanaAddress } = useAccounts();
+  const { blackbottleAddress, solanaAddress } = useAccounts();
 
   const { data: solBalance } = useSolBalance();
   const maxWithdrawable = useMaxWithdrawableSol();
@@ -96,7 +96,7 @@ export const SpotWithdrawForm = ({
   const withdrawDisabled = !destinationAddress || !amount || !!validationError;
 
   const handleWithdraw = async () => {
-    if (withdrawDisabled || !dydxAddress) return;
+    if (withdrawDisabled || !blackbottleAddress) return;
 
     const withdrawId = crypto.randomUUID();
 
@@ -108,7 +108,7 @@ export const SpotWithdrawForm = ({
       status: 'pending',
     };
 
-    dispatch(addSpotWithdraw({ withdraw: spotWithdraw, dydxAddress }));
+    dispatch(addSpotWithdraw({ withdraw: spotWithdraw, blackbottleAddress }));
     onWithdrawSigned(withdrawId);
 
     try {
@@ -116,7 +116,7 @@ export const SpotWithdrawForm = ({
 
       dispatch(
         updateSpotWithdraw({
-          dydxAddress,
+          blackbottleAddress,
           withdrawId,
           updates: { status: 'success', txSignature: signature },
         })
@@ -126,7 +126,7 @@ export const SpotWithdrawForm = ({
 
       dispatch(
         updateSpotWithdraw({
-          dydxAddress,
+          blackbottleAddress,
           withdrawId,
           updates: { status: 'error', error: errorMessage },
         })

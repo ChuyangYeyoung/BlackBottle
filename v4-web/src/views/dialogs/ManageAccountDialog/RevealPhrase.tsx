@@ -30,7 +30,7 @@ import { getAppTheme } from '@/state/appUiConfigsSelectors';
 import { openDialog } from '@/state/dialogs';
 import { getSourceAccount } from '@/state/walletSelectors';
 
-type ExportWalletType = 'turnkey' | 'dydx';
+type ExportWalletType = 'turnkey' | 'blackbottle';
 
 export const RevealPhrase = ({
   closeDialog,
@@ -190,7 +190,7 @@ export const RevealPhrase = ({
       );
     }
 
-    if (exportWalletType === 'dydx') {
+    if (exportWalletType === 'blackbottle') {
       return (
         <ToggleButton
           tw="[& svg]:w-auto"
@@ -221,7 +221,7 @@ export const RevealPhrase = ({
     onBack,
   ]);
 
-  const phrase = exportWalletType === 'dydx' ? hdKey?.mnemonic : undefined;
+  const phrase = exportWalletType === 'blackbottle' ? hdKey?.mnemonic : undefined;
   const theme = useAppThemeAndColorModeContext();
   const appTheme = useAppSelector(getAppTheme);
 
@@ -254,7 +254,7 @@ export const RevealPhrase = ({
       <div tw="flexColumn gap-0.5">
         <span tw="row gap-0.25">
           <AccentTag tw="rounded-[360px] px-0.5 py-0.25 font-tiny-bold">
-            {exportWalletType === 'turnkey' ? 'Turnkey' : 'dYdX'}
+            {exportWalletType === 'turnkey' ? 'Turnkey' : 'Black Bottle'}
           </AccentTag>
           {stringGetter({ key: STRING_KEYS.SECRET_RECOVERY_PHRASE })}
         </span>
@@ -294,7 +294,7 @@ export const RevealPhrase = ({
             </>
           )}
 
-          {exportWalletType === 'dydx' && (
+          {exportWalletType === 'blackbottle' && (
             <span tw="font-small-book">
               {phrase?.split(' ').map((word, idx) => (
                 // eslint-disable-next-line react/no-array-index-key

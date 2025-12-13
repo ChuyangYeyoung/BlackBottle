@@ -51,7 +51,7 @@ export function useWithdrawStep({
   const stringGetter = useStringGetter();
   const { skipClient } = useSkipClient();
   const {
-    dydxAddress,
+    blackbottleAddress,
     localDydxWallet,
     localNobleWallet,
     nobleAddress,
@@ -66,7 +66,7 @@ export function useWithdrawStep({
 
     if (
       destinationAddress.trim() === '' ||
-      dydxAddress == null ||
+      blackbottleAddress == null ||
       withdrawRoute == null ||
       lastChainId == null ||
       !isValidWithdrawalAddress(destinationAddress, lastChainId)
@@ -78,13 +78,13 @@ export function useWithdrawStep({
       withdrawRoute,
       sourceAccount,
       nobleAddress,
-      dydxAddress,
+      blackbottleAddress,
       osmosisAddress,
       neutronAddress,
       destinationAddress
     );
   }, [
-    dydxAddress,
+    blackbottleAddress,
     neutronAddress,
     nobleAddress,
     osmosisAddress,
@@ -103,7 +103,7 @@ export function useWithdrawStep({
       }
 
       if (!localDydxWallet?.offlineSigner)
-        throw new Error('No local dydxwallet offline signer. Cannot submit tx');
+        throw new Error('No local blackbottlewallet offline signer. Cannot submit tx');
 
       return localDydxWallet.offlineSigner;
     },
@@ -115,7 +115,7 @@ export function useWithdrawStep({
       setIsLoading(true);
       if (!withdrawRoute) throw new Error('No route found');
       if (!userAddresses) throw new Error('No user addresses found');
-      if (!localDydxWallet || !localNobleWallet || !dydxAddress) {
+      if (!localDydxWallet || !localNobleWallet || !blackbottleAddress) {
         throw new Error('No local wallets found');
       }
 
@@ -135,10 +135,10 @@ export function useWithdrawStep({
             {
               msg: JSON.stringify({
                 sender: {
-                  owner: dydxAddress,
+                  owner: blackbottleAddress,
                   number: 0,
                 },
-                recipient: dydxAddress,
+                recipient: blackbottleAddress,
                 assetId: USDC_ASSET_ID,
                 quantums: withdrawRoute.amountIn,
               }),

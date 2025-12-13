@@ -32,8 +32,8 @@ export const SwapNotification = ({
   const { mintscan: mintscanTxUrl } = useURLConfigs();
 
   const [inputToken, outputToken] = useMemo(() => {
-    const inputTokenLabel = swap.route.sourceAssetDenom === DYDX_CHAIN_DYDX_DENOM ? 'dYdX' : 'USDC';
-    const outputTokenLabel = inputTokenLabel === 'dYdX' ? 'USDC' : 'dYdX';
+    const inputTokenLabel = swap.route.sourceAssetDenom === DYDX_CHAIN_DYDX_DENOM ? 'Black Bottle' : 'USDC';
+    const outputTokenLabel = inputTokenLabel === 'Black Bottle' ? 'USDC' : 'Black Bottle';
     return [inputTokenLabel, outputTokenLabel];
   }, [swap.route.sourceAssetDenom]);
 

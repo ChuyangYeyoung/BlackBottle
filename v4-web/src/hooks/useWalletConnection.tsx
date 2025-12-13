@@ -73,12 +73,12 @@ export const useWalletConnectionContext = () => {
     disconnect: disconnectPhantom,
   } = usePhantomWallet();
 
-  const { data: dydxAccountGraz, isConnected: isConnectedGraz } = useAccountGraz({
+  const { data: blackbottleAccountGraz, isConnected: isConnectedGraz } = useAccountGraz({
     chainId: SUPPORTED_COSMOS_CHAINS,
     multiChain: true,
   });
-  const dydxAddressGraz = isConnectedGraz
-    ? dydxAccountGraz?.[selectedDydxChainId]?.bech32Address
+  const blackbottleAddressGraz = isConnectedGraz
+    ? blackbottleAccountGraz?.[selectedDydxChainId]?.bech32Address
     : undefined;
 
   const sourceAccount = useAppSelector(getSourceAccount);
@@ -111,14 +111,14 @@ export const useWalletConnectionContext = () => {
       dispatch(setSourceAddress({ address: evmAddressWagmi, chain: WalletNetworkType.Evm }));
     } else if (walletInfo.connectorType === ConnectorType.PhantomSolana && solAddressPhantom) {
       dispatch(setSourceAddress({ address: solAddressPhantom, chain: WalletNetworkType.Solana }));
-    } else if (walletInfo.connectorType === ConnectorType.Cosmos && dydxAddressGraz) {
-      dispatch(setSourceAddress({ address: dydxAddressGraz, chain: WalletNetworkType.Cosmos }));
+    } else if (walletInfo.connectorType === ConnectorType.Cosmos && blackbottleAddressGraz) {
+      dispatch(setSourceAddress({ address: blackbottleAddressGraz, chain: WalletNetworkType.Cosmos }));
     }
   }, [
     sourceAccount.walletInfo,
     evmAddressWagmi,
     solAddressPhantom,
-    dydxAddressGraz,
+    blackbottleAddressGraz,
     dispatch,
     primaryTurnkeyWallet,
   ]);
@@ -371,7 +371,7 @@ export const useWalletConnectionContext = () => {
     connectWallet,
 
     // Wallet connection (Cosmos)
-    dydxAccountGraz,
+    blackbottleAccountGraz,
     isConnectedGraz,
     getCosmosOfflineSigner,
   };

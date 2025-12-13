@@ -31,12 +31,12 @@ describe('migration2', () => {
   });
 
   it('should copy localStorage values to dismissable object', () => {
-    localStorage.setItem('dydx.HasSeenPredictionMarketsIntro', 'true');
+    localStorage.setItem('blackbottle.HasSeenPredictionMarketsIntro', 'true');
 
     const result = migration2(V1_STATE);
 
     expect(result.dismissable.hasSeenPredictionMarketIntroDialog).toBe(true);
     // Check if localStorage items were removed
-    expect(localStorage.getItem('dydx.HasSeenPredictionMarketsIntro')).toBeNull();
+    expect(localStorage.getItem('blackbottle.HasSeenPredictionMarketsIntro')).toBeNull();
   });
 });

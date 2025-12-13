@@ -110,19 +110,19 @@ app.get('/sync/status/:walletAddress', (req, res) => {
   }
 });
 
-// Sync blockchain data (dYdX Chain)
+// Sync blockchain data (Black Bottle)
 app.post('/sync/blockchain-data', async (req, res) => {
   try {
-    const { dydxAddress, indexerUrl } = req.body;
+    const { blackbottleAddress, indexerUrl } = req.body;
 
-    if (!dydxAddress) {
-      return res.status(400).json({ error: 'dydxAddress required' });
+    if (!blackbottleAddress) {
+      return res.status(400).json({ error: 'blackbottleAddress required' });
     }
 
     const result = await syncBlockchainData(
       db,
-      dydxAddress,
-      indexerUrl || 'https://indexer.v4testnet.dydx.exchange'
+      blackbottleAddress,
+      indexerUrl || 'https://indexer.v4testnet.blackbottle.trade'
     );
 
     if (result.success) {

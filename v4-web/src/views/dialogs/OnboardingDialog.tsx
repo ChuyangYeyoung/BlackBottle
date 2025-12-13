@@ -62,7 +62,7 @@ export const OnboardingDialog = ({
   const isTurnkeyEnabled = useEnableTurnkey();
   const currentOnboardingStep = useAppSelectorWithArgs(calculateOnboardingStep, isTurnkeyEnabled);
   const isSimpleUi = useSimpleUiEnabled();
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
   const privyWallet = useDisplayedWallets().find((wallet) => wallet.name === WalletType.Privy);
 
   const setIsOpen = useCallback(
@@ -82,10 +82,10 @@ export const OnboardingDialog = ({
   }, [dispatch]);
 
   useEffect(() => {
-    if (!currentOnboardingStep || dydxAddress) {
+    if (!currentOnboardingStep || blackbottleAddress) {
       setIsOpen(false);
     }
-  }, [currentOnboardingStep, setIsOpen, dispatch, showNewDepositFlow, dydxAddress]);
+  }, [currentOnboardingStep, setIsOpen, dispatch, showNewDepositFlow, blackbottleAddress]);
 
   const setIsOpenFromDialog = useCallback(
     (open: boolean) => {

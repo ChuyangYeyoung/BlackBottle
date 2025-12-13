@@ -74,15 +74,15 @@ const useSubaccountContext = ({ localDydxWallet }: { localDydxWallet?: LocalWall
   const { getFaucetFunds, getNativeTokens } = useMemo(
     () => ({
       getFaucetFunds: async ({
-        dydxAddress,
+        blackbottleAddress,
         subaccountNumber,
       }: {
-        dydxAddress: DydxAddress;
+        blackbottleAddress: DydxAddress;
         subaccountNumber: number;
-      }) => faucetClient?.fill(dydxAddress, subaccountNumber, 100),
+      }) => faucetClient?.fill(blackbottleAddress, subaccountNumber, 100),
 
-      getNativeTokens: async ({ dydxAddress }: { dydxAddress: DydxAddress }) =>
-        faucetClient?.fillNative(dydxAddress),
+      getNativeTokens: async ({ blackbottleAddress }: { blackbottleAddress: DydxAddress }) =>
+        faucetClient?.fillNative(blackbottleAddress),
     }),
     [faucetClient]
   );
@@ -187,11 +187,11 @@ const useSubaccountContext = ({ localDydxWallet }: { localDydxWallet?: LocalWall
     [localDydxWallet, subaccountNumber]
   );
 
-  const dydxAddress = localDydxWallet?.address as DydxAddress | undefined;
+  const blackbottleAddress = localDydxWallet?.address as DydxAddress | undefined;
 
   useEffect(() => {
     dispatch(clearLocalOrders());
-  }, [dispatch, dydxAddress]);
+  }, [dispatch, blackbottleAddress]);
 
   // ------ Deposit/Withdraw Methods ------ //
   const balances = useAppSelector(BonsaiCore.account.balances.data);
@@ -232,7 +232,7 @@ const useSubaccountContext = ({ localDydxWallet }: { localDydxWallet?: LocalWall
 
   const depositCurrentBalance = useCallback(async () => {
     const currentBalance = (
-      await compositeClient?.validatorClient.get.getAccountBalance(dydxAddress as string, usdcDenom)
+      await compositeClient?.validatorClient.get.getAccountBalance(blackbottleAddress as string, usdcDenom)
     )?.amount;
 
     if (!currentBalance) throw new Error('Failed to get current balance');
@@ -244,7 +244,7 @@ const useSubaccountContext = ({ localDydxWallet }: { localDydxWallet?: LocalWall
     if (depositAmount > 0) {
       await deposit(depositAmount);
     }
-  }, [usdcDecimals, compositeClient, dydxAddress, usdcDenom, deposit]);
+  }, [usdcDecimals, compositeClient, blackbottleAddress, usdcDenom, deposit]);
 
   const withdraw = useCallback(
     async (amount: number, fromSubaccountNumber: number) => {
@@ -266,17 +266,17 @@ const useSubaccountContext = ({ localDydxWallet }: { localDydxWallet?: LocalWall
   // ------ Faucet Methods ------ //
   const requestFaucetFunds = useCallback(async () => {
     try {
-      if (!dydxAddress) throw new Error('dydxAddress is not connected');
+      if (!blackbottleAddress) throw new Error('blackbottleAddress is not connected');
 
       await Promise.all([
-        getFaucetFunds({ dydxAddress, subaccountNumber }),
-        getNativeTokens({ dydxAddress }),
+        getFaucetFunds({ blackbottleAddress, subaccountNumber }),
+        getNativeTokens({ blackbottleAddress }),
       ]);
     } catch (error) {
       log('useSubaccount/getFaucetFunds', error);
       throw error;
     }
-  }, [dydxAddress, getFaucetFunds, getNativeTokens, subaccountNumber]);
+  }, [blackbottleAddress, getFaucetFunds, getNativeTokens, subaccountNumber]);
 
   // ------ Trigger Orders Methods ------ //
   const placeTriggerOrders = useCallback(async (payload: TriggerOrdersPayload) => {
@@ -319,13 +319,13 @@ const useSubaccountContext = ({ localDydxWallet }: { localDydxWallet?: LocalWall
       if (!compositeClient) {
         throw new Error('client not initialized');
       }
-      if (!subaccountClient || !dydxAddress) {
+      if (!subaccountClient || !blackbottleAddress) {
         throw new Error('wallet not initialized');
       }
 
       const response = await compositeClient.validatorClient.post.delegate(
         subaccountClient,
-        dydxAddress,
+        blackbottleAddress,
         validator,
         parseUnits(amount.toString(), chainTokenDecimals).toString(),
         Method.BroadcastTxCommit
@@ -333,7 +333,7 @@ const useSubaccountContext = ({ localDydxWallet }: { localDydxWallet?: LocalWall
 
       return response;
     },
-    [compositeClient, subaccountClient, dydxAddress, chainTokenDecimals]
+    [compositeClient, subaccountClient, blackbottleAddress, chainTokenDecimals]
   );
 
   const getDelegateFee = useCallback(
@@ -536,14 +536,14 @@ const useSubaccountContext = ({ localDydxWallet }: { localDydxWallet?: LocalWall
   useEffect(() => {
     if (!subaccountClient) return;
 
-    if (dydxAddress === latestReferrer) {
+    if (blackbottleAddress === latestReferrer) {
       dispatch(removeLatestReferrer());
       return;
     }
     if (
       compositeClient &&
       latestReferrer &&
-      dydxAddress &&
+      blackbottleAddress &&
       usdcCoinBalance &&
       parseFloat(usdcCoinBalance) > AMOUNT_USDC_BEFORE_REBALANCE &&
       isReferredByFetched &&
@@ -555,7 +555,7 @@ const useSubaccountContext = ({ localDydxWallet }: { localDydxWallet?: LocalWall
   }, [
     compositeClient,
     latestReferrer,
-    dydxAddress,
+    blackbottleAddress,
     registerAffiliateMutate,
     usdcCoinBalance,
     subaccountClient,
@@ -575,13 +575,13 @@ const useSubaccountContext = ({ localDydxWallet }: { localDydxWallet?: LocalWall
     if (!compositeClient?.validatorClient) {
       throw new Error('client not initialized');
     }
-    if (!dydxAddress) throw new Error('dydxAddress is not connected');
-    const result = await compositeClient.validatorClient.get.getMegavaultOwnerShares(dydxAddress);
+    if (!blackbottleAddress) throw new Error('blackbottleAddress is not connected');
+    const result = await compositeClient.validatorClient.get.getMegavaultOwnerShares(blackbottleAddress);
     if (result == null) {
       return result;
     }
     return parseToPrimitives(result);
-  }, [compositeClient?.validatorClient, dydxAddress]);
+  }, [compositeClient?.validatorClient, blackbottleAddress]);
 
   const depositToMegavault = useCallback(
     async (amount: number) => {

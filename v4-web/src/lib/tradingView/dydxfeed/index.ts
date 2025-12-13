@@ -48,9 +48,9 @@ const configurationData: DatafeedConfiguration = {
   supports_marks: true,
   exchanges: [
     {
-      value: 'dYdX', // `exchange` argument for the `searchSymbols` method, if a user selects this exchange
-      name: 'dYdX', // filter name
-      desc: 'dYdX v4 exchange', // full exchange name displayed in the filter popup
+      value: 'Black Bottle', // `exchange` argument for the `searchSymbols` method, if a user selects this exchange
+      name: 'Black Bottle', // filter name
+      desc: 'Black Bottle v4 exchange', // full exchange name displayed in the filter popup
     },
   ],
   symbols_types: [
@@ -99,8 +99,8 @@ export const getDydxDatafeed = (
       name: symbolItem.full_name,
       description: symbolItem.description,
       type: symbolItem.type,
-      exchange: 'dYdX',
-      listed_exchange: 'dYdX',
+      exchange: 'Black Bottle',
+      listed_exchange: 'Black Bottle',
       has_intraday: true,
       has_daily: true,
 
@@ -205,7 +205,7 @@ export const getDydxDatafeed = (
         });
       }
     } catch (error) {
-      log('tradingView/dydxfeed/getBars', error);
+      log('tradingView/blackbottlefeed/getBars', error);
       onErrorCallback(error);
     }
   },

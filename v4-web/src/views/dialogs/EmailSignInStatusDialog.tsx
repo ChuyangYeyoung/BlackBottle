@@ -43,7 +43,7 @@ export const EmailSignInStatusDialog = ({
   const hasNoUploadedAddress =
     walletInfo?.connectorType === ConnectorType.Turnkey &&
     walletInfo.loginMethod === LoginMethod.Email &&
-    !turnkeyEmailOnboardingData?.dydxAddress;
+    !turnkeyEmailOnboardingData?.blackbottleAddress;
 
   // Use cached turnkeyEmailOnboardingData to determine if we should show the welcome content
   // turnkeyEmailOnboardingData is cleared after handling, so we only want initial state

@@ -197,13 +197,13 @@ export function useForceRefreshVaultAccount() {
 
 export const useLoadedVaultAccount = () => {
   const { getAllAccountTransfersBetween, compositeClient } = useDydxClient();
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
   const { getVaultAccountInfo } = useSubaccount();
 
   const accountVaultQueryResult = useQuery({
-    queryKey: ['vaultAccount', dydxAddress, compositeClient != null],
+    queryKey: ['vaultAccount', blackbottleAddress, compositeClient != null],
     queryFn: wrapAndLogBonsaiError(async () => {
-      if (dydxAddress == null || compositeClient == null) {
+      if (blackbottleAddress == null || compositeClient == null) {
         return wrapNullable(undefined);
       }
       const [account, transfers] = await Promise.all([
@@ -212,7 +212,7 @@ export const useLoadedVaultAccount = () => {
           // error is an expected result of this call when user has no balance
           () => undefined
         ),
-        getAllAccountTransfersBetween(dydxAddress, '0', MEGAVAULT_MODULE_ADDRESS, '0'),
+        getAllAccountTransfersBetween(blackbottleAddress, '0', MEGAVAULT_MODULE_ADDRESS, '0'),
       ]);
 
       if (transfers == null) {

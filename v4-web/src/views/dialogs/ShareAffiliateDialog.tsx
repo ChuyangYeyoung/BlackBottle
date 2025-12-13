@@ -44,11 +44,11 @@ const copyBlobToClipboard = async (blob: Blob | null) => {
 export const ShareAffiliateDialog = ({ setIsOpen }: DialogProps<ShareAffiliateDialogProps>) => {
   const stringGetter = useStringGetter();
   const { affiliateProgramFaq } = useURLConfigs();
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
   const {
     affiliateMetadataQuery: { data },
     affiliateMaxEarningQuery: { data: maxEarningData },
-  } = useAffiliatesInfo(dydxAddress);
+  } = useAffiliatesInfo(blackbottleAddress);
 
   const maxEarning = maxEarningData?.maxEarning;
 
@@ -68,8 +68,8 @@ export const ShareAffiliateDialog = ({ setIsOpen }: DialogProps<ShareAffiliateDi
           params: {
             AMOUNT_USD: AFFILIATES_FEE_DISCOUNT_USD.toLocaleString(),
           },
-        })}\n\n${affiliatesUrl}\n\n#dYdX \n[${stringGetter({ key: STRING_KEYS.TWEET_PASTE_IMAGE_AND_DELETE_THIS })}]`,
-        related: 'dYdX',
+        })}\n\n${affiliatesUrl}\n\n#Black Bottle \n[${stringGetter({ key: STRING_KEYS.TWEET_PASTE_IMAGE_AND_DELETE_THIS })}]`,
+        related: 'Black Bottle',
       });
     },
   });
@@ -116,7 +116,7 @@ export const ShareAffiliateDialog = ({ setIsOpen }: DialogProps<ShareAffiliateDi
       description={dialogDescription}
       withAnimation
     >
-      {!dydxAddress && (
+      {!blackbottleAddress && (
         <OnboardingTriggerButton
           tw="w-full"
           size={ButtonSize.Medium}
@@ -125,8 +125,8 @@ export const ShareAffiliateDialog = ({ setIsOpen }: DialogProps<ShareAffiliateDi
           }}
         />
       )}
-      {dydxAddress && !data?.isEligible && <AffiliateProgress volume={data?.totalVolume} />}
-      {dydxAddress && data?.isEligible && (
+      {blackbottleAddress && !data?.isEligible && <AffiliateProgress volume={data?.totalVolume} />}
+      {blackbottleAddress && data?.isEligible && (
         <div tw="column gap-1">
           <$EditAffiliateInput />
           {affiliatesUrl && (

@@ -63,7 +63,7 @@ export const TransferForm = ({
 }: TransferFormProps) => {
   const stringGetter = useStringGetter();
 
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
   const { transfer } = useSubaccount();
   const selectedDydxChainId = useAppSelector(getSelectedDydxChainId);
   const { tokensConfigs, usdcImage, usdcLabel, chainTokenImage, chainTokenLabel } =
@@ -97,10 +97,10 @@ export const TransferForm = ({
   const isAddressValid = useMemo(
     () =>
       recipientAddress &&
-      dydxAddress !== recipientAddress &&
+      blackbottleAddress !== recipientAddress &&
       validation.isValidAddress(recipientAddress) &&
       !sanctionedAddresses.has(recipientAddress),
-    [recipientAddress, sanctionedAddresses, dydxAddress]
+    [recipientAddress, sanctionedAddresses, blackbottleAddress]
   );
 
   const isUSDCSelected = transferType === TransferToken.USDC;
@@ -127,10 +127,10 @@ export const TransferForm = ({
 
     try {
       const screenResults = await screenAddresses({
-        addresses: [recipientAddress!, dydxAddress!],
+        addresses: [recipientAddress!, blackbottleAddress!],
       });
 
-      if (screenResults[dydxAddress!]) {
+      if (screenResults[blackbottleAddress!]) {
         setError(
           stringGetter({
             key: STRING_KEYS.WALLET_RESTRICTED_WITHDRAWAL_TRANSFER_ORIGINATION_ERROR_MESSAGE,

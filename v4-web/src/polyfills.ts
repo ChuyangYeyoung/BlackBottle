@@ -6,9 +6,9 @@ globalThis.Buffer = globalThis.Buffer || Buffer;
 
 declare global {
   interface WindowEventMap {
-    'dydx:log': CustomEvent;
-    'dydx:track': CustomEvent;
-    'dydx:identify': CustomEvent;
+    'blackbottle:log': CustomEvent;
+    'blackbottle:track': CustomEvent;
+    'blackbottle:identify': CustomEvent;
   }
 
   var Intercom: any;

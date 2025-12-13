@@ -47,7 +47,7 @@ export const HeaderDesktop = () => {
     useURLConfigs();
   const dispatch = useAppDispatch();
   const { chainTokenLabel } = useTokenConfigs();
-  const { dydxAccounts } = useAccounts();
+  const { blackbottleAccounts } = useAccounts();
   const onboardingState = useAppSelector(getOnboardingState);
   const { complianceState } = useComplianceState();
   const isSpotEnabled = useEnableSpot();
@@ -206,7 +206,7 @@ export const HeaderDesktop = () => {
               onClick={() => {
                 dispatch(openDialog(DialogTypes.Deposit2({})));
               }}
-              state={{ isDisabled: !dydxAccounts }}
+              state={{ isDisabled: !blackbottleAccounts }}
             >
               <Icon iconName={IconName.Deposit2} size="1rem" />
               <span tw="font-small-bold">{stringGetter({ key: STRING_KEYS.DEPOSIT })}</span>

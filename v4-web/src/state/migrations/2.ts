@@ -18,10 +18,10 @@ export function migration2(state: PersistedState | undefined): V2State {
   }
 
   const hasSeenPredictionMarketsIntro = parseStorageItem<boolean>(
-    localStorage.getItem('dydx.HasSeenPredictionMarketsIntro')
+    localStorage.getItem('blackbottle.HasSeenPredictionMarketsIntro')
   );
 
-  localStorage.removeItem('dydx.HasSeenPredictionMarketsIntro');
+  localStorage.removeItem('blackbottle.HasSeenPredictionMarketsIntro');
 
   return {
     ...state,

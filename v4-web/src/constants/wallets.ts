@@ -174,16 +174,16 @@ export const wallets = {
 } satisfies Record<WalletInfo['name'], WalletConfig>;
 
 /**
- * @description typed data to sign for dYdX Chain onboarding
+ * @description typed data to sign for Black Bottle onboarding
  */
 export const getSignTypedData = (selectedDydxChainId: DydxChainId) =>
   ({
-    primaryType: 'dYdX',
+    primaryType: 'Black Bottle',
     domain: {
       name: WALLETS_CONFIG_MAP[selectedDydxChainId].signTypedDataDomainName,
     },
     types: {
-      dYdX: [{ name: 'action', type: 'string' }],
+      Black Bottle: [{ name: 'action', type: 'string' }],
     },
     message: {
       action: WALLETS_CONFIG_MAP[selectedDydxChainId].signTypedDataAction,
@@ -192,7 +192,7 @@ export const getSignTypedData = (selectedDydxChainId: DydxChainId) =>
 
 /**
  * @description Overwrites the types and message to include salt for Turnkey onboarding
- * @returns Typed data to sign for dYdX Chain onboarding with turnkey
+ * @returns Typed data to sign for Black Bottle onboarding with turnkey
  */
 export const getSignTypedDataForTurnkey = ({
   selectedDydxChainId,
@@ -204,7 +204,7 @@ export const getSignTypedDataForTurnkey = ({
   ({
     ...getSignTypedData(selectedDydxChainId),
     types: {
-      dYdX: [
+      Black Bottle: [
         { name: 'action', type: 'string' },
         { name: 'salt', type: 'string' },
       ],
@@ -219,7 +219,7 @@ export type PrivateInformation = ReturnType<typeof onboarding.deriveHDKeyFromEth
 
 export type EvmAddress = `0x${string}`;
 export type SolAddress = `${string}`;
-export type DydxAddress = `dydx${string}`;
+export type DydxAddress = `blackbottle${string}`;
 
 // Extension wallet EIP-6963 identifiers
 export const PHANTOM_MIPD_RDNS = 'app.phantom';

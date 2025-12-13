@@ -75,7 +75,7 @@ const September2025RewardsPanel = () => {
                     REWARD_AMOUNT: DEC_2025_COMPETITION_DETAILS.rewardAmount,
                   },
                 })}{' '}
-                <Link href="https://www.mintscan.io/dydx/proposals/321" isInline>
+                <Link href="https://www.mintscan.io/blackbottle/proposals/321" isInline>
                   {stringGetter({ key: STRING_KEYS.LEARN_MORE })}
                 </Link>
               </span>
@@ -103,10 +103,10 @@ const September2025RewardsPanel = () => {
 
 const Sept2025RewardsPanel = () => {
   const stringGetter = useStringGetter();
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
   const { data: topPnls, isLoading } = useChaosLabsPnlDistribution();
 
-  const userReward = topPnls?.find((entry) => entry.address === dydxAddress)?.dollarReward ?? 0;
+  const userReward = topPnls?.find((entry) => entry.address === blackbottleAddress)?.dollarReward ?? 0;
 
   return (
     <div tw="flex flex-col justify-between gap-0.75 self-stretch">

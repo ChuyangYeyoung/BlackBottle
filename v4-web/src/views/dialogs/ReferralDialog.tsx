@@ -38,7 +38,7 @@ const CONTENT_SECTIONS = [
 
 export const ReferralDialog = ({ setIsOpen, refCode }: DialogProps<ReferralDialogProps>) => {
   const stringGetter = useStringGetter();
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
 
   const {
     data: referralAddress,
@@ -52,7 +52,7 @@ export const ReferralDialog = ({ setIsOpen, refCode }: DialogProps<ReferralDialo
 
   const { data: referredBy, isPending: isReferredByPending } = useReferredBy();
   const isNotEligible = isAffiliatesInfoSuccess && !affiliatesInfo.isEligible;
-  const isOwnReferralCode = isReferralAddressFetched && referralAddress === dydxAddress;
+  const isOwnReferralCode = isReferralAddressFetched && referralAddress === blackbottleAddress;
   const invalidReferralCode = isReferralAddressFetched && !referralAddress;
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export const ReferralDialog = ({ setIsOpen, refCode }: DialogProps<ReferralDialo
 
   if (
     isReferralAddressPending ||
-    !!(dydxAddress && isReferredByPending) ||
+    !!(blackbottleAddress && isReferredByPending) ||
     !!referredBy?.affiliateAddress ||
     isOwnReferralCode
   ) {
@@ -155,7 +155,7 @@ export const ReferralDialog = ({ setIsOpen, refCode }: DialogProps<ReferralDialo
           ))}
         </div>
         <div tw="flex flex-col items-center gap-0.5">
-          {!dydxAddress ? (
+          {!blackbottleAddress ? (
             <OnboardingTriggerButton
               tw="w-full"
               size={ButtonSize.Medium}

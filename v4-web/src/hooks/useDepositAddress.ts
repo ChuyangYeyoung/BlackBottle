@@ -6,11 +6,11 @@ import { useAppSelector } from '@/state/appTypes';
 import { useAccounts } from './useAccounts';
 
 export const useDepositAddress = () => {
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
   const indexerUrl = useAppSelector(selectIndexerUrl);
   const indexerReady = useAppSelector(selectIndexerReady);
 
-  const canQueryForDepositAddresses = dydxAddress != null && indexerReady;
+  const canQueryForDepositAddresses = blackbottleAddress != null && indexerReady;
 
   const {
     data: depositAddresses,
@@ -19,13 +19,13 @@ export const useDepositAddress = () => {
     error: fetchDepositAddressesError,
   } = useQuery({
     enabled: canQueryForDepositAddresses,
-    queryKey: ['turnkeyWallets', dydxAddress],
+    queryKey: ['turnkeyWallets', blackbottleAddress],
     queryFn: async (): Promise<{
       avalancheAddress: string;
       evmAddress: string;
       svmAddress: string;
     }> => {
-      const response = await fetch(`${indexerUrl}/v4/bridging/getDepositAddress/${dydxAddress}`, {
+      const response = await fetch(`${indexerUrl}/v4/bridging/getDepositAddress/${blackbottleAddress}`, {
         method: 'GET',
       }).then((res) => res.json());
 

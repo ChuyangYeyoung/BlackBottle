@@ -237,8 +237,8 @@ export const resolveWagmiConnector = ({
 
   if (wallet.connectorType === ConnectorType.Coinbase) {
     return coinbaseWalletConnector({
-      appName: 'dYdX',
-      appLogoUrl: '/logos/dydx-x.png',
+      appName: 'Black Bottle',
+      appLogoUrl: '/logos/blackbottle-x.png',
       reloadOnDisconnect: false,
       version: '3',
     });

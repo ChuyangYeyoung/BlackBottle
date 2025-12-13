@@ -38,7 +38,7 @@ export const WithdrawFromSubaccountDialog = ({
   setIsOpen,
 }: DialogProps<WithdrawFromSubaccountDialogProps>) => {
   const [isLoading, setIsLoading] = useState(false);
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
   const childSubaccountSummaries = useAppSelector(BonsaiCore.account.childSubaccountSummaries.data);
   const usdcBalance = useAppSelector(BonsaiCore.account.balances.data).usdcAmount;
   const usdcBalanceBN = MustBigNumber(usdcBalance);
@@ -87,7 +87,7 @@ export const WithdrawFromSubaccountDialog = ({
 
       if (tx) {
         appQueryClient.invalidateQueries({
-          queryKey: ['validator', 'accountBalances', dydxAddress],
+          queryKey: ['validator', 'accountBalances', blackbottleAddress],
         });
 
         await sleep(INVALIDATION_SLEEP_TIME);

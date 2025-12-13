@@ -34,8 +34,8 @@ enum AffiliatesTableType {
 }
 
 export const AffiliatesPage = () => {
-  const { dydxAddress } = useAccounts();
-  const { affiliateStatsQuery, affiliateMetadataQuery } = useAffiliatesInfo(dydxAddress);
+  const { blackbottleAddress } = useAccounts();
+  const { affiliateStatsQuery, affiliateMetadataQuery } = useAffiliatesInfo(blackbottleAddress);
   const { data: accountStats } = affiliateStatsQuery;
   const { data: affiliateMetadata } = affiliateMetadataQuery;
   const { affiliateProgramFaq } = useURLConfigs();
@@ -73,7 +73,7 @@ export const AffiliatesPage = () => {
 
   const showAffiliateDetails = userStatus.isAffiliate;
 
-  const myReferralStats = dydxAddress && (
+  const myReferralStats = blackbottleAddress && (
     <div tw="flexColumn w-full gap-1">
       <span tw="text-color-text-1 font-base-bold">
         {stringGetter({ key: STRING_KEYS.MY_REFERRAL_STATS })}
@@ -155,7 +155,7 @@ export const AffiliatesPage = () => {
   const affiliateStatsSection = (
     <>
       {affiliateTitleSection}
-      {dydxAddress ? (
+      {blackbottleAddress ? (
         affiliateMetadata == null ? (
           <div tw="flex min-h-4 flex-1 items-center justify-center rounded-0.625 bg-color-layer-3">
             <LoadingSpinner />

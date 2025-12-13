@@ -77,28 +77,28 @@ export const transfersSlice = createSlice({
   name: 'Transfers',
   initialState,
   reducers: {
-    addDeposit: (state, action: PayloadAction<{ dydxAddress: DydxAddress; deposit: Deposit }>) => {
-      const { dydxAddress, deposit } = action.payload;
-      if (!state.transfersByDydxAddress[dydxAddress]) {
-        state.transfersByDydxAddress[dydxAddress] = [];
+    addDeposit: (state, action: PayloadAction<{ blackbottleAddress: DydxAddress; deposit: Deposit }>) => {
+      const { blackbottleAddress, deposit } = action.payload;
+      if (!state.transfersByDydxAddress[blackbottleAddress]) {
+        state.transfersByDydxAddress[blackbottleAddress] = [];
       }
 
       const newDeposit = { ...deposit, updatedAt: Date.now() };
 
-      state.transfersByDydxAddress[dydxAddress].push(newDeposit);
+      state.transfersByDydxAddress[blackbottleAddress].push(newDeposit);
     },
     updateDeposit: (
       state,
       action: PayloadAction<{
-        dydxAddress: DydxAddress;
+        blackbottleAddress: DydxAddress;
         deposit: Partial<Deposit> & { txHash: string; chainId: string };
       }>
     ) => {
-      const { dydxAddress, deposit } = action.payload;
-      const accountTransfers = state.transfersByDydxAddress[dydxAddress];
+      const { blackbottleAddress, deposit } = action.payload;
+      const accountTransfers = state.transfersByDydxAddress[blackbottleAddress];
       if (!accountTransfers?.length) return;
 
-      state.transfersByDydxAddress[dydxAddress] = accountTransfers.map((transfer) => {
+      state.transfersByDydxAddress[blackbottleAddress] = accountTransfers.map((transfer) => {
         if (
           isDeposit(transfer) &&
           transfer.txHash === deposit.txHash &&
@@ -112,29 +112,29 @@ export const transfersSlice = createSlice({
     },
     addWithdraw: (
       state,
-      action: PayloadAction<{ dydxAddress: DydxAddress; withdraw: Withdraw }>
+      action: PayloadAction<{ blackbottleAddress: DydxAddress; withdraw: Withdraw }>
     ) => {
-      const { dydxAddress, withdraw } = action.payload;
-      if (!state.transfersByDydxAddress[dydxAddress]) {
-        state.transfersByDydxAddress[dydxAddress] = [];
+      const { blackbottleAddress, withdraw } = action.payload;
+      if (!state.transfersByDydxAddress[blackbottleAddress]) {
+        state.transfersByDydxAddress[blackbottleAddress] = [];
       }
 
       const newWithdraw = { ...withdraw, updatedAt: Date.now() };
 
-      state.transfersByDydxAddress[dydxAddress].push(newWithdraw);
+      state.transfersByDydxAddress[blackbottleAddress].push(newWithdraw);
     },
     updateWithdraw: (
       state,
       action: PayloadAction<{
-        dydxAddress: DydxAddress;
+        blackbottleAddress: DydxAddress;
         withdraw: Partial<Withdraw>;
       }>
     ) => {
-      const { dydxAddress, withdraw } = action.payload;
-      const accountTransfers = state.transfersByDydxAddress[dydxAddress];
+      const { blackbottleAddress, withdraw } = action.payload;
+      const accountTransfers = state.transfersByDydxAddress[blackbottleAddress];
       if (!accountTransfers?.length) return;
 
-      state.transfersByDydxAddress[dydxAddress] = accountTransfers.map((transfer) => {
+      state.transfersByDydxAddress[blackbottleAddress] = accountTransfers.map((transfer) => {
         if (isWithdraw(transfer) && transfer.id === withdraw.id) {
           return { ...transfer, ...withdraw };
         }
@@ -145,16 +145,16 @@ export const transfersSlice = createSlice({
     onWithdrawBroadcast: (
       state,
       action: PayloadAction<{
-        dydxAddress: DydxAddress;
+        blackbottleAddress: DydxAddress;
         withdrawId: string;
         subtransaction: WithdrawSubtransaction;
       }>
     ) => {
-      const { dydxAddress, withdrawId, subtransaction } = action.payload;
-      const accountTransfers = state.transfersByDydxAddress[dydxAddress];
+      const { blackbottleAddress, withdrawId, subtransaction } = action.payload;
+      const accountTransfers = state.transfersByDydxAddress[blackbottleAddress];
       if (!accountTransfers?.length) return;
 
-      state.transfersByDydxAddress[dydxAddress] = accountTransfers.map((transfer) => {
+      state.transfersByDydxAddress[blackbottleAddress] = accountTransfers.map((transfer) => {
         if (isWithdraw(transfer) && transfer.id === withdrawId) {
           const currentTransactions = transfer.transactions.map((sub) => {
             if (sub.chainId === subtransaction.chainId) {
@@ -176,30 +176,30 @@ export const transfersSlice = createSlice({
     },
     addSpotWithdraw: (
       state,
-      action: PayloadAction<{ dydxAddress: DydxAddress; withdraw: SpotWithdraw }>
+      action: PayloadAction<{ blackbottleAddress: DydxAddress; withdraw: SpotWithdraw }>
     ) => {
-      const { dydxAddress, withdraw } = action.payload;
-      if (!state.transfersByDydxAddress[dydxAddress]) {
-        state.transfersByDydxAddress[dydxAddress] = [];
+      const { blackbottleAddress, withdraw } = action.payload;
+      if (!state.transfersByDydxAddress[blackbottleAddress]) {
+        state.transfersByDydxAddress[blackbottleAddress] = [];
       }
 
       const newWithdraw = { ...withdraw, updatedAt: Date.now() };
 
-      state.transfersByDydxAddress[dydxAddress].push(newWithdraw);
+      state.transfersByDydxAddress[blackbottleAddress].push(newWithdraw);
     },
     updateSpotWithdraw: (
       state,
       action: PayloadAction<{
-        dydxAddress: DydxAddress;
+        blackbottleAddress: DydxAddress;
         withdrawId: string;
         updates: Partial<SpotWithdraw>;
       }>
     ) => {
-      const { dydxAddress, withdrawId, updates } = action.payload;
-      const accountTransfers = state.transfersByDydxAddress[dydxAddress];
+      const { blackbottleAddress, withdrawId, updates } = action.payload;
+      const accountTransfers = state.transfersByDydxAddress[blackbottleAddress];
       if (!accountTransfers?.length) return;
 
-      state.transfersByDydxAddress[dydxAddress] = accountTransfers.map((transfer) => {
+      state.transfersByDydxAddress[blackbottleAddress] = accountTransfers.map((transfer) => {
         if (isSpotWithdraw(transfer) && transfer.id === withdrawId) {
           return { ...transfer, updatedAt: Date.now(), ...updates };
         }

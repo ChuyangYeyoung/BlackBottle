@@ -32,6 +32,6 @@ datadogLogger.setContextProperty('instance-id', instanceId);
 
 /**
  * TODO: make a logger wrapper that enables us also log to the console
- * https://linear.app/dydx/issue/OTE-718/[web]-default-to-console-methods-if-no-client-token-available
+ * https://linear.app/blackbottle/issue/OTE-718/[web]-default-to-console-methods-if-no-client-token-available
  */
 export const dd = datadogLogger;

@@ -42,12 +42,12 @@ async function inject(fileName) {
             : ''
         }),
         globalThis.amplitude.setOptOut(!1),
-        globalThis.addEventListener("dydx:track", function (e) {
+        globalThis.addEventListener("blackbottle:track", function (e) {
           var t = e.detail.eventType,
             d = e.detail.eventData;
           globalThis.amplitude.track(t, d);
         }),
-        globalThis.addEventListener("dydx:identify", function (e) {
+        globalThis.addEventListener("blackbottle:identify", function (e) {
           var t = e.detail.property,
             d = e.detail.propertyValue;
           if ("userId" === t) globalThis.amplitude.setUserId(d);

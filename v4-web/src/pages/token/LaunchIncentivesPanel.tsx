@@ -104,7 +104,7 @@ const September2025RewardsPanel = () => {
                     REBATE_PERCENT: CURRENT_SURGE_REWARDS_DETAILS.rebatePercent,
                   },
                 })}{' '}
-                <Link href="https://www.dydx.xyz/surge" isInline>
+                <Link href="https://www.blackbottle.xyz/surge" isInline>
                   {stringGetter({ key: STRING_KEYS.LEARN_MORE })}
                 </Link>
               </span>
@@ -132,16 +132,16 @@ const September2025RewardsPanel = () => {
 
 const Sept2025RewardsPanel = () => {
   const stringGetter = useStringGetter();
-  const { dydxAddress } = useAccounts();
-  const dydxPrice = useAppSelector(BonsaiCore.rewardParams.data).tokenPrice;
+  const { blackbottleAddress } = useAccounts();
+  const blackbottlePrice = useAppSelector(BonsaiCore.rewardParams.data).tokenPrice;
 
   const { data, isLoading } = useChaosLabsFeeLeaderboard({
-    address: dydxAddress,
+    address: blackbottleAddress,
   });
   const addressEntry = useMemo(
     () =>
-      data?.addressEntry ? addRewardsToLeaderboardEntry(data.addressEntry, dydxPrice) : undefined,
-    [data?.addressEntry, dydxPrice]
+      data?.addressEntry ? addRewardsToLeaderboardEntry(data.addressEntry, blackbottlePrice) : undefined,
+    [data?.addressEntry, blackbottlePrice]
   );
 
   return (
@@ -234,9 +234,9 @@ const LaunchIncentivesTitle = () => {
 
 const EstimatedRewards = () => {
   const stringGetter = useStringGetter();
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
 
-  const { data, isLoading } = useQueryChaosLabsIncentives({ dydxAddress });
+  const { data, isLoading } = useQueryChaosLabsIncentives({ blackbottleAddress });
   const { incentivePoints } = data ?? {};
 
   return (
@@ -291,7 +291,7 @@ const LaunchIncentivesContent = () => {
             dispatch(
               openDialog(
                 DialogTypes.ExternalLink({
-                  link: 'https://community.chaoslabs.xyz/dydx-v4/risk/leaderboard',
+                  link: 'https://community.chaoslabs.xyz/blackbottle-v4/risk/leaderboard',
                 })
               )
             );

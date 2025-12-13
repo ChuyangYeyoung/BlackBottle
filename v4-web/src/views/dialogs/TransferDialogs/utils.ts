@@ -41,7 +41,7 @@ export function getUserAddressesForRoute(
   route: RouteResponse,
   sourceAccount?: SourceAccount,
   nobleAddress?: string,
-  dydxAddress?: string,
+  blackbottleAddress?: string,
   osmosisAddress?: string,
   neutronAddress?: string,
   destinationAddress?: string // Withdraw Only: The final stop for the transfer
@@ -66,8 +66,8 @@ export function getUserAddressesForRoute(
         if (!neutronAddress) throw new Error('neutronAddress undefined');
         return { chainId, address: neutronAddress };
       case DYDX_DEPOSIT_CHAIN:
-        if (!dydxAddress) throw new Error('dydxAddress undefined');
-        return { chainId, address: dydxAddress };
+        if (!blackbottleAddress) throw new Error('blackbottleAddress undefined');
+        return { chainId, address: blackbottleAddress };
       default:
         if (
           (isEvmDepositChainId(chainId) && sourceAccount?.chain === WalletNetworkType.Evm) ||

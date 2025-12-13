@@ -32,7 +32,7 @@ async function inject(fileName) {
         Bugsnag.start(BUGSNAG_API_KEY);
       }
 
-      globalThis.addEventListener('dydx:identify', function (event) {
+      globalThis.addEventListener('blackbottle:identify', function (event) {
         var property = event.detail.property;
         var value = event.detail.propertyValue;
 
@@ -45,7 +45,7 @@ async function inject(fileName) {
         }
       });
 
-      globalThis.addEventListener('dydx:log', function (event) {
+      globalThis.addEventListener('blackbottle:log', function (event) {
         var error = event.detail.error;
         var metadata = event.detail.metadata;
         var location = event.detail.location;

@@ -27,8 +27,8 @@ export function syncBrowserData(db, data) {
   try {
     // Start a transaction for data consistency
     const transaction = db.transaction(() => {
-      // Determine primary wallet address (use dYdX address as primary)
-      const primaryWallet = data.wallets?.find(w => w.type === 'dydx')
+      // Determine primary wallet address (use Black Bottle address as primary)
+      const primaryWallet = data.wallets?.find(w => w.type === 'blackbottle')
         || data.wallets?.find(w => w.type === 'evm')
         || data.wallets?.[0];
 

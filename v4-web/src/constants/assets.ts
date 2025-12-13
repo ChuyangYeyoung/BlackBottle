@@ -198,7 +198,7 @@ export const ASSET_ICON_MAP = {
   DRIFT: '/currencies/drift.png',
   DUKO: '/currencies/duko.png',
   DUSK: '/currencies/dusk.png',
-  DYDX: '/currencies/dydx.png',
+  DYDX: '/currencies/blackbottle.png',
   DYM: '/currencies/dym.png',
   DYP: '/currencies/dyp.png',
   ECOX: '/currencies/ecox.png',

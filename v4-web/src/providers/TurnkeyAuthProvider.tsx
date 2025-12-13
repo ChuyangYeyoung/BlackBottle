@@ -70,7 +70,7 @@ const useTurnkeyAuthContext = () => {
   const indexerUrl = useAppSelector(selectIndexerUrl);
   const sourceAccount = useAppSelector(getSourceAccount);
   const { indexedDbClient, authIframeClient } = useTurnkey();
-  const { dydxAddress: connectedDydxAddress, setWalletFromSignature, selectWallet } = useAccounts();
+  const { blackbottleAddress: connectedDydxAddress, setWalletFromSignature, selectWallet } = useAccounts();
   const [searchParams, setSearchParams] = useSearchParams();
   const [emailToken, setEmailToken] = useState<string>();
   const [emailSignInError, setEmailSignInError] = useState<string>();
@@ -93,7 +93,7 @@ const useTurnkeyAuthContext = () => {
     mutationFn: async ({
       payload,
     }: {
-      payload: { dydxAddress: string; signature: string };
+      payload: { blackbottleAddress: string; signature: string };
     }): Promise<{ success: boolean }> => {
       const body = JSON.stringify(payload);
 
@@ -117,7 +117,7 @@ const useTurnkeyAuthContext = () => {
     onError: (error, variables) => {
       track(
         AnalyticsEvents.UploadAddressError({
-          dydxAddress: variables.payload.dydxAddress,
+          blackbottleAddress: variables.payload.blackbottleAddress,
           error: error.message,
         })
       );
@@ -131,10 +131,10 @@ const useTurnkeyAuthContext = () => {
   const uploadAddress = useCallback(
     async ({
       tkClient,
-      dydxAddress,
+      blackbottleAddress,
     }: {
       tkClient?: TurnkeyIndexedDbClient;
-      dydxAddress: string;
+      blackbottleAddress: string;
     }) => {
       try {
         logBonsaiInfo('TurnkeyOnboarding', 'Attempting to upload address');
@@ -143,7 +143,7 @@ const useTurnkeyAuthContext = () => {
           throw new Error('No tk client provided');
         }
 
-        const payload = await getUploadAddressPayload({ dydxAddress, tkClient });
+        const payload = await getUploadAddressPayload({ blackbottleAddress, tkClient });
         await sendUploadAddressRequest({ payload });
       } catch (error) {
         logBonsaiError('TurnkeyOnboarding', 'Error uploading address', { error });
@@ -194,7 +194,7 @@ const useTurnkeyAuthContext = () => {
         throw new Error(`Backend Error: ${errorMsg}`);
       }
 
-      if (response.dydxAddress === '') {
+      if (response.blackbottleAddress === '') {
         setIsNewTurnkeyUser(true);
         identify(AnalyticsUserProperties.IsNewUser(true));
       } else {
@@ -299,7 +299,7 @@ const useTurnkeyAuthContext = () => {
 
   const handleOauthResponse = useCallback(
     async ({ response }: { response: TurnkeyOAuthResponse }) => {
-      const { session, salt, dydxAddress: uploadedDydxAddress } = response;
+      const { session, salt, blackbottleAddress: uploadedDydxAddress } = response;
       if (session == null) {
         throw new Error('useTurnkeyAuth: No session found');
       } else if (salt == null) {
@@ -315,7 +315,7 @@ const useTurnkeyAuthContext = () => {
 
       if (uploadedDydxAddress === '' && derivedDydxAddress) {
         try {
-          await uploadAddress({ tkClient: indexedDbClient, dydxAddress: derivedDydxAddress });
+          await uploadAddress({ tkClient: indexedDbClient, blackbottleAddress: derivedDydxAddress });
         } catch (uploadAddressError) {
           if (
             uploadAddressError instanceof Error &&
@@ -336,7 +336,7 @@ const useTurnkeyAuthContext = () => {
 
   const handleEmailResponse = useCallback(
     async ({ response, userEmail }: { response: TurnkeyEmailResponse; userEmail: string }) => {
-      const { salt, organizationId, userId, dydxAddress: dydxAddressFromResponse } = response;
+      const { salt, organizationId, userId, blackbottleAddress: blackbottleAddressFromResponse } = response;
 
       if (!salt) {
         throw new Error('No salt provided in response');
@@ -356,7 +356,7 @@ const useTurnkeyAuthContext = () => {
           organizationId,
           userId,
           userEmail,
-          dydxAddress: dydxAddressFromResponse,
+          blackbottleAddress: blackbottleAddressFromResponse,
         })
       );
     },
@@ -380,7 +380,7 @@ const useTurnkeyAuthContext = () => {
           throw new Error('No public key found');
         }
 
-        const { organizationId, dydxAddress: uploadedDydxAddress } =
+        const { organizationId, blackbottleAddress: uploadedDydxAddress } =
           turnkeyEmailOnboardingData ?? {};
 
         if (!organizationId) {
@@ -408,7 +408,7 @@ const useTurnkeyAuthContext = () => {
 
         if (derivedDydxAddress && uploadedDydxAddress === '') {
           try {
-            await uploadAddress({ tkClient: indexedDbClient, dydxAddress: derivedDydxAddress });
+            await uploadAddress({ tkClient: indexedDbClient, blackbottleAddress: derivedDydxAddress });
           } catch (uploadAddressError) {
             if (
               uploadAddressError instanceof Error &&

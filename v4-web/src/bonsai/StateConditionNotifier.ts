@@ -41,9 +41,9 @@ export class StateConditionNotifier {
       const state = this.store.getState();
 
       // if address changes, clear all listeners
-      const dydxAddress = getUserWalletAddress(state);
-      if (dydxAddress !== this.currentDydxAddress) {
-        this.currentDydxAddress = dydxAddress;
+      const blackbottleAddress = getUserWalletAddress(state);
+      if (blackbottleAddress !== this.currentDydxAddress) {
+        this.currentDydxAddress = blackbottleAddress;
         this.clearAllConditions();
       }
 

@@ -47,7 +47,7 @@ export const CriteriaDialog = ({
   accountStats,
   userTier,
 }: DialogProps<CriteriaDialogProps>) => {
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
   const stringGetter = useStringGetter();
   const currentUserTierIdx = TIERS.findIndex((tier) => tier.tier === userTier);
   const currentUserTier = TIERS[currentUserTierIdx];
@@ -70,7 +70,7 @@ export const CriteriaDialog = ({
               label: stringGetter({ key: STRING_KEYS.AFFILIATE_TIER }),
               value: (
                 <span>
-                  {dydxAddress
+                  {blackbottleAddress
                     ? currentUserTier?.tier.toString().toUpperCase()
                     : stringGetter({ key: STRING_KEYS.NONE })}
                 </span>

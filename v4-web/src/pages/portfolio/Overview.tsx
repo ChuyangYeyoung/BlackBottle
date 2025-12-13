@@ -33,12 +33,12 @@ export const Overview = () => {
   const navigate = useNavigate();
 
   const { isTablet } = useBreakpoints();
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
 
   const dynamicConfigs = useAllStatsigDynamicConfigValues();
   const feedbackRequestWalletAddresses = dynamicConfigs[StatsigDynamicConfigs.dcHighestVolumeUsers];
   const shouldShowTelegramInvite =
-    dydxAddress && feedbackRequestWalletAddresses?.includes(dydxAddress);
+    blackbottleAddress && feedbackRequestWalletAddresses?.includes(blackbottleAddress);
   const affiliatesEnabled = useStatsigGateValue(StatsigFlags.ffEnableAffiliates);
 
   const handleViewUnopenedIsolatedOrders = useCallback(() => {

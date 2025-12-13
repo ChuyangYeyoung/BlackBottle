@@ -28,7 +28,7 @@ export const SkipTransferNotificationRow = ({
   isUnseen: boolean;
 }) => {
   const stringGetter = useStringGetter();
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
   const { type, status } = transfer;
 
   // Skip spot withdrawals for now
@@ -61,7 +61,7 @@ export const SkipTransferNotificationRow = ({
     : stringGetter({
         key: STRING_KEYS.TO,
         params: {
-          TO: <span tw="text-color-text-2">{truncateAddress(dydxAddress)}</span>,
+          TO: <span tw="text-color-text-2">{truncateAddress(blackbottleAddress)}</span>,
         },
       });
 

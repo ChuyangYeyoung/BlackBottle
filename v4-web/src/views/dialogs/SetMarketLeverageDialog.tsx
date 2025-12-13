@@ -43,7 +43,7 @@ export const SetMarketLeverageDialog = ({
   const dispatch = useAppDispatch();
 
   const { updateLeverage, subaccountNumber: crossSubaccountNumber } = useSubaccount();
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
 
   const marketData = useAppSelectorWithArgs(
     BonsaiHelpers.markets.selectMarketSummaryById,
@@ -176,8 +176,8 @@ export const SetMarketLeverageDialog = ({
         throw new Error('market data does not exist');
       }
 
-      if (dydxAddress === undefined) {
-        throw new Error('dydx address does not exist');
+      if (blackbottleAddress === undefined) {
+        throw new Error('blackbottle address does not exist');
       }
 
       const leverage = leverageBN.toNumber();
@@ -188,7 +188,7 @@ export const SetMarketLeverageDialog = ({
       // proper subaccount - updateLeverage will also update it the cross subaccount since
       // that is the source of truth for the leverage we show on the frontend.
       const result = await updateLeverage({
-        senderAddress: dydxAddress,
+        senderAddress: blackbottleAddress,
         subaccountNumber: subaccountNumber ?? crossSubaccountNumber,
         clobPairId: Number(clobPairId),
         leverage,

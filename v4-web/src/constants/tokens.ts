@@ -3,7 +3,7 @@ import { arbitrum, avalanche, base, mainnet, optimism, polygon } from 'viem/chai
 import { CosmosChainId } from './graz';
 import { SOLANA_MAINNET_ID } from './solana';
 
-// USDC has a assetId of 0 on the dYdX Chain
+// USDC has a assetId of 0 on the Black Bottle
 export const USDC_ASSET_ID = 0;
 
 export const USDC_ADDRESSES = {
@@ -19,7 +19,7 @@ export const USDC_ADDRESSES = {
   [CosmosChainId.Neutron]: 'ibc/B559A80D62249C8AA07A380E2A2BEA6E5CA9A6F079C912C3A9E9B494105E4F81',
 };
 
-export const DYDX_CHAIN_DYDX_DENOM = 'adydx';
+export const DYDX_CHAIN_DYDX_DENOM = 'ablackbottle';
 export const DYDX_CHAIN_USDC_DENOM =
   'ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5';
 

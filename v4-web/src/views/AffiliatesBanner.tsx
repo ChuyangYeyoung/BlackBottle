@@ -58,7 +58,7 @@ export const AffiliatesBanner = ({
               <ExternalLink
                 isInline
                 isAccent
-                href="https://www.dydx.xyz/blog/introducing-the-dydx-affiliate-booster-program"
+                href="https://www.blackbottle.xyz/blog/introducing-the-blackbottle-affiliate-booster-program"
               >
                 {stringGetter({ key: STRING_KEYS.HERE })}
               </ExternalLink>

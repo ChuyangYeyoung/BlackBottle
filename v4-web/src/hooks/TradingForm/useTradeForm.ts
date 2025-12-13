@@ -69,7 +69,7 @@ export const useTradeForm = ({
   const { connectionError } = useApiState();
   const { complianceState } = useComplianceState();
   const { updateLeverage } = useSubaccount();
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
 
   const { setUnIndexedClientId, clientId: unIndexedClientId } =
     useOnOrderIndexed(onLastOrderIndexed);
@@ -144,12 +144,12 @@ export const useTradeForm = ({
         !hasExistingPosition &&
         positionSubaccountNumber !== undefined &&
         clobPairId !== undefined &&
-        dydxAddress !== undefined &&
+        blackbottleAddress !== undefined &&
         rawSelectedLeverage !== undefined
       ) {
         // Fire and forget - don't await to keep order placement fast
         updateLeverage({
-          senderAddress: dydxAddress,
+          senderAddress: blackbottleAddress,
           subaccountNumber: positionSubaccountNumber,
           clobPairId,
           leverage: rawSelectedLeverage,

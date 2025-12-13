@@ -241,8 +241,8 @@ const useTurnkeyWalletContext = () => {
         dispatch(setSavedEncryptedSignature(encryptedSignature));
       }
 
-      const dydxAddress = await setWalletFromSignature(signature);
-      return dydxAddress;
+      const blackbottleAddress = await setWalletFromSignature(signature);
+      return blackbottleAddress;
     },
     [
       dispatch,
@@ -255,12 +255,12 @@ const useTurnkeyWalletContext = () => {
 
   const getUploadAddressPayload = useCallback(
     async ({
-      dydxAddress,
+      blackbottleAddress,
       tkClient,
     }: {
-      dydxAddress: string;
+      blackbottleAddress: string;
       tkClient?: TurnkeyIndexedDbClient;
-    }): Promise<{ dydxAddress: string; signature: string }> => {
+    }): Promise<{ blackbottleAddress: string; signature: string }> => {
       const selectedTurnkeyWallet = primaryTurnkeyWallet ?? (await getPrimaryUserWallets(tkClient));
 
       const ethAccount = selectedTurnkeyWallet?.accounts.find(
@@ -275,7 +275,7 @@ const useTurnkeyWalletContext = () => {
         throw new Error('TK client is not available');
       }
 
-      const payload = hashMessage(dydxAddress);
+      const payload = hashMessage(blackbottleAddress);
 
       const response = await tkClient.signRawPayload({
         signWith: ethAccount.address,
@@ -289,7 +289,7 @@ const useTurnkeyWalletContext = () => {
       // Combine rsv values with 0x prefix to constuct the signature
       const signature = `0x${response.r}${response.s}${response.v}`;
 
-      return { dydxAddress, signature };
+      return { blackbottleAddress, signature };
     },
     [primaryTurnkeyWallet, getPrimaryUserWallets]
   );

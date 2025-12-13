@@ -6,8 +6,8 @@ import {
 } from '@/constants/networks';
 
 export const useNetworks = (): MenuItem<DydxNetwork>[] =>
-  (AVAILABLE_ENVIRONMENTS.environments as DydxNetwork[]).map((dydxNetwork) => ({
-    key: dydxNetwork,
-    label: ENVIRONMENT_CONFIG_MAP[dydxNetwork].name,
-    value: dydxNetwork,
+  (AVAILABLE_ENVIRONMENTS.environments as DydxNetwork[]).map((blackbottleNetwork) => ({
+    key: blackbottleNetwork,
+    label: ENVIRONMENT_CONFIG_MAP[blackbottleNetwork].name,
+    value: blackbottleNetwork,
   }));

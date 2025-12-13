@@ -67,13 +67,13 @@ export type TurnkeyEmailOnboardingData = {
   organizationId: string;
   userId: string;
   userEmail: string;
-  dydxAddress?: string;
+  blackbottleAddress?: string;
 };
 
 export type TurnkeyOAuthResponse = {
   session?: string;
   salt?: string;
-  dydxAddress?: string;
+  blackbottleAddress?: string;
 };
 
 export type TurnkeyEmailResponse = {
@@ -81,5 +81,5 @@ export type TurnkeyEmailResponse = {
   userId?: string;
   organizationId?: string;
   salt?: string;
-  dydxAddress?: string;
+  blackbottleAddress?: string;
 };

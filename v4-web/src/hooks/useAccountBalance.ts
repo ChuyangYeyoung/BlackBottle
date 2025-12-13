@@ -53,7 +53,7 @@ export const useAccountBalance = ({
   usdcBalance: number;
   refetchQuery: (options?: RefetchOptions) => Promise<QueryObserverResult>;
 } => {
-  const { sourceAccount, dydxAccountGraz, dydxAddress } = useAccounts();
+  const { sourceAccount, blackbottleAccountGraz, blackbottleAddress } = useAccounts();
 
   const { chainTokenAmount: nativeTokenCoinBalance, usdcAmount: usdcCoinBalance } = useAppSelector(
     BonsaiCore.account.balances.data
@@ -111,16 +111,16 @@ export const useAccountBalance = ({
 
   const cosmosAddress = useMemo(() => {
     if (chainId === selectedDydxChainId) {
-      return dydxAddress;
+      return blackbottleAddress;
     }
     if (typeof chainId === 'string' && SUPPORTED_COSMOS_CHAINS.includes(chainId)) {
-      return dydxAccountGraz?.[chainId]?.bech32Address;
+      return blackbottleAccountGraz?.[chainId]?.bech32Address;
     }
     return undefined;
-  }, [chainId, dydxAccountGraz, dydxAddress, selectedDydxChainId]);
+  }, [chainId, blackbottleAccountGraz, blackbottleAddress, selectedDydxChainId]);
 
   const cosmosQueryFn = useCallback(async () => {
-    if (dydxAddress && cosmosAddress && addressOrDenom) {
+    if (blackbottleAddress && cosmosAddress && addressOrDenom) {
       const nobleChainId = getNobleChainId();
       const osmosisChainId = getOsmosisChainId();
       const neutronChainId = getNeutronChainId();
@@ -150,7 +150,7 @@ export const useAccountBalance = ({
     }
     return undefined;
   }, [
-    dydxAddress,
+    blackbottleAddress,
     cosmosAddress,
     addressOrDenom,
     usdcDecimals,
@@ -163,7 +163,7 @@ export const useAccountBalance = ({
   ]);
 
   const cosmosQuery = useQuery({
-    enabled: Boolean(isCosmosChain && dydxAddress && cosmosAddress && addressOrDenom),
+    enabled: Boolean(isCosmosChain && blackbottleAddress && cosmosAddress && addressOrDenom),
     queryKey: ['accountBalances', chainId, cosmosAddress, addressOrDenom],
     queryFn: cosmosQueryFn,
     refetchOnWindowFocus: false,
@@ -215,7 +215,7 @@ export const useAccountBalance = ({
   }, [solAddress, addressOrDenom, connection]);
 
   const solanaQuery = useQuery({
-    enabled: Boolean(isSolanaChain && dydxAddress && solAddress && addressOrDenom),
+    enabled: Boolean(isSolanaChain && blackbottleAddress && solAddress && addressOrDenom),
     queryKey: ['accountBalancesSol', chainId, solAddress, addressOrDenom],
     queryFn: solanaQueryFn,
     refetchOnWindowFocus: false,

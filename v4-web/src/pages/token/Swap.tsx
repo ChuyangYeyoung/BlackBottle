@@ -24,7 +24,7 @@ import { useStringGetter } from '@/hooks/useStringGetter';
 
 import CardHolderIcon from '@/icons/card-holder.svg';
 import CaretDown from '@/icons/caret-down.svg';
-import DydxLogo from '@/icons/dydx-protocol.svg';
+import DydxLogo from '@/icons/blackbottle-protocol.svg';
 import ExchangeIcon from '@/icons/exchange.svg';
 import GasIcon from '@/icons/gas.svg';
 import UsdcLogo from '@/icons/usdc-inverted.svg';
@@ -49,11 +49,11 @@ import { escapeRegExp, numericValueRegex } from '@/lib/inputUtils';
 import { BIG_NUMBERS, MustBigNumber } from '@/lib/numbers';
 
 type SwapMode = 'exact-in' | 'exact-out';
-function otherToken(currToken: 'usdc' | 'dydx') {
-  return currToken === 'usdc' ? 'dydx' : 'usdc';
+function otherToken(currToken: 'usdc' | 'blackbottle') {
+  return currToken === 'usdc' ? 'blackbottle' : 'usdc';
 }
 
-function getTokenLabel(token: 'usdc' | 'dydx') {
+function getTokenLabel(token: 'usdc' | 'blackbottle') {
   return token === 'usdc' ? 'USDC' : 'DYDX';
 }
 
@@ -67,7 +67,7 @@ export const Swap = () => {
   const onboardingState = useAppSelector(getOnboardingState);
   const { chainTokenAmount: nativeTokenBalance } = useAppSelector(BonsaiCore.account.balances.data);
 
-  const [inputToken, setInputToken] = useState<'dydx' | 'usdc'>('usdc');
+  const [inputToken, setInputToken] = useState<'blackbottle' | 'usdc'>('usdc');
   const [mode, setMode] = useState<SwapMode>('exact-in');
   const [amount, setAmount] = useState('');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -79,7 +79,7 @@ export const Swap = () => {
       Number(nativeTokenBalance ?? 0) - AMOUNT_RESERVED_FOR_GAS_DYDX,
       0
     );
-    const dydx = {
+    const blackbottle = {
       rawBalanceBigInt: parseUnits(`${usableDydxBalance}`, DYDX_DECIMALS),
       formatted: MustBigNumber(usableDydxBalance).toFormat(2, BigNumber.ROUND_DOWN),
     };
@@ -93,13 +93,13 @@ export const Swap = () => {
     };
 
     return {
-      inputBalance: inputToken === 'usdc' ? usdc : dydx,
-      outputBalance: inputToken === 'usdc' ? dydx : usdc,
+      inputBalance: inputToken === 'usdc' ? usdc : blackbottle,
+      outputBalance: inputToken === 'usdc' ? blackbottle : usdc,
     };
   }, [nativeTokenBalance, parentSubaccountUsdcBalance, inputToken]);
 
   const onSwitchTokens = () => {
-    setInputToken(inputToken === 'usdc' ? 'dydx' : 'usdc');
+    setInputToken(inputToken === 'usdc' ? 'blackbottle' : 'usdc');
     setAmount('');
   };
 
@@ -132,7 +132,7 @@ export const Swap = () => {
   } = useSwapQuote(inputToken, debouncedAmount, mode);
 
   // Exchange Rate Quote
-  const { data: priceQuote } = useSwapQuote('dydx', '1', 'exact-in');
+  const { data: priceQuote } = useSwapQuote('blackbottle', '1', 'exact-in');
 
   const hasSufficientBalance = useMemo(() => {
     if (!quote || !amount) return true;
@@ -150,11 +150,11 @@ export const Swap = () => {
         BigInt(inputToken === 'usdc' ? quote.amountIn : quote.amountOut),
         USDC_DECIMALS
       );
-      const dydxAmount = formatUnits(
-        BigInt(inputToken === 'dydx' ? quote.amountIn : quote.amountOut),
+      const blackbottleAmount = formatUnits(
+        BigInt(inputToken === 'blackbottle' ? quote.amountIn : quote.amountOut),
         DYDX_DECIMALS
       );
-      return Number(usdcAmount) / Number(dydxAmount);
+      return Number(usdcAmount) / Number(blackbottleAmount);
     }
     if (!priceQuote) return undefined;
 
@@ -164,7 +164,7 @@ export const Swap = () => {
   const quotedAmount = useMemo(() => {
     if (!quote || !amount) return '';
     const quotedToken = mode === 'exact-in' ? otherToken(inputToken) : inputToken;
-    const quotedTokenDecimals = quotedToken === 'dydx' ? DYDX_DECIMALS : USDC_DECIMALS;
+    const quotedTokenDecimals = quotedToken === 'blackbottle' ? DYDX_DECIMALS : USDC_DECIMALS;
     const quotedTokenAmount = mode === 'exact-in' ? quote.amountOut : quote.amountIn;
     const formattedQuotedTokenAmount = formatUnits(BigInt(quotedTokenAmount), quotedTokenDecimals);
     return Number(formattedQuotedTokenAmount).toFixed(2);
@@ -414,14 +414,14 @@ const ExchangeRate = ({
 }: {
   usdcPerDydx?: number;
   priceImpact?: number;
-  selectedToken: 'usdc' | 'dydx';
+  selectedToken: 'usdc' | 'blackbottle';
   gas: BigNumber;
 }) => {
   const stringGetter = useStringGetter();
   const exchangeRate = useMemo(() => {
-    return selectedToken === 'dydx' ? usdcPerDydx : 1 / (usdcPerDydx ?? 1);
+    return selectedToken === 'blackbottle' ? usdcPerDydx : 1 / (usdcPerDydx ?? 1);
   }, [selectedToken, usdcPerDydx]);
-  const nonSelectedToken = selectedToken === 'dydx' ? 'usdc' : 'dydx';
+  const nonSelectedToken = selectedToken === 'blackbottle' ? 'usdc' : 'blackbottle';
 
   return !usdcPerDydx ? (
     <LoadingDots />
@@ -484,7 +484,7 @@ const $SwapButton = styled(Button)`
   transform: translate(-50%, -50%);
 `;
 
-const TokenLogo = ({ token }: { token: 'usdc' | 'dydx' }) => {
+const TokenLogo = ({ token }: { token: 'usdc' | 'blackbottle' }) => {
   if (token === 'usdc') {
     return (
       <div tw="relative h-1.5 w-1.5">

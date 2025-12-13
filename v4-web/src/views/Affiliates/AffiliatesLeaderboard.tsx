@@ -76,7 +76,7 @@ const AffiliatesFilter = ({
 export const AffiliatesLeaderboard = ({ className }: { className?: string }) => {
   const { isTablet } = useBreakpoints();
   const stringGetter = useStringGetter();
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
   const affiliatesFilters = Object.values(AffiliateEpochsFilter);
   const [epochFilter, setEpochFilter] = useState<AffiliateEpochsFilter>(AffiliateEpochsFilter.ALL);
   const { data: affiliates } = useAffiliatesLeaderboard();
@@ -91,7 +91,7 @@ export const AffiliatesLeaderboard = ({ className }: { className?: string }) => 
               <TableCell>
                 {rank}
 
-                {affiliateAddress && affiliateAddress === dydxAddress && (
+                {affiliateAddress && affiliateAddress === blackbottleAddress && (
                   <Tag tw="bg-color-accent">{stringGetter({ key: STRING_KEYS.YOU })}</Tag>
                 )}
               </TableCell>
@@ -142,7 +142,7 @@ export const AffiliatesLeaderboard = ({ className }: { className?: string }) => 
           renderCell: ({ rank, affiliateAddress }) => (
             <TableCell tw="text-color-text-1 font-base-medium">
               {rank}
-              {affiliateAddress && affiliateAddress === dydxAddress && (
+              {affiliateAddress && affiliateAddress === blackbottleAddress && (
                 <Tag tw="bg-color-accent">{stringGetter({ key: STRING_KEYS.YOU })}</Tag>
               )}
             </TableCell>

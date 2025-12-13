@@ -6,7 +6,7 @@ import { useAppSelector } from '@/state/appTypes';
 interface EnvironmentConfig {
   name: string;
   ethereumChainId: string;
-  dydxChainId: string;
+  blackbottleChainId: string;
   chainName: string;
   chainLogo: string;
   deployerName: string;

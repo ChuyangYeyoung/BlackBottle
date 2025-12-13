@@ -25,23 +25,23 @@ export type DepositStatusResponse = {
 };
 
 export const useDepositStatus = ({ enabled }: { enabled: boolean } = { enabled: false }) => {
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
   const { depositAddresses } = useDepositAddress();
   const indexerUrl = useAppSelector(selectIndexerUrl);
 
   const canQueryForDepositStatus =
-    enabled && !!dydxAddress && Boolean(indexerUrl) && !!depositAddresses;
+    enabled && !!blackbottleAddress && Boolean(indexerUrl) && !!depositAddresses;
 
   return useQuery({
     enabled: canQueryForDepositStatus,
-    queryKey: ['depositStatus', dydxAddress, ...Object.values(depositAddresses ?? {})],
+    queryKey: ['depositStatus', blackbottleAddress, ...Object.values(depositAddresses ?? {})],
     queryFn: async (): Promise<DepositStatusResponse> => {
-      if (!indexerUrl || !dydxAddress) {
-        return { address: dydxAddress ?? '', deposits: { results: [], total: 0 } };
+      if (!indexerUrl || !blackbottleAddress) {
+        return { address: blackbottleAddress ?? '', deposits: { results: [], total: 0 } };
       }
 
       try {
-        const response = await fetch(`${indexerUrl}/v4/bridging/getDeposits/${dydxAddress}`, {
+        const response = await fetch(`${indexerUrl}/v4/bridging/getDeposits/${blackbottleAddress}`, {
           method: 'GET',
         });
 
@@ -52,7 +52,7 @@ export const useDepositStatus = ({ enabled }: { enabled: boolean } = { enabled: 
         return await response.json();
       } catch (error) {
         logBonsaiError('useDepositStatus', 'Failed to fetch automated deposits', { error });
-        return { address: dydxAddress, deposits: { results: [], total: 0 } };
+        return { address: blackbottleAddress, deposits: { results: [], total: 0 } };
       }
     },
     refetchInterval: 5 * timeUnits.second, // Poll every 5 seconds

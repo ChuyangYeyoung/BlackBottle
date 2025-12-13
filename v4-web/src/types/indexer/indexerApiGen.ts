@@ -2275,7 +2275,7 @@ export interface IndexerTurnkeyAuthResponse {
    * @type {string}
    * @memberof TurnkeyAuthResponse
    */
-  dydxAddress?: string | null;
+  blackbottleAddress?: string | null;
   /**
    *
    * @type {string}
@@ -2330,7 +2330,7 @@ export interface IndexerTurnkeyUploadAddressBody {
    * @type {string}
    * @memberof TurnkeyUploadAddressBody
    */
-  dydxAddress: string;
+  blackbottleAddress: string;
 }
 /**
  *

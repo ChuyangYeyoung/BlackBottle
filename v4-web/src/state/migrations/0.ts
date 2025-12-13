@@ -13,9 +13,9 @@ export function migration0(state: PersistedState | undefined): V0State {
   }
 
   const oldTvChartConfig = parseStorageItem<object>(
-    localStorage.getItem('dydx.TradingViewChartConfig')
+    localStorage.getItem('blackbottle.TradingViewChartConfig')
   );
-  localStorage.removeItem('dydx.TradingViewChartConfig');
+  localStorage.removeItem('blackbottle.TradingViewChartConfig');
 
   return {
     ...state,

@@ -34,7 +34,7 @@ export const ConfirmPendingDepositDialog = ({
 }: DialogProps<ConfirmPendingDepositDialogProps>) => {
   const [isLoading, setIsLoading] = useState(false);
   const selectedDydxChainId = useAppSelector(getSelectedDydxChainId);
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
 
   const stringGetter = useStringGetter();
 
@@ -69,7 +69,7 @@ export const ConfirmPendingDepositDialog = ({
           isAutoRebalance: false,
         })
       );
-      if (tx && dydxAddress) {
+      if (tx && blackbottleAddress) {
         await refetchQuery();
 
         setIsOpen(false);

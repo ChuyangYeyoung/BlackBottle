@@ -65,7 +65,7 @@ const useAccountsContext = () => {
     publicClientWagmi,
     getCosmosOfflineSigner,
     isConnectedGraz,
-    dydxAccountGraz,
+    blackbottleAccountGraz,
   } = useWalletConnection();
 
   const hasSubAccount = useAppSelector(BonsaiCore.account.parentSubaccountSummary.data) != null;
@@ -103,14 +103,14 @@ const useAccountsContext = () => {
     return signature;
   };
 
-  // dYdXClient Onboarding & Account Helpers
+  // Black BottleClient Onboarding & Account Helpers
   const { indexerClient, getWalletFromSignature } = useDydxClient();
-  // dYdX subaccounts
-  const [dydxSubaccounts, setDydxSubaccounts] = useState<Subaccount[] | undefined>();
+  // Black Bottle subaccounts
+  const [blackbottleSubaccounts, setDydxSubaccounts] = useState<Subaccount[] | undefined>();
 
-  const getSubaccounts = async ({ dydxAddress }: { dydxAddress: DydxAddress }) => {
+  const getSubaccounts = async ({ blackbottleAddress }: { blackbottleAddress: DydxAddress }) => {
     try {
-      const response = await indexerClient?.account.getSubaccounts(dydxAddress);
+      const response = await indexerClient?.account.getSubaccounts(blackbottleAddress);
       setDydxSubaccounts(response?.subaccounts);
       return response?.subaccounts ?? [];
     } catch (error) {
@@ -124,7 +124,7 @@ const useAccountsContext = () => {
     }
   };
 
-  // dYdX wallet / onboarding state
+  // Black Bottle wallet / onboarding state
   const [localDydxWallet, setLocalDydxWallet] = useState<LocalWallet>();
   const [localNobleWallet, setLocalNobleWallet] = useState<LocalWallet>();
   const [localOsmosisWallet, setLocalOsmosisWallet] = useState<LocalWallet>();
@@ -133,9 +133,9 @@ const useAccountsContext = () => {
 
   const [hdKey, setHdKey] = useState<PrivateInformation>();
 
-  const dydxAccounts = useMemo(() => localDydxWallet?.accounts, [localDydxWallet]);
+  const blackbottleAccounts = useMemo(() => localDydxWallet?.accounts, [localDydxWallet]);
 
-  const dydxAddress = useMemo(
+  const blackbottleAddress = useMemo(
     () => localDydxWallet?.address as DydxAddress | undefined,
     [localDydxWallet]
   );
@@ -150,8 +150,8 @@ const useAccountsContext = () => {
   );
 
   useEffect(() => {
-    dispatch(setLocalWallet({ address: dydxAddress, solanaAddress, subaccountNumber: 0 }));
-  }, [dispatch, dydxAddress, solanaAddress]);
+    dispatch(setLocalWallet({ address: blackbottleAddress, solanaAddress, subaccountNumber: 0 }));
+  }, [dispatch, blackbottleAddress, solanaAddress]);
 
   const nobleAddress = localNobleWallet?.address;
   const osmosisAddress = localOsmosisWallet?.address;
@@ -208,7 +208,7 @@ const useAccountsContext = () => {
       }
 
       /**
-       * Handle Test (dYdX), Cosmos (dYdX), Evm, and Solana wallets
+       * Handle Test (Black Bottle), Cosmos (Black Bottle), Evm, and Solana wallets
        */
       if (sourceAccount.walletInfo?.connectorType === ConnectorType.Test) {
         dispatch(setOnboardingState(OnboardingState.WalletConnected));
@@ -218,10 +218,10 @@ const useAccountsContext = () => {
         dispatch(setOnboardingState(OnboardingState.AccountConnected));
       } else if (sourceAccount.chain === WalletNetworkType.Cosmos && isConnectedGraz) {
         try {
-          const dydxOfflineSigner = await getCosmosOfflineSigner(selectedDydxChainId);
-          if (dydxOfflineSigner) {
+          const blackbottleOfflineSigner = await getCosmosOfflineSigner(selectedDydxChainId);
+          if (blackbottleOfflineSigner) {
             setLocalDydxWallet(
-              await (await getLazyLocalWallet()).fromOfflineSigner(dydxOfflineSigner)
+              await (await getLazyLocalWallet()).fromOfflineSigner(blackbottleOfflineSigner)
             );
             dispatch(setOnboardingState(OnboardingState.AccountConnected));
           }
@@ -343,14 +343,14 @@ const useAccountsContext = () => {
     setCosmosWallets();
   }, [hdKey?.mnemonic, getCosmosOfflineSigner]);
 
-  // clear subaccounts when no dydxAddress is set
+  // clear subaccounts when no blackbottleAddress is set
   useEffect(() => {
     (async () => {
-      if (!dydxAddress) {
+      if (!blackbottleAddress) {
         setDydxSubaccounts(undefined);
       }
     })();
-  }, [dydxAddress]);
+  }, [blackbottleAddress]);
 
   // Onboarding conditions
   const [hasAcknowledgedTerms, saveHasAcknowledgedTerms] = useLocalStorage({
@@ -368,7 +368,7 @@ const useAccountsContext = () => {
   }, [dispatch, hasAcknowledgedTerms]);
 
   useEffect(() => {
-    const hasPreviousTransactions = Boolean(dydxSubaccounts?.length);
+    const hasPreviousTransactions = Boolean(blackbottleSubaccounts?.length);
 
     dispatch(
       setOnboardingGuard({
@@ -376,7 +376,7 @@ const useAccountsContext = () => {
         value: hasPreviousTransactions,
       })
     );
-  }, [dispatch, dydxSubaccounts]);
+  }, [dispatch, blackbottleSubaccounts]);
 
   // Disconnect wallet / accounts
   const disconnectLocalDydxWallet = () => {
@@ -416,11 +416,11 @@ const useAccountsContext = () => {
 
     setWalletFromSignature,
 
-    // dYdX accounts
+    // Black Bottle accounts
     hdKey,
     localDydxWallet,
-    dydxAccounts,
-    dydxAddress,
+    blackbottleAccounts,
+    blackbottleAddress,
 
     nobleAddress,
     osmosisAddress,
@@ -437,10 +437,10 @@ const useAccountsContext = () => {
     // Disconnect wallet / accounts
     disconnect,
 
-    // dydxClient Account methods
+    // blackbottleClient Account methods
     getSubaccounts,
 
     // cosmos account
-    dydxAccountGraz,
+    blackbottleAccountGraz,
   };
 };

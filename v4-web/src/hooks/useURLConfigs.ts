@@ -3,7 +3,7 @@ import { LINKS_CONFIG_MAP } from '@/constants/networks';
 import { getSelectedDydxChainId } from '@/state/appSelectors';
 import { useAppSelector } from '@/state/appTypes';
 
-const FALLBACK_URL = 'https://help.dydx.exchange/';
+const FALLBACK_URL = 'https://help.blackbottle.trade/';
 
 export interface LinksConfigs {
   accountExportLearnMore?: string;
@@ -47,7 +47,7 @@ export interface LinksConfigs {
   discoveryProgram?: string;
   getInTouch?: string;
   deployerTermsAndConditions?: string;
-  dydxLearnMore?: string;
+  blackbottleLearnMore?: string;
   affiliateProgram?: string;
   affiliateProgramFaq?: string;
   affiliateProgramSupportEmail?: string;
@@ -102,7 +102,7 @@ export const useURLConfigs = (): LinksConfigs => {
     discoveryProgram: linksConfigs.discoveryProgram,
     getInTouch: linksConfigs.getInTouch,
     deployerTermsAndConditions: linksConfigs.deployerTermsAndConditions,
-    dydxLearnMore: linksConfigs.dydxLearnMore ?? FALLBACK_URL,
+    blackbottleLearnMore: linksConfigs.blackbottleLearnMore ?? FALLBACK_URL,
     affiliateProgram: linksConfigs.affiliateProgram,
     affiliateProgramFaq: linksConfigs.affiliateProgramFaq,
     affiliateProgramSupportEmail: linksConfigs.affiliateProgramSupportEmail,

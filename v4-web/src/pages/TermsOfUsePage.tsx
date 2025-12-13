@@ -451,7 +451,7 @@ const TermsOfUsePage = () => (
           certain open-source components and that your use of the Services is subject to, and you
           will comply with, any applicable open-source licenses and terms of use that govern any
           such open-source components, including terms of use with respect to v4 software, available
-          at https://dydx.exchange/legal (collectively, the “Open-Source Licenses”). Without
+          at https://blackbottle.trade/legal (collectively, the “Open-Source Licenses”). Without
           limiting the generality of the foregoing, you may not (a) resell, lease, lend, share,
           distribute, or otherwise permit any third party to use the Services; (b) use the Services
           for time-sharing or service bureau purposes; or (c) otherwise use the Services in a manner

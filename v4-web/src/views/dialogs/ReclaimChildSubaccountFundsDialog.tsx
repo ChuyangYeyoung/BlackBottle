@@ -31,7 +31,7 @@ export const ReclaimChildSubaccountFundsDialog = ({
   setIsOpen,
 }: DialogProps<WithdrawFromSubaccountDialogProps>) => {
   const [isLoading, setIsLoading] = useState(false);
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
   const notify = useCustomNotification();
   const stringGetter = useStringGetter();
   const { transferBetweenSubaccounts } = useSubaccount();
@@ -46,25 +46,25 @@ export const ReclaimChildSubaccountFundsDialog = ({
   const handleReclaim = async () => {
     setIsLoading(true);
     try {
-      if (reclaimableAmount.eq(0) || reclaimableChildSubaccounts == null || dydxAddress == null) {
+      if (reclaimableAmount.eq(0) || reclaimableChildSubaccounts == null || blackbottleAddress == null) {
         return;
       }
 
       logBonsaiInfo('ReclaimChildSubaccountFundsDialog', 'Reclaiming funds', {
         reclaimableChildSubaccounts,
         reclaimableAmount,
-        dydxAddress,
+        blackbottleAddress,
       });
 
       await Promise.all(
         reclaimableChildSubaccounts.map(({ subaccountNumber, usdcBalance }) =>
           transferBetweenSubaccounts(
             {
-              senderAddress: dydxAddress,
+              senderAddress: blackbottleAddress,
               subaccountNumber,
               destinationSubaccountNumber: 0,
               amount: usdcBalance.toString(),
-              destinationAddress: dydxAddress,
+              destinationAddress: blackbottleAddress,
             },
             TransactionMemo.reclaimIsolatedMarginFunds
           )

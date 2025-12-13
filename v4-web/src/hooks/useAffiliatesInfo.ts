@@ -22,11 +22,11 @@ type AffiliatesMetadata = {
   isAffiliate: boolean;
 };
 
-export const useAffiliateMetadata = (dydxAddress?: string) => {
+export const useAffiliateMetadata = (blackbottleAddress?: string) => {
   const { compositeClient, getAffiliateInfo } = useDydxClient();
 
   const fetchAffiliateMetadata = async () => {
-    if (!compositeClient || !dydxAddress) {
+    if (!compositeClient || !blackbottleAddress) {
       return {};
     }
     const metadataEndpoint = `${compositeClient.indexerClient.config.restEndpoint}/v4/affiliates/metadata`;
@@ -34,19 +34,19 @@ export const useAffiliateMetadata = (dydxAddress?: string) => {
 
     try {
       const [metaDataResponse, totalVolumeResponse, affiliateInfo] = await Promise.all([
-        fetch(`${metadataEndpoint}?address=${encodeURIComponent(dydxAddress)}`, {
+        fetch(`${metadataEndpoint}?address=${encodeURIComponent(blackbottleAddress)}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
         }),
-        fetch(`${totalVolumeEndpoint}?address=${encodeURIComponent(dydxAddress)}`, {
+        fetch(`${totalVolumeEndpoint}?address=${encodeURIComponent(blackbottleAddress)}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
         }),
-        getAffiliateInfo(dydxAddress),
+        getAffiliateInfo(blackbottleAddress),
       ]);
 
       const data: AffiliatesMetadata | undefined = await metaDataResponse.json();
@@ -61,9 +61,9 @@ export const useAffiliateMetadata = (dydxAddress?: string) => {
   };
 
   const affiliateMetadataQuery = useQuery({
-    queryKey: ['affiliateMetadata', dydxAddress],
+    queryKey: ['affiliateMetadata', blackbottleAddress],
     queryFn: fetchAffiliateMetadata,
-    enabled: Boolean(compositeClient && dydxAddress),
+    enabled: Boolean(compositeClient && blackbottleAddress),
     staleTime: 5 * timeUnits.minute,
     refetchOnMount: 'always',
   });
@@ -71,13 +71,13 @@ export const useAffiliateMetadata = (dydxAddress?: string) => {
   return affiliateMetadataQuery;
 };
 
-const useAffiliatesStatus = (dydxAddress?: string) => {
+const useAffiliatesStatus = (blackbottleAddress?: string) => {
   const { compositeClient } = useDydxClient();
 
   const fetchAccountStats = async () => {
-    if (!dydxAddress || !compositeClient) return undefined;
+    if (!blackbottleAddress || !compositeClient) return undefined;
 
-    const endpoint = `${compositeClient.indexerClient.config.restEndpoint}/v4/affiliates/snapshot?addressFilter=${encodeURIComponent(dydxAddress)}`;
+    const endpoint = `${compositeClient.indexerClient.config.restEndpoint}/v4/affiliates/snapshot?addressFilter=${encodeURIComponent(blackbottleAddress)}`;
 
     try {
       const res = await safeFetch(endpoint, {
@@ -97,9 +97,9 @@ const useAffiliatesStatus = (dydxAddress?: string) => {
   };
 
   const affiliateStatsQuery = useQuery({
-    queryKey: ['accountStats', dydxAddress],
+    queryKey: ['accountStats', blackbottleAddress],
     queryFn: fetchAccountStats,
-    enabled: Boolean(compositeClient && dydxAddress),
+    enabled: Boolean(compositeClient && blackbottleAddress),
     staleTime: 5 * timeUnits.minute,
   });
 
@@ -133,9 +133,9 @@ const useAffiliateMaxEarning = () => {
   return affiliateMaxEarningQuery;
 };
 
-export const useAffiliatesInfo = (dydxAddress?: string) => {
-  const affiliateMetadataQuery = useAffiliateMetadata(dydxAddress);
-  const affiliateStatsQuery = useAffiliatesStatus(dydxAddress);
+export const useAffiliatesInfo = (blackbottleAddress?: string) => {
+  const affiliateMetadataQuery = useAffiliateMetadata(blackbottleAddress);
+  const affiliateStatsQuery = useAffiliatesStatus(blackbottleAddress);
   const affiliateMaxEarningQuery = useAffiliateMaxEarning();
 
   return {

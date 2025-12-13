@@ -23,7 +23,7 @@ import { getSelectedLocale } from '@/state/localizationSelectors';
 import { updateChartConfig } from '@/state/tradingView';
 import { getTvChartConfig } from '@/state/tradingViewSelectors';
 
-import { getDydxDatafeed } from '@/lib/tradingView/dydxfeed';
+import { getDydxDatafeed } from '@/lib/tradingView/blackbottlefeed';
 import { getSavedResolution, getWidgetOptions, getWidgetOverrides } from '@/lib/tradingView/utils';
 import { orEmptyObj } from '@/lib/typeUtils';
 

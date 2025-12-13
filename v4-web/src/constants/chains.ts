@@ -99,4 +99,4 @@ export const NEAR_INSTANT_DEPOSIT_CHAINS = [
   avalanche.id.toString(),
 ];
 
-export const DYDX_DEPOSIT_CHAIN = 'dydx-mainnet-1';
+export const DYDX_DEPOSIT_CHAIN = 'blackbottle-mainnet-1';

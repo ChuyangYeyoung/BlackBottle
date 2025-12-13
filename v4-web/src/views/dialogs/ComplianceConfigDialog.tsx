@@ -105,18 +105,18 @@ export const ComplianceConfigDialog = ({ setIsOpen }: DialogProps<ComplianceConf
   const preferenceItems = usePreferenceMenu();
   const complianceStatus = useAppSelector(getComplianceStatus);
 
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
   const { compositeClient } = useDydxClient();
 
   const submit = async () => {
     const endpoint = `${compositeClient?.indexerClient.config.restEndpoint}/v4/compliance/setStatus`;
-    if (dydxAddress) {
+    if (blackbottleAddress) {
       await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ address: dydxAddress, status: complianceStatus }),
+        body: JSON.stringify({ address: blackbottleAddress, status: complianceStatus }),
       });
     }
   };

@@ -52,7 +52,7 @@ export type EvmDerivedAddresses = {
   version?: string;
   [EvmAddress: EvmAddress]: {
     encryptedSignature?: string;
-    dydxAddress?: DydxAddress;
+    blackbottleAddress?: DydxAddress;
   };
 };
 
@@ -62,7 +62,7 @@ export type SolDerivedAddresses = {
   SolAddress,
   {
     encryptedSignature?: string;
-    dydxAddress?: DydxAddress;
+    blackbottleAddress?: DydxAddress;
   }
 >;
 

@@ -1,12 +1,12 @@
 export function pointsToEstimatedDydxRewards(
   points?: number,
   totalPoints?: number,
-  dydxPrice?: number,
+  blackbottlePrice?: number,
   totalUsdRewards?: number
 ) {
-  if (!totalPoints || !dydxPrice || !totalUsdRewards || points === undefined) return '-';
+  if (!totalPoints || !blackbottlePrice || !totalUsdRewards || points === undefined) return '-';
   const usdRewards = (points / totalPoints) * totalUsdRewards;
-  return usdRewards / dydxPrice;
+  return usdRewards / blackbottlePrice;
 }
 
 export function pointsToEstimatedDollarRewards(

@@ -36,7 +36,7 @@ const SLEEP_TIME = timeUnits.second * 30;
 const INVALIDATION_SLEEP_TIME = timeUnits.second * 10;
 
 /**
- * @description Lifecycle for sweeping all USDC on Noble to dYdX chain. This is used to sweep deposits that only land within Noble.
+ * @description Lifecycle for sweeping all USDC on Noble to Black Bottle chain. This is used to sweep deposits that only land within Noble.
  */
 export function setUpNobleBalanceSweepLifecycle(store: RootStore) {
   const accountAndBalanceSelector = createAppSelector(
@@ -60,7 +60,7 @@ export function setUpNobleBalanceSweepLifecycle(store: RootStore) {
     selector: accountAndBalanceSelector,
     handle: (
       { nobleClientRpcUrl, tokenConfig, chainId },
-      { dydxAddress, nobleLocalWallet, sourceAccount },
+      { blackbottleAddress, nobleLocalWallet, sourceAccount },
       { balance, hasNonExpiredPendingWithdraws }
     ) => {
       async function sweepNobleBalance() {
@@ -73,7 +73,7 @@ export function setUpNobleBalanceSweepLifecycle(store: RootStore) {
           return;
         }
 
-        if (nobleLocalWallet.address == null || dydxAddress == null) {
+        if (nobleLocalWallet.address == null || blackbottleAddress == null) {
           return;
         }
 
@@ -103,7 +103,7 @@ export function setUpNobleBalanceSweepLifecycle(store: RootStore) {
           destAssetDenom: tokenConfig.usdc.denom,
           destAssetChainId: chainId,
           chainIdsToAddresses: {
-            [chainId]: dydxAddress,
+            [chainId]: blackbottleAddress,
             'noble-1': nobleLocalWallet.address,
           },
           amountIn,
@@ -131,7 +131,7 @@ export function setUpNobleBalanceSweepLifecycle(store: RootStore) {
           },
         };
 
-        logBonsaiInfo('nobleBalanceSweepLifecycle', 'simulate sweep USDC from Noble to dYdX', {
+        logBonsaiInfo('nobleBalanceSweepLifecycle', 'simulate sweep USDC from Noble to Black Bottle', {
           balance,
           balanceToSweep: balanceToSweep.toString(),
         });
@@ -153,7 +153,7 @@ export function setUpNobleBalanceSweepLifecycle(store: RootStore) {
 
           logBonsaiInfo(
             'nobleBalanceSweepLifecycle',
-            'send transaction to sweep USDC from Noble to dYdX',
+            'send transaction to sweep USDC from Noble to Black Bottle',
             {
               balance,
               fee,
@@ -199,7 +199,7 @@ export function setUpNobleBalanceSweepLifecycle(store: RootStore) {
 
           logBonsaiError(
             'nobleBalanceSweepLifecycle',
-            'error sweeping noble balance to dYdX address',
+            'error sweeping noble balance to Black Bottle address',
             {
               error,
             }

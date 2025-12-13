@@ -5,7 +5,7 @@
  * from localStorage and Redux persist to the local API.
  *
  * Usage:
- * 1. Open the dYdX web app in your browser
+ * 1. Open the Black Bottle web app in your browser
  * 2. Open Developer Tools (F12)
  * 3. Copy and paste this entire script into the console
  * 4. The script will automatically extract data and send it to the local API
@@ -21,12 +21,12 @@
   // ==========================================================================
 
   const localStorageData = {};
-  const dydxKeys = [];
+  const blackbottleKeys = [];
 
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
-    if (key && key.startsWith('dydx')) {
-      dydxKeys.push(key);
+    if (key && key.startsWith('blackbottle')) {
+      blackbottleKeys.push(key);
       try {
         const value = localStorage.getItem(key);
         localStorageData[key] = JSON.parse(value);
@@ -36,7 +36,7 @@
     }
   }
 
-  console.log(`📦 Found ${dydxKeys.length} dYdX localStorage keys:`, dydxKeys);
+  console.log(`📦 Found ${blackbottleKeys.length} Black Bottle localStorage keys:`, blackbottleKeys);
 
   // ==========================================================================
   // STEP 2: Extract Redux persist state
@@ -69,9 +69,9 @@
   // ==========================================================================
 
   const walletData = {
-    evmAddress: localStorageData['dydx.EvmAddress'] || reduxState?.wallet?.evmAddress,
-    dydxAddress: localStorageData['dydx.DydxAddress'] || reduxState?.wallet?.dydxAddress,
-    solanaAddress: localStorageData['dydx.SolAddress'] || reduxState?.wallet?.solAddress,
+    evmAddress: localStorageData['blackbottle.EvmAddress'] || reduxState?.wallet?.evmAddress,
+    blackbottleAddress: localStorageData['blackbottle.DydxAddress'] || reduxState?.wallet?.blackbottleAddress,
+    solanaAddress: localStorageData['blackbottle.SolAddress'] || reduxState?.wallet?.solAddress,
     nobleAddress: reduxState?.wallet?.nobleAddress,
   };
 
@@ -90,10 +90,10 @@
 
     // User preferences
     preferences: {
-      locale: localStorageData['dydx.SelectedLocale'],
-      network: localStorageData['dydx.SelectedNetwork'],
+      locale: localStorageData['blackbottle.SelectedLocale'],
+      network: localStorageData['blackbottle.SelectedNetwork'],
       colorMode: reduxState?.appUiConfigs?.theme,
-      hasAcknowledgedTerms: localStorageData['dydx.OnboardingHasAcknowledgedTerms'],
+      hasAcknowledgedTerms: localStorageData['blackbottle.OnboardingHasAcknowledgedTerms'],
       notificationsEnabled: true, // Default
     },
 
@@ -129,15 +129,15 @@
     exportData.wallets.push({
       type: 'evm',
       address: walletData.evmAddress,
-      chainId: localStorageData['dydx.EvmChainId'] || '1',
+      chainId: localStorageData['blackbottle.EvmChainId'] || '1',
     });
   }
 
-  if (walletData.dydxAddress) {
+  if (walletData.blackbottleAddress) {
     exportData.wallets.push({
-      type: 'dydx',
-      address: walletData.dydxAddress,
-      chainId: 'dydx-mainnet-1',
+      type: 'blackbottle',
+      address: walletData.blackbottleAddress,
+      chainId: 'blackbottle-mainnet-1',
     });
   }
 
@@ -202,7 +202,7 @@
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `dydx-browser-data-${Date.now()}.json`;
+    a.download = `blackbottle-browser-data-${Date.now()}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -218,7 +218,7 @@
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `dydx-browser-data-${Date.now()}.json`;
+    a.download = `blackbottle-browser-data-${Date.now()}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

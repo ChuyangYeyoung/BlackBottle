@@ -80,7 +80,7 @@ export const AccountMenu = () => {
   const { debugCompliance } = useEnvFeatures();
   const {
     sourceAccount: { walletInfo },
-    dydxAddress,
+    blackbottleAddress,
     hdKey,
     solanaAddress,
     canDeriveSolanaWallet,
@@ -186,7 +186,7 @@ export const AccountMenu = () => {
                 </$AddressCopyButton>
               )}
               <$AddressCopyButton
-                value={dydxAddress}
+                value={blackbottleAddress}
                 size={ButtonSize.XSmall}
                 shape={ButtonShape.Pill}
                 copyIconPosition="end"
@@ -447,7 +447,7 @@ export const AccountMenu = () => {
       sideOffset={16}
     >
       {walletIcon}
-      {!isTablet && <$Address>{truncateAddress(dydxAddress)}</$Address>}
+      {!isTablet && <$Address>{truncateAddress(blackbottleAddress)}</$Address>}
     </$DropdownMenu>
   );
 };

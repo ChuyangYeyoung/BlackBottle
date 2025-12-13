@@ -34,7 +34,7 @@ export const calculateOnboardingStep = createAppSelector(
 
 /**
  * @description calculate whether the client has enough information to display account info.
- * User does not have to have AccountConnected. The dYdX account can be viewed if the client knows the dYdX address.
+ * User does not have to have AccountConnected. The Black Bottle account can be viewed if the client knows the Black Bottle address.
  */
 export const calculateCanViewAccount = createAppSelector(
   [getOnboardingState, getSubaccountId],

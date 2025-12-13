@@ -32,8 +32,8 @@ async function getChaosLabsPointsDistribution() {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      protocol: 'dydx-v4',
-      'apollographql-client-name': 'dydx-v4',
+      protocol: 'blackbottle-v4',
+      'apollographql-client-name': 'blackbottle-v4',
     },
     body: JSON.stringify({
       operationName: 'VolumeLeaderboard',
@@ -58,7 +58,7 @@ async function getChaosLabsPointsDistribution() {
 
 export function useChaosLabsPointsDistribution() {
   const { data: pointsInfo, isLoading: rewardsInfoLoading } = useTotalRewardsPoints();
-  const dydxPrice = useAppSelector(BonsaiCore.rewardParams.data).tokenPrice;
+  const blackbottlePrice = useAppSelector(BonsaiCore.rewardParams.data).tokenPrice;
 
   const { data: leaderboardItems, isLoading: leaderboardItemsLoading } = useQuery({
     queryKey: ['chaoslabs/points'],
@@ -70,13 +70,13 @@ export function useChaosLabsPointsDistribution() {
   });
 
   return {
-    isLoading: rewardsInfoLoading || leaderboardItemsLoading || !dydxPrice,
+    isLoading: rewardsInfoLoading || leaderboardItemsLoading || !blackbottlePrice,
     data: leaderboardItems?.map((item) => ({
       ...item,
       estimatedDydxRewards: pointsToEstimatedDydxRewards(
         item.incentivePoints,
         pointsInfo?.totalPoints,
-        dydxPrice,
+        blackbottlePrice,
         CURRENT_SURGE_REWARDS_DETAILS.rewardAmountUsd
       ),
     })),
@@ -84,7 +84,7 @@ export function useChaosLabsPointsDistribution() {
 }
 
 async function getTotalRewardsPoints() {
-  const res = await fetch('https://cloud.chaoslabs.co/query/api/dydx/total-points');
+  const res = await fetch('https://cloud.chaoslabs.co/query/api/blackbottle/total-points');
   const data = (await res.json()) as { totalPoints: number; seasonNumber: number };
   return data;
 }
@@ -97,17 +97,17 @@ export function useTotalRewardsPoints() {
 }
 
 export const useChaosLabsUsdRewards = ({
-  dydxAddress,
+  blackbottleAddress,
   season,
   totalUsdRewards,
 }: {
-  dydxAddress?: DydxAddress;
+  blackbottleAddress?: DydxAddress;
   season?: number;
   totalUsdRewards?: number;
 }) => {
   const { data: totalPoints, isLoading: totalPointsLoading } = useTotalRewardsPoints();
   const { data: points, isLoading: pointsLoading } = useQueryChaosLabsIncentives({
-    dydxAddress,
+    blackbottleAddress,
     season,
   });
 
@@ -141,7 +141,7 @@ export type ChaosLabsPnlItem = {
 
 async function getChaosLabsPnlDistribution() {
   const res = await fetch(
-    `https://pp-external-api-ffb2ad95ef03.herokuapp.com/api/dydx-weekly-clc?perPage=1000`,
+    `https://pp-external-api-ffb2ad95ef03.herokuapp.com/api/blackbottle-weekly-clc?perPage=1000`,
     {
       method: 'GET',
     }
@@ -154,7 +154,7 @@ async function getChaosLabsPnlDistribution() {
 }
 
 export function useChaosLabsPnlDistribution() {
-  const dydxPrice = useAppSelector(BonsaiCore.rewardParams.data).tokenPrice;
+  const blackbottlePrice = useAppSelector(BonsaiCore.rewardParams.data).tokenPrice;
 
   const { data: pnlItems, isLoading: pnlItemsLoading } = useQuery({
     queryKey: ['chaoslabs/pnls'],
@@ -166,7 +166,7 @@ export function useChaosLabsPnlDistribution() {
   });
 
   return {
-    isLoading: pnlItemsLoading || !dydxPrice,
+    isLoading: pnlItemsLoading || !blackbottlePrice,
     data: pnlItems,
   };
 }
@@ -223,20 +223,20 @@ type ChaosLabsFeeLeaderboardResponse = {
 
 export const addRewardsToLeaderboardEntry = (
   entry: ChaosLabsFeeLeaderboardItem,
-  dydxPrice: number | undefined
+  blackbottlePrice: number | undefined
 ): ChaosLabsFeeLeaderboardItemWithRewards => {
   const dollarRewards = feesToEstimatedDollarRewards(entry.total_fees);
-  const dydxRewards = dydxPrice ? dollarRewards / dydxPrice : 0;
+  const blackbottleRewards = blackbottlePrice ? dollarRewards / blackbottlePrice : 0;
   return {
     ...entry,
     estimatedDollarRewards: dollarRewards,
-    estimatedDydxRewards: dydxRewards,
+    estimatedDydxRewards: blackbottleRewards,
   };
 };
 
 async function getChaosLabsFeeLeaderboard({ address }: { address?: string }) {
   const res = await fetch(
-    `https://pp-external-api-ffb2ad95ef03.herokuapp.com/api/dydx-fee-leaderboard?perPage=1000${address ? `&address=${address}` : ''}`
+    `https://pp-external-api-ffb2ad95ef03.herokuapp.com/api/blackbottle-fee-leaderboard?perPage=1000${address ? `&address=${address}` : ''}`
   );
 
   const data = (await res.json()) as ChaosLabsFeeLeaderboardResponse;

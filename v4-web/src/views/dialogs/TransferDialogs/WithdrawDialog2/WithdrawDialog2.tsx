@@ -31,7 +31,7 @@ import { WithdrawForm } from './WithdrawForm';
 import { WithdrawStatus } from './WithdrawStatus';
 
 export const WithdrawDialog2 = ({ setIsOpen }: DialogProps<DepositDialog2Props>) => {
-  const { dydxAddress, sourceAccount, solanaAddress } = useAccounts();
+  const { blackbottleAddress, sourceAccount, solanaAddress } = useAccounts();
   const isPrivy = sourceAccount.walletInfo?.name === WalletType.Privy;
   const isTurnkey = sourceAccount.walletInfo?.name === WalletType.Turnkey;
   const [destinationAddress, setDestinationAddress] = useState(
@@ -84,16 +84,16 @@ export const WithdrawDialog2 = ({ setIsOpen }: DialogProps<DepositDialog2Props>)
   };
 
   const onWithdraw = (withdraw: Withdraw) => {
-    if (!dydxAddress) return;
-    dispatch(addWithdraw({ withdraw, dydxAddress }));
+    if (!blackbottleAddress) return;
+    dispatch(addWithdraw({ withdraw, blackbottleAddress }));
   };
 
   const onWithdrawBroadcastUpdate = (
     withdrawId: string,
     subtransaction: WithdrawSubtransaction
   ) => {
-    if (!dydxAddress) return;
-    dispatch(onWithdrawBroadcast({ dydxAddress, withdrawId, subtransaction }));
+    if (!blackbottleAddress) return;
+    dispatch(onWithdrawBroadcast({ blackbottleAddress, withdrawId, subtransaction }));
   };
 
   const tabs: SpotTabItem[] = [

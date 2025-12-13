@@ -38,7 +38,7 @@ export const ExportHistoryDropdown = (props: ExportHistoryDropdownProps) => {
   const selectedLocale = useAppSelector(getSelectedLocale);
   const stringGetter = useStringGetter();
   const subaccountNumber = useAppSelector(getSubaccountId);
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
   const isAccountConnected = useAppSelector(getIsAccountConnected);
   const { requestAllAccountFills, requestAllAccountTransfers } = useDydxClient();
   const [checkedTrades, setCheckedTrades] = useState(true);
@@ -49,8 +49,8 @@ export const ExportHistoryDropdown = (props: ExportHistoryDropdownProps) => {
     useLocaleSeparators();
 
   const exportTrades = useCallback(async () => {
-    if (dydxAddress && subaccountNumber !== undefined) {
-      const trades = await requestAllAccountFills(dydxAddress, subaccountNumber);
+    if (blackbottleAddress && subaccountNumber !== undefined) {
+      const trades = await requestAllAccountFills(blackbottleAddress, subaccountNumber);
 
       const csvTrades = trades.map((fill) => {
         const sideKey = {
@@ -117,11 +117,11 @@ export const ExportHistoryDropdown = (props: ExportHistoryDropdownProps) => {
         ],
       });
     }
-  }, [dydxAddress, subaccountNumber, requestAllAccountFills, stringGetter]);
+  }, [blackbottleAddress, subaccountNumber, requestAllAccountFills, stringGetter]);
 
   const exportTransfers = useCallback(async () => {
-    if (dydxAddress && subaccountNumber !== undefined) {
-      const transfers = await requestAllAccountTransfers(dydxAddress, subaccountNumber);
+    if (blackbottleAddress && subaccountNumber !== undefined) {
+      const transfers = await requestAllAccountTransfers(blackbottleAddress, subaccountNumber);
 
       const csvTransfers = transfers.map((transfer) => {
         const amount = formatNumberOutput(transfer.size, OutputType.Fiat, {
@@ -174,7 +174,7 @@ export const ExportHistoryDropdown = (props: ExportHistoryDropdownProps) => {
       });
     }
   }, [
-    dydxAddress,
+    blackbottleAddress,
     subaccountNumber,
     requestAllAccountTransfers,
     stringGetter,
@@ -185,7 +185,7 @@ export const ExportHistoryDropdown = (props: ExportHistoryDropdownProps) => {
 
   const allVaultTransfers = useLoadedVaultAccountTransfers();
   const exportVaultTransfers = useCallback(async () => {
-    if (dydxAddress && subaccountNumber !== undefined && allVaultTransfers != null) {
+    if (blackbottleAddress && subaccountNumber !== undefined && allVaultTransfers != null) {
       const csvTransfers = allVaultTransfers.map((transfer) => {
         const amount = formatNumberOutput(transfer.amountUsdc, OutputType.Fiat, {
           decimalSeparator: LOCALE_DECIMAL_SEPARATOR,
@@ -230,7 +230,7 @@ export const ExportHistoryDropdown = (props: ExportHistoryDropdownProps) => {
       });
     }
   }, [
-    dydxAddress,
+    blackbottleAddress,
     subaccountNumber,
     allVaultTransfers,
     stringGetter,
@@ -241,7 +241,7 @@ export const ExportHistoryDropdown = (props: ExportHistoryDropdownProps) => {
 
   const allFundingPayments = BonsaiHooks.useFundingPayments().data;
   const exportFundingPayments = useCallback(async () => {
-    if (dydxAddress && subaccountNumber !== undefined && allFundingPayments != null) {
+    if (blackbottleAddress && subaccountNumber !== undefined && allFundingPayments != null) {
       const csvFundingPayments = allFundingPayments.map((payment) => {
         return {
           time: new Date(payment.createdAt).toISOString(),
@@ -289,7 +289,7 @@ export const ExportHistoryDropdown = (props: ExportHistoryDropdownProps) => {
       });
     }
   }, [
-    dydxAddress,
+    blackbottleAddress,
     subaccountNumber,
     allFundingPayments,
     stringGetter,

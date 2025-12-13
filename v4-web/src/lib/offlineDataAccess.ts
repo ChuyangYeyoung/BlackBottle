@@ -70,16 +70,16 @@ export async function syncBrowserData(data: any): Promise<SyncResult> {
 }
 
 /**
- * Sync blockchain data (dYdX Chain) to local database
+ * Sync blockchain data (Black Bottle) to local database
  */
 export async function syncBlockchainData(
-  dydxAddress: string,
+  blackbottleAddress: string,
   indexerUrl?: string
 ): Promise<SyncResult> {
   const response = await fetch(`${LOCAL_API_BASE}/sync/blockchain-data`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ dydxAddress, indexerUrl }),
+    body: JSON.stringify({ blackbottleAddress, indexerUrl }),
   });
 
   if (!response.ok) {

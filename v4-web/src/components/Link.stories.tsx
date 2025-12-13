@@ -18,7 +18,7 @@ export const LinkStory: Story<Parameters<typeof Link>[0]> = (args) => {
 };
 
 LinkStory.args = {
-  href: 'https://trade.dydx.exchange',
+  href: 'https://trade.blackbottle.trade',
 };
 const $Container = styled.section`
   background: var(--color-layer-3);

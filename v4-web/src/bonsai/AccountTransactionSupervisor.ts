@@ -170,13 +170,13 @@ export class AccountTransactionSupervisor {
       }
 
       const chainId = getSelectedDydxChainId(state);
-      const dydxOfflineSigner = await window.keplr.getOfflineSigner(chainId);
-      const dydxLocalWallet = await (
+      const blackbottleOfflineSigner = await window.keplr.getOfflineSigner(chainId);
+      const blackbottleLocalWallet = await (
         await getLazyLocalWallet()
-      ).fromOfflineSigner(dydxOfflineSigner);
+      ).fromOfflineSigner(blackbottleOfflineSigner);
 
-      this.cachedDydxLocalWallet = dydxLocalWallet;
-      return dydxLocalWallet;
+      this.cachedDydxLocalWallet = blackbottleLocalWallet;
+      return blackbottleLocalWallet;
     }
 
     return undefined;

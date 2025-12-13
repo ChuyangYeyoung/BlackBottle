@@ -16,10 +16,10 @@ const SWAP_VENUES = [
   { chainId: 'neutron-1', name: 'neutron-astroport' },
 ];
 
-// Swaps are from dydxchain DYDX <-> dydxchain USDC
+// Swaps are from blackbottlechain DYDX <-> blackbottlechain USDC
 async function getSkipSwapRoute(
   skipClient: SkipClient,
-  input: 'usdc' | 'dydx',
+  input: 'usdc' | 'blackbottle',
   tokenConfig: TokenConfigsResult,
   chainId: string,
   amount: string,
@@ -59,7 +59,7 @@ async function getSkipSwapRoute(
 }
 
 export function useSwapQuote(
-  input: 'usdc' | 'dydx',
+  input: 'usdc' | 'blackbottle',
   amount: string,
   mode: 'exact-in' | 'exact-out'
 ) {

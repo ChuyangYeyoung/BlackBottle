@@ -16,7 +16,7 @@ try {
     const baseURL = sitemapConfig['baseURL'];
     const staticURLs = sitemapConfig['staticURLs'];
 
-    const marketPairs = await fetchActiveMarketPairs('https://dydx-ops-rest.kingnodes.com');
+    const marketPairs = await fetchActiveMarketPairs('https://blackbottle-ops-rest.kingnodes.com');
 
     const siteMap = await generateSitemap(baseURL, staticURLs, marketPairs);
     await fs.writeFile(sitemapFilePath, siteMap, 'utf-8');

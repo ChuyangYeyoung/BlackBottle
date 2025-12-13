@@ -39,7 +39,7 @@ const MobileQrCode = ({
   onClick: () => void;
 }) => {
   const stringGetter = useStringGetter();
-  const { dydxAddress, hdKey } = useAccounts();
+  const { blackbottleAddress, hdKey } = useAccounts();
   const { mnemonic, privateKey, publicKey } = hdKey ?? {};
 
   if (!mnemonic || !privateKey || !publicKey) {
@@ -49,7 +49,7 @@ const MobileQrCode = ({
 
   const data = {
     mnemonic,
-    cosmosAddress: dydxAddress,
+    cosmosAddress: blackbottleAddress,
     pubkeyHex: Buffer.from(publicKey).toString('hex'),
     privkeyHex: Buffer.from(privateKey).toString('hex'),
   };

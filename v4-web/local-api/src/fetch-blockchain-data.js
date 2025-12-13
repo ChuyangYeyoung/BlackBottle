@@ -1,17 +1,17 @@
 /**
  * Blockchain Data Fetcher
  *
- * Fetches user data from dYdX Chain, Ethereum, and Solana blockchains
+ * Fetches user data from Black Bottle, Ethereum, and Solana blockchains
  * and stores it in the local database for offline access.
  */
 
 import Database from 'better-sqlite3';
 
-const DEFAULT_INDEXER_API = 'https://indexer.v4testnet.dydx.exchange';
-const MAINNET_INDEXER_API = 'https://indexer.dydx.trade';
+const DEFAULT_INDEXER_API = 'https://indexer.v4testnet.blackbottle.trade';
+const MAINNET_INDEXER_API = 'https://indexer.blackbottle.trade';
 
 /**
- * Fetch data from dYdX Indexer API
+ * Fetch data from Black Bottle Indexer API
  * @param {string} endpoint - API endpoint path
  * @param {string} baseUrl - Base URL for the indexer
  * @returns {Promise<any>}
@@ -30,14 +30,14 @@ async function fetchFromIndexer(endpoint, baseUrl = DEFAULT_INDEXER_API) {
 }
 
 /**
- * Fetch account balances from dYdX
- * @param {string} dydxAddress - dYdX account address
+ * Fetch account balances from Black Bottle
+ * @param {string} blackbottleAddress - Black Bottle account address
  * @param {string} indexerUrl - Indexer API base URL
  * @returns {Promise<Array>}
  */
-export async function fetchAccountBalances(dydxAddress, indexerUrl = DEFAULT_INDEXER_API) {
+export async function fetchAccountBalances(blackbottleAddress, indexerUrl = DEFAULT_INDEXER_API) {
   try {
-    const data = await fetchFromIndexer(`/v4/addresses/${dydxAddress}`, indexerUrl);
+    const data = await fetchFromIndexer(`/v4/addresses/${blackbottleAddress}`, indexerUrl);
 
     if (!data || !data.subaccounts) {
       return [];
@@ -48,8 +48,8 @@ export async function fetchAccountBalances(dydxAddress, indexerUrl = DEFAULT_IND
     for (const subaccount of data.subaccounts) {
       if (subaccount.equity) {
         balances.push({
-          walletAddress: dydxAddress,
-          chainId: 'dydx-mainnet-1',
+          walletAddress: blackbottleAddress,
+          chainId: 'blackbottle-mainnet-1',
           tokenSymbol: 'USDC',
           tokenDenom: 'ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5',
           balance: subaccount.equity,
@@ -61,20 +61,20 @@ export async function fetchAccountBalances(dydxAddress, indexerUrl = DEFAULT_IND
 
     return balances;
   } catch (err) {
-    console.error(`Failed to fetch balances for ${dydxAddress}:`, err.message);
+    console.error(`Failed to fetch balances for ${blackbottleAddress}:`, err.message);
     return [];
   }
 }
 
 /**
- * Fetch open positions from dYdX
- * @param {string} dydxAddress - dYdX account address
+ * Fetch open positions from Black Bottle
+ * @param {string} blackbottleAddress - Black Bottle account address
  * @param {string} indexerUrl - Indexer API base URL
  * @returns {Promise<Array>}
  */
-export async function fetchPositions(dydxAddress, indexerUrl = DEFAULT_INDEXER_API) {
+export async function fetchPositions(blackbottleAddress, indexerUrl = DEFAULT_INDEXER_API) {
   try {
-    const data = await fetchFromIndexer(`/v4/addresses/${dydxAddress}`, indexerUrl);
+    const data = await fetchFromIndexer(`/v4/addresses/${blackbottleAddress}`, indexerUrl);
 
     if (!data || !data.subaccounts) {
       return [];
@@ -86,7 +86,7 @@ export async function fetchPositions(dydxAddress, indexerUrl = DEFAULT_INDEXER_A
       if (subaccount.openPerpetualPositions) {
         for (const [market, position] of Object.entries(subaccount.openPerpetualPositions)) {
           positions.push({
-            walletAddress: dydxAddress,
+            walletAddress: blackbottleAddress,
             positionId: `${subaccount.address}-${market}`,
             market,
             side: parseFloat(position.size) > 0 ? 'LONG' : 'SHORT',
@@ -107,22 +107,22 @@ export async function fetchPositions(dydxAddress, indexerUrl = DEFAULT_INDEXER_A
 
     return positions;
   } catch (err) {
-    console.error(`Failed to fetch positions for ${dydxAddress}:`, err.message);
+    console.error(`Failed to fetch positions for ${blackbottleAddress}:`, err.message);
     return [];
   }
 }
 
 /**
- * Fetch orders from dYdX
- * @param {string} dydxAddress - dYdX account address
+ * Fetch orders from Black Bottle
+ * @param {string} blackbottleAddress - Black Bottle account address
  * @param {string} indexerUrl - Indexer API base URL
  * @param {number} limit - Number of orders to fetch
  * @returns {Promise<Array>}
  */
-export async function fetchOrders(dydxAddress, indexerUrl = DEFAULT_INDEXER_API, limit = 100) {
+export async function fetchOrders(blackbottleAddress, indexerUrl = DEFAULT_INDEXER_API, limit = 100) {
   try {
     // Fetch open orders
-    const subaccountsData = await fetchFromIndexer(`/v4/addresses/${dydxAddress}`, indexerUrl);
+    const subaccountsData = await fetchFromIndexer(`/v4/addresses/${blackbottleAddress}`, indexerUrl);
     const orders = [];
 
     if (subaccountsData?.subaccounts) {
@@ -137,7 +137,7 @@ export async function fetchOrders(dydxAddress, indexerUrl = DEFAULT_INDEXER_API,
           if (ordersData && Array.isArray(ordersData)) {
             for (const order of ordersData) {
               orders.push({
-                walletAddress: dydxAddress,
+                walletAddress: blackbottleAddress,
                 orderId: order.id,
                 clientId: order.clientId || null,
                 market: order.ticker || order.market,
@@ -165,22 +165,22 @@ export async function fetchOrders(dydxAddress, indexerUrl = DEFAULT_INDEXER_API,
 
     return orders;
   } catch (err) {
-    console.error(`Failed to fetch orders for ${dydxAddress}:`, err.message);
+    console.error(`Failed to fetch orders for ${blackbottleAddress}:`, err.message);
     return [];
   }
 }
 
 /**
- * Fetch fills (trade history) from dYdX
- * @param {string} dydxAddress - dYdX account address
+ * Fetch fills (trade history) from Black Bottle
+ * @param {string} blackbottleAddress - Black Bottle account address
  * @param {string} indexerUrl - Indexer API base URL
  * @param {number} limit - Number of fills to fetch
  * @returns {Promise<Array>}
  */
-export async function fetchFills(dydxAddress, indexerUrl = DEFAULT_INDEXER_API, limit = 100) {
+export async function fetchFills(blackbottleAddress, indexerUrl = DEFAULT_INDEXER_API, limit = 100) {
   try {
     const data = await fetchFromIndexer(
-      `/v4/fills?address=${dydxAddress}&limit=${limit}`,
+      `/v4/fills?address=${blackbottleAddress}&limit=${limit}`,
       indexerUrl
     );
 
@@ -189,7 +189,7 @@ export async function fetchFills(dydxAddress, indexerUrl = DEFAULT_INDEXER_API, 
     }
 
     return data.fills.map(fill => ({
-      walletAddress: dydxAddress,
+      walletAddress: blackbottleAddress,
       fillId: fill.id,
       orderId: fill.orderId,
       market: fill.market || fill.ticker,
@@ -201,22 +201,22 @@ export async function fetchFills(dydxAddress, indexerUrl = DEFAULT_INDEXER_API, 
       createdAt: fill.createdAt || new Date().toISOString(),
     }));
   } catch (err) {
-    console.error(`Failed to fetch fills for ${dydxAddress}:`, err.message);
+    console.error(`Failed to fetch fills for ${blackbottleAddress}:`, err.message);
     return [];
   }
 }
 
 /**
- * Fetch transfers from dYdX
- * @param {string} dydxAddress - dYdX account address
+ * Fetch transfers from Black Bottle
+ * @param {string} blackbottleAddress - Black Bottle account address
  * @param {string} indexerUrl - Indexer API base URL
  * @param {number} limit - Number of transfers to fetch
  * @returns {Promise<Array>}
  */
-export async function fetchTransfers(dydxAddress, indexerUrl = DEFAULT_INDEXER_API, limit = 100) {
+export async function fetchTransfers(blackbottleAddress, indexerUrl = DEFAULT_INDEXER_API, limit = 100) {
   try {
     const data = await fetchFromIndexer(
-      `/v4/transfers?address=${dydxAddress}&limit=${limit}`,
+      `/v4/transfers?address=${blackbottleAddress}&limit=${limit}`,
       indexerUrl
     );
 
@@ -225,15 +225,15 @@ export async function fetchTransfers(dydxAddress, indexerUrl = DEFAULT_INDEXER_A
     }
 
     return data.transfers.map(transfer => ({
-      walletAddress: dydxAddress,
+      walletAddress: blackbottleAddress,
       transferId: transfer.id,
       txHash: transfer.transactionHash || null,
       type: transfer.type || 'TRANSFER',
       status: transfer.status || 'CONFIRMED',
       fromAddress: transfer.sender?.address || null,
       toAddress: transfer.recipient?.address || null,
-      fromChain: transfer.sender?.chain || 'dydx-mainnet-1',
-      toChain: transfer.recipient?.chain || 'dydx-mainnet-1',
+      fromChain: transfer.sender?.chain || 'blackbottle-mainnet-1',
+      toChain: transfer.recipient?.chain || 'blackbottle-mainnet-1',
       amount: transfer.size || transfer.amount || '0',
       tokenSymbol: transfer.symbol || 'USDC',
       tokenDenom: transfer.denom || null,
@@ -242,13 +242,13 @@ export async function fetchTransfers(dydxAddress, indexerUrl = DEFAULT_INDEXER_A
       updatedAt: transfer.updatedAt || new Date().toISOString(),
     }));
   } catch (err) {
-    console.error(`Failed to fetch transfers for ${dydxAddress}:`, err.message);
+    console.error(`Failed to fetch transfers for ${blackbottleAddress}:`, err.message);
     return [];
   }
 }
 
 /**
- * Fetch market configurations from dYdX
+ * Fetch market configurations from Black Bottle
  * @param {string} indexerUrl - Indexer API base URL
  * @returns {Promise<Array>}
  */
@@ -280,11 +280,11 @@ export async function fetchMarkets(indexerUrl = DEFAULT_INDEXER_API) {
 /**
  * Sync all blockchain data for a given wallet address
  * @param {Database} db - SQLite database instance
- * @param {string} dydxAddress - dYdX account address
+ * @param {string} blackbottleAddress - Black Bottle account address
  * @param {string} indexerUrl - Indexer API base URL
  * @returns {Promise<object>} Sync result
  */
-export async function syncBlockchainData(db, dydxAddress, indexerUrl = DEFAULT_INDEXER_API) {
+export async function syncBlockchainData(db, blackbottleAddress, indexerUrl = DEFAULT_INDEXER_API) {
   const result = {
     success: true,
     timestamp: new Date().toISOString(),
@@ -299,17 +299,17 @@ export async function syncBlockchainData(db, dydxAddress, indexerUrl = DEFAULT_I
     errors: [],
   };
 
-  console.log(`\n🔗 Syncing blockchain data for: ${dydxAddress}`);
+  console.log(`\n🔗 Syncing blockchain data for: ${blackbottleAddress}`);
   console.log(`📡 Using indexer: ${indexerUrl}\n`);
 
   try {
     // Fetch all data in parallel
     const [balances, positions, orders, fills, transfers, markets] = await Promise.all([
-      fetchAccountBalances(dydxAddress, indexerUrl),
-      fetchPositions(dydxAddress, indexerUrl),
-      fetchOrders(dydxAddress, indexerUrl),
-      fetchFills(dydxAddress, indexerUrl),
-      fetchTransfers(dydxAddress, indexerUrl),
+      fetchAccountBalances(blackbottleAddress, indexerUrl),
+      fetchPositions(blackbottleAddress, indexerUrl),
+      fetchOrders(blackbottleAddress, indexerUrl),
+      fetchFills(blackbottleAddress, indexerUrl),
+      fetchTransfers(blackbottleAddress, indexerUrl),
       fetchMarkets(indexerUrl),
     ]);
 
@@ -558,7 +558,7 @@ export async function syncBlockchainData(db, dydxAddress, indexerUrl = DEFAULT_I
       `);
 
       const totalRecords = Object.values(result.synced).reduce((a, b) => a + b, 0);
-      syncMetaStmt.run(dydxAddress, totalRecords);
+      syncMetaStmt.run(blackbottleAddress, totalRecords);
     });
 
     // Execute transaction
@@ -579,18 +579,18 @@ export async function syncBlockchainData(db, dydxAddress, indexerUrl = DEFAULT_I
  * CLI Usage
  */
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const dydxAddress = process.argv[2];
+  const blackbottleAddress = process.argv[2];
   const indexerUrl = process.argv[3] || DEFAULT_INDEXER_API;
   const dbPath = process.env.DB_PATH || './db.sqlite';
 
-  if (!dydxAddress) {
-    console.error('Usage: node fetch-blockchain-data.js <dydx_address> [indexer_url]');
-    console.error('Example: node fetch-blockchain-data.js dydx1abc123... https://indexer.v4testnet.dydx.exchange');
+  if (!blackbottleAddress) {
+    console.error('Usage: node fetch-blockchain-data.js <blackbottle_address> [indexer_url]');
+    console.error('Example: node fetch-blockchain-data.js blackbottle1abc123... https://indexer.v4testnet.blackbottle.trade');
     process.exit(1);
   }
 
   const db = new Database(dbPath);
-  const result = await syncBlockchainData(db, dydxAddress, indexerUrl);
+  const result = await syncBlockchainData(db, blackbottleAddress, indexerUrl);
   console.log(JSON.stringify(result, null, 2));
   process.exit(result.success ? 0 : 1);
 }

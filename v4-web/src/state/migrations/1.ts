@@ -6,7 +6,7 @@ type EvmDerivedAddresses = {
   version?: string;
   [EvmAddress: EvmAddress]: {
     encryptedSignature?: string;
-    dydxAddress?: DydxAddress;
+    blackbottleAddress?: DydxAddress;
   };
 };
 
@@ -16,7 +16,7 @@ type SolDerivedAddresses = {
   SolAddress,
   {
     encryptedSignature?: string;
-    dydxAddress?: DydxAddress;
+    blackbottleAddress?: DydxAddress;
   }
 >;
 
@@ -40,7 +40,7 @@ enum CosmosWalletType {
 }
 type EvmAddress = `0x${string}`;
 type SolAddress = `${string}`;
-type DydxAddress = `dydx${string}`;
+type DydxAddress = `blackbottle${string}`;
 
 interface EIP6963ProviderInfo<TRdns extends string = any> {
   icon: `data:image/${string}`; // RFC-2397
@@ -118,18 +118,18 @@ export function migration1(state: PersistedState): V1State {
   }
 
   // We have to run parseStorageItem on these strings because they are stored with a extra quotations (from JSON.stringify)!
-  const evmAddress = parseStorageItem<EvmAddress>(localStorage.getItem('dydx.EvmAddress'));
+  const evmAddress = parseStorageItem<EvmAddress>(localStorage.getItem('blackbottle.EvmAddress'));
   const evmDerivedAddresses = parseStorageItem<EvmDerivedAddresses>(
-    localStorage.getItem('dydx.EvmDerivedAddresses')
+    localStorage.getItem('blackbottle.EvmDerivedAddresses')
   );
-  const solAddress = parseStorageItem<SolAddress>(localStorage.getItem('dydx.SolAddress'));
+  const solAddress = parseStorageItem<SolAddress>(localStorage.getItem('blackbottle.SolAddress'));
   const solDerivedAddresses = parseStorageItem<SolDerivedAddresses>(
-    localStorage.getItem('dydx.SolDerivedAddresses')
+    localStorage.getItem('blackbottle.SolDerivedAddresses')
   );
 
-  const dydxAddress = parseStorageItem<DydxAddress>(localStorage.getItem('dydx.DydxAddress'));
+  const blackbottleAddress = parseStorageItem<DydxAddress>(localStorage.getItem('blackbottle.DydxAddress'));
   const selectedWallet = parseStorageItem<WalletInfo>(
-    localStorage.getItem('dydx.OnboardingSelectedWallet')
+    localStorage.getItem('blackbottle.OnboardingSelectedWallet')
   );
 
   if (!selectedWallet) {
@@ -167,7 +167,7 @@ export function migration1(state: PersistedState): V1State {
       ...state,
       wallet: {
         sourceAccount: {
-          address: dydxAddress ?? undefined,
+          address: blackbottleAddress ?? undefined,
           chain: WalletNetworkType.Cosmos,
           walletInfo: selectedWallet,
         },

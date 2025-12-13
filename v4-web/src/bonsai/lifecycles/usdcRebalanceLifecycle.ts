@@ -25,7 +25,7 @@ const SLEEP_TIME = timeUnits.second * 10;
 const INVALIDATION_SLEEP_TIME = timeUnits.second * 10;
 
 /**
- * @description Lifecycle for rebalancing USDC across chains. This will handle auto-deposits from dYdX Wallet as well as auto-withdrawals to dYdX Wallet.
+ * @description Lifecycle for rebalancing USDC across chains. This will handle auto-deposits from Black Bottle Wallet as well as auto-withdrawals to Black Bottle Wallet.
  */
 export function setUpUsdcRebalanceLifecycle(store: RootStore) {
   const balanceAndTransfersSelector = createAppSelector(

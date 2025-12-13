@@ -54,7 +54,7 @@ export const TradingKeysDialog = ({ setIsOpen }: DialogProps<TradingKeysDialogPr
   const stringGetter = useStringGetter();
   const { isMobile } = useBreakpoints();
 
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
   const { createRandomTradingKeyWallet, removeAuthorizedKey, authorizeTradingKeyWallet } =
     useSubaccount();
 
@@ -134,10 +134,10 @@ export const TradingKeysDialog = ({ setIsOpen }: DialogProps<TradingKeysDialogPr
               {stringGetter({ key: STRING_KEYS.YOUR_DYDX_ADDRESS })}
             </div>
             <div tw="row gap-0.5">
-              <$Address>{truncateAddress(dydxAddress)}</$Address>
+              <$Address>{truncateAddress(blackbottleAddress)}</$Address>
               <$CopyButton
                 buttonType="icon"
-                value={dydxAddress}
+                value={blackbottleAddress}
                 shape={ButtonShape.Square}
                 size={ButtonSize.XXSmall}
                 buttonStyle={ButtonStyle.WithoutBackground}

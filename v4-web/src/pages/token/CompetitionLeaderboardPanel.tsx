@@ -31,7 +31,7 @@ export enum RewardsLeaderboardTableColumns {
 export const CompetitionLeaderboardPanel = () => {
   const stringGetter = useStringGetter();
   const { data: topPnls, isLoading } = useChaosLabsPnlDistribution();
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
 
   const getRowKey = useCallback((row: ChaosLabsCompetitionItem) => row.rank, []);
 
@@ -40,7 +40,7 @@ export const CompetitionLeaderboardPanel = () => {
       getRewardsLeaderboardTableColumnDef({
         key,
         stringGetter,
-        dydxAddress,
+        blackbottleAddress,
       })
   );
 
@@ -113,7 +113,7 @@ export const CompetitionLeaderboardPanel = () => {
               direction: 'ascending',
             }}
             getIsRowPinned={(row) => {
-              return row.account === dydxAddress;
+              return row.account === blackbottleAddress;
             }}
             slotEmpty={
               isLoading ? (
@@ -127,7 +127,7 @@ export const CompetitionLeaderboardPanel = () => {
             }
             getRowAttributes={({ account }) => ({
               style: {
-                backgroundColor: account === dydxAddress ? 'var(--color-accent-faded)' : undefined,
+                backgroundColor: account === blackbottleAddress ? 'var(--color-accent-faded)' : undefined,
               },
             })}
             selectionBehavior="replace"
@@ -187,17 +187,17 @@ const $Table = styled(Table)`
 ` as typeof Table;
 
 const getTraderLink = (address: string) => {
-  return `https://community.chaoslabs.xyz/dydx-v4/risk/accounts/${address}/subAccount/0/overview`;
+  return `https://community.chaoslabs.xyz/blackbottle-v4/risk/accounts/${address}/subAccount/0/overview`;
 };
 
 const getRewardsLeaderboardTableColumnDef = ({
   key,
   stringGetter,
-  dydxAddress,
+  blackbottleAddress,
 }: {
   key: RewardsLeaderboardTableColumns;
   stringGetter: StringGetterFunction;
-  dydxAddress?: string;
+  blackbottleAddress?: string;
 }): ColumnDef<ChaosLabsCompetitionItem> => ({
   ...(
     {
@@ -219,7 +219,7 @@ const getRewardsLeaderboardTableColumnDef = ({
             {rank === 1 && <TrophyIcon tw="size-1.5 text-[#e5c346]" />}
             {rank === 2 && <TrophyIcon tw="size-1.5 text-[#c9c9cb]" />}
             {rank === 3 && <TrophyIcon tw="size-1.5 text-[#c37b3f]" />}
-            {account === dydxAddress && (
+            {account === blackbottleAddress && (
               <div tw="flex items-center justify-center rounded-20 border border-solid border-color-accent px-0.5">
                 <span tw="text-small font-medium text-color-accent">
                   {stringGetter({ key: STRING_KEYS.YOU })}
@@ -239,13 +239,13 @@ const getRewardsLeaderboardTableColumnDef = ({
         ),
         renderCell: ({ account }) => (
           <div
-            css={{ color: account === dydxAddress ? 'var(--color-accent)' : 'var(--color-text-1)' }}
+            css={{ color: account === blackbottleAddress ? 'var(--color-accent)' : 'var(--color-text-1)' }}
             tw="flex items-center gap-0.5 text-small font-medium"
           >
             {truncateAddress(account)}
             <Link
               css={{
-                color: account === dydxAddress ? 'var(--color-accent)' : 'var(--color-text-0)',
+                color: account === blackbottleAddress ? 'var(--color-accent)' : 'var(--color-text-0)',
               }}
               href={getTraderLink(account)}
               iconSize="1rem"

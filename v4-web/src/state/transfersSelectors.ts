@@ -19,30 +19,30 @@ import {
 export const getTransfersByAddress = (state: RootState) => state.transfers.transfersByDydxAddress;
 
 export const selectPendingTransfers = createAppSelector(
-  [getTransfersByAddress, (_s, dydxAddress?: DydxAddress) => dydxAddress],
-  (transfersByAddress, dydxAddress): Transfer[] => {
-    if (dydxAddress == null || !transfersByAddress[dydxAddress]) return [];
-    return transfersByAddress[dydxAddress].filter((transfer) => transfer.status === 'pending');
+  [getTransfersByAddress, (_s, blackbottleAddress?: DydxAddress) => blackbottleAddress],
+  (transfersByAddress, blackbottleAddress): Transfer[] => {
+    if (blackbottleAddress == null || !transfersByAddress[blackbottleAddress]) return [];
+    return transfersByAddress[blackbottleAddress].filter((transfer) => transfer.status === 'pending');
   }
 );
 
 export const selectPendingDeposits = createAppSelector(
-  [getTransfersByAddress, (s, dydxAddress?: DydxAddress) => dydxAddress],
-  (transfersByAddress, dydxAddress): Deposit[] => {
-    if (!dydxAddress || !transfersByAddress[dydxAddress]) return [];
+  [getTransfersByAddress, (s, blackbottleAddress?: DydxAddress) => blackbottleAddress],
+  (transfersByAddress, blackbottleAddress): Deposit[] => {
+    if (!blackbottleAddress || !transfersByAddress[blackbottleAddress]) return [];
 
-    return transfersByAddress[dydxAddress].filter(
+    return transfersByAddress[blackbottleAddress].filter(
       (transfer): transfer is Deposit => isDeposit(transfer) && transfer.status === 'pending'
     );
   }
 );
 
 export const selectPendingWithdraws = createAppSelector(
-  [getTransfersByAddress, (s, dydxAddress?: DydxAddress) => dydxAddress],
-  (transfersByAddress, dydxAddress): Withdraw[] => {
-    if (!dydxAddress || !transfersByAddress[dydxAddress]) return [];
+  [getTransfersByAddress, (s, blackbottleAddress?: DydxAddress) => blackbottleAddress],
+  (transfersByAddress, blackbottleAddress): Withdraw[] => {
+    if (!blackbottleAddress || !transfersByAddress[blackbottleAddress]) return [];
 
-    return transfersByAddress[dydxAddress].filter(
+    return transfersByAddress[blackbottleAddress].filter(
       (transfer): transfer is Withdraw => isWithdraw(transfer) && transfer.status === 'pending'
     );
   }
@@ -53,10 +53,10 @@ const selectAllTransfers = createAppSelector([getTransfersByAddress], (transfers
 );
 
 export const selectTransfersByAddress = createAppSelector(
-  [getTransfersByAddress, (s, dydxAddress?: DydxAddress) => dydxAddress],
-  (transfersByAddress, dydxAddress): Transfer[] => {
-    if (!dydxAddress) return [];
-    return transfersByAddress[dydxAddress] ?? [];
+  [getTransfersByAddress, (s, blackbottleAddress?: DydxAddress) => blackbottleAddress],
+  (transfersByAddress, blackbottleAddress): Transfer[] => {
+    if (!blackbottleAddress) return [];
+    return transfersByAddress[blackbottleAddress] ?? [];
   }
 );
 

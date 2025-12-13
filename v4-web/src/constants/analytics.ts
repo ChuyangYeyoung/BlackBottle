@@ -34,7 +34,7 @@ export type AnalyticsEventIdentifyMeta<T extends AnalyticsUserPropertyTypes> = {
 export const customIdentifyEvent = <T extends AnalyticsUserPropertyTypes>(
   meta: AnalyticsEventIdentifyMeta<T>
 ) => {
-  return new CustomEvent('dydx:identify', meta);
+  return new CustomEvent('blackbottle:identify', meta);
 };
 
 // Do not update. this is used specifically to type how we create custom track events.
@@ -42,7 +42,7 @@ export const customIdentifyEvent = <T extends AnalyticsUserPropertyTypes>(
 export const customTrackEvent = <T extends AnalyticsEventTypes>(
   meta: AnalyticsEventTrackMeta<T>
 ) => {
-  return new CustomEvent('dydx:track', meta);
+  return new CustomEvent('blackbottle:track', meta);
 };
 
 // User properties
@@ -105,7 +105,7 @@ export const AnalyticsUserPropertyLoggableTypes = {
   WalletConnectorType: 'walletConnectorType',
   WalletAddress: 'walletAddress',
   IsRememberMe: 'isRememberMe',
-  DydxAddress: 'dydxAddress',
+  DydxAddress: 'blackbottleAddress',
   SubaccountNumber: 'subaccountNumber',
   AffiliateAddress: 'affiliateAddress',
   BonsaiValidatorUrl: 'bonsaiValidator',
@@ -222,11 +222,11 @@ export const AnalyticsEvents = unionize(
       signinMethod: 'email' | 'google' | 'apple';
     }>(),
     UploadAddressError: ofType<{
-      dydxAddress: string;
+      blackbottleAddress: string;
       error: string;
     }>(),
     TurnkeyFetchDepositAddressError: ofType<{
-      dydxAddress: string;
+      blackbottleAddress: string;
       error: string;
     }>(),
     TurnkeyResendEmailClick: ofType<{}>(),
@@ -599,7 +599,7 @@ export type AnalyticsEvent = UnionOf<typeof AnalyticsEvents>;
 export type AnalyticsEventTypes = TagsOf<typeof AnalyticsEvents>;
 export type AnalyticsEventPayloads = RecordOf<typeof AnalyticsEvents>;
 
-export const DEFAULT_TRANSACTION_MEMO = 'dYdX Frontend (web)';
+export const DEFAULT_TRANSACTION_MEMO = 'Black Bottle Frontend (web)';
 
 export enum TransactionMemo {
   depositToSubaccount = `${DEFAULT_TRANSACTION_MEMO} | Deposit from wallet to subaccount`,

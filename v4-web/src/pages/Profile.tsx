@@ -58,7 +58,7 @@ const Profile = () => {
   const onboardingState = useAppSelector(getOnboardingState);
   const isConnected = onboardingState !== OnboardingState.Disconnected;
 
-  const { sourceAccount, dydxAddress } = useAccounts();
+  const { sourceAccount, blackbottleAddress } = useAccounts();
   const { disableConnectButton } = useComplianceState();
 
   const { data: ensName } = useEnsName({
@@ -120,7 +120,7 @@ const Profile = () => {
         <$ProfileIcon />
         <div>
           <h1 tw="font-extra-medium">
-            {isConnected ? (ensName ?? truncateAddress(dydxAddress)) : '-'}
+            {isConnected ? (ensName ?? truncateAddress(blackbottleAddress)) : '-'}
           </h1>
           {isConnected && sourceAccount.walletInfo ? (
             <$SubHeader>

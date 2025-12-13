@@ -30,7 +30,7 @@ export const HelpDialog = ({ setIsOpen }: DialogProps<HelpDialogProps>) => {
     help: helpCenter,
     community,
     deployerTermsAndConditions,
-    dydxLearnMore,
+    blackbottleLearnMore,
     tos,
   } = useURLConfigs();
 
@@ -99,7 +99,7 @@ export const HelpDialog = ({ setIsOpen }: DialogProps<HelpDialogProps>) => {
           ),
           TERMS_OF_USE: <TermsOfUseLink isInline hrefOverride={tos} />,
           LEARN_MORE_LINK: (
-            <Link isInline href={dydxLearnMore}>
+            <Link isInline href={blackbottleLearnMore}>
               {stringGetter({ key: STRING_KEYS.LEARN_MORE_ARROW })}
             </Link>
           ),

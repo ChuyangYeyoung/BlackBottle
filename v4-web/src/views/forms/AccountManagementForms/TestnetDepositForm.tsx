@@ -28,19 +28,19 @@ type DepositFormProps = {
 
 export const TestnetDepositForm = ({ onDeposit, onError }: DepositFormProps) => {
   const stringGetter = useStringGetter();
-  const { dydxAddress, getSubaccounts } = useAccounts();
+  const { blackbottleAddress, getSubaccounts } = useAccounts();
   const { requestFaucetFunds } = useSubaccount();
   const subAccount = useAppSelector(getSubaccount);
   const canAccountTrade = useAppSelector(calculateCanAccountTrade);
-  const dydxChainId = useEnvConfig('dydxChainId');
+  const blackbottleChainId = useEnvConfig('blackbottleChainId');
 
   const [isLoading, setIsLoading] = useState(false);
 
   // call getSubaccounts once the subaccount detected via ws from bonsai
   useEffect(() => {
-    if (dydxAddress && isLoading && subAccount) {
+    if (blackbottleAddress && isLoading && subAccount) {
       setIsLoading(false);
-      getSubaccounts({ dydxAddress });
+      getSubaccounts({ blackbottleAddress });
     }
   }, [subAccount]);
 
@@ -72,7 +72,7 @@ export const TestnetDepositForm = ({ onDeposit, onError }: DepositFormProps) => 
           key: STRING_KEYS.CREDITED_WITH,
           params: {
             AMOUNT_USD:
-              dydxChainId === 'dydx-testnet-4' || dydxChainId === 'dydxprotocol-testnet'
+              blackbottleChainId === 'blackbottle-testnet-4' || blackbottleChainId === 'dydxprotocol-testnet'
                 ? 1000
                 : 100,
           },

@@ -143,7 +143,7 @@ export const MarketsBanners = ({
           <Button
             action={ButtonAction.Primary}
             type={ButtonType.Link}
-            href="https://dydx.trade/DYDX?utm_source=markets&utm_medium=markets-banner&utm_campaign=02092025-markets-surge-banner-dydx&utm_term=&utm_content=surge-banner"
+            href="https://blackbottle.trade/DYDX?utm_source=markets&utm_medium=markets-banner&utm_campaign=02092025-markets-surge-banner-blackbottle&utm_term=&utm_content=surge-banner"
             tw="relative z-10 w-12"
           >
             {stringGetter({ key: STRING_KEYS.GET_STARTED })}

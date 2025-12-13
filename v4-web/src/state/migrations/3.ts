@@ -59,12 +59,12 @@ const v3AppUiConfigsInitialState: V3AppUiConfigs = {
 };
 
 export const appUiConfigsLocalStorageKeys = {
-  appThemeSetting: 'dydx.SelectedTheme',
-  appColorMode: 'dydx.SelectedColorMode',
-  hasSeenLaunchIncentives: 'dydx.HasSeenLaunchIncentives',
-  defaultToAllMarketsInPositionsOrdersFills: 'dydx.DefaultToAllMarketsInPositionsOrdersFills',
-  displayUnit: 'dydx.SelectedDisplayUnit',
-  shouldHideLaunchableMarkets: 'dydx.ShouldHideLaunchableMarkets',
+  appThemeSetting: 'blackbottle.SelectedTheme',
+  appColorMode: 'blackbottle.SelectedColorMode',
+  hasSeenLaunchIncentives: 'blackbottle.HasSeenLaunchIncentives',
+  defaultToAllMarketsInPositionsOrdersFills: 'blackbottle.DefaultToAllMarketsInPositionsOrdersFills',
+  displayUnit: 'blackbottle.SelectedDisplayUnit',
+  shouldHideLaunchableMarkets: 'blackbottle.ShouldHideLaunchableMarkets',
 };
 
 /**

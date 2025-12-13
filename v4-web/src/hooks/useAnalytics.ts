@@ -34,7 +34,7 @@ import { useAllStatsigGateValues } from './useStatsig';
 
 export const useAnalytics = () => {
   const latestCommit = import.meta.env.VITE_LAST_ORIGINAL_COMMIT;
-  const { sourceAccount, selectedWallet, dydxAddress } = useAccounts();
+  const { sourceAccount, selectedWallet, blackbottleAddress } = useAccounts();
   const { indexerClient } = useDydxClient();
   const statsigConfig = useAllStatsigGateValues();
   /** User properties */
@@ -147,16 +147,16 @@ export const useAnalytics = () => {
 
   // AnalyticsUserProperty.DydxAddress
   useEffect(() => {
-    identify(AnalyticsUserProperties.DydxAddress(dydxAddress ?? null));
-  }, [dydxAddress]);
+    identify(AnalyticsUserProperties.DydxAddress(blackbottleAddress ?? null));
+  }, [blackbottleAddress]);
 
   useEffect(() => {
     identify(
       AnalyticsUserProperties.IsRememberMe(
-        dydxAddress ? Boolean(sourceAccount.encryptedSignature) : null
+        blackbottleAddress ? Boolean(sourceAccount.encryptedSignature) : null
       )
     );
-  }, [dydxAddress, sourceAccount.encryptedSignature]);
+  }, [blackbottleAddress, sourceAccount.encryptedSignature]);
 
   // AnalyticsUserProperty.SubaccountNumber
   const subaccountNumber = useAppSelector(getSubaccountId);

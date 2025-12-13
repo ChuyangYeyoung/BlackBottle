@@ -30,7 +30,7 @@ export const DepositFormContent = ({
   onDeposit: (args: { txHash: string; chainId: string }) => void;
 }) => {
   const dispatch = useAppDispatch();
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
   const { isMobile } = useBreakpoints();
 
   const [amount, setAmount] = useState('');
@@ -42,10 +42,10 @@ export const DepositFormContent = ({
   };
 
   const handleDeposit = (deposit: Deposit) => {
-    if (!dydxAddress) return;
+    if (!blackbottleAddress) return;
 
     onDeposit({ txHash: deposit.txHash, chainId: deposit.chainId });
-    dispatch(addDeposit({ deposit, dydxAddress }));
+    dispatch(addDeposit({ deposit, blackbottleAddress }));
   };
 
   return (

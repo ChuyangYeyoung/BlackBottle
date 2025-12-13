@@ -38,7 +38,7 @@ const ManagementSection = ({
   </$ManagementSection>
 );
 
-type AccountManagementPage = 'default' | 'dydxExport' | 'turnkeyExport';
+type AccountManagementPage = 'default' | 'blackbottleExport' | 'turnkeyExport';
 
 export const ManageAccountDialog = ({ setIsOpen }: DialogProps<ManageAccountDialogProps>) => {
   const stringGetter = useStringGetter();
@@ -84,7 +84,7 @@ export const ManageAccountDialog = ({ setIsOpen }: DialogProps<ManageAccountDial
         <button
           type="button"
           tw="row gap-0.25 rounded-[0.75rem] bg-color-layer-2 px-1 py-0.75"
-          onClick={() => setPage('dydxExport')}
+          onClick={() => setPage('blackbottleExport')}
         >
           {stringGetter({ key: STRING_KEYS.REVEAL_DYDX_PHRASE })}
           <PrivateTag tw="rounded-[360px] px-0.5 font-tiny-bold">
@@ -111,9 +111,9 @@ export const ManageAccountDialog = ({ setIsOpen }: DialogProps<ManageAccountDial
         {exportSection}
       </div>
     ),
-    dydxExport: (
+    blackbottleExport: (
       <RevealPhrase
-        exportWalletType="dydx"
+        exportWalletType="blackbottle"
         closeDialog={() => setIsOpen(false)}
         onBack={() => setPage('default')}
       />
@@ -129,7 +129,7 @@ export const ManageAccountDialog = ({ setIsOpen }: DialogProps<ManageAccountDial
 
   const title = {
     default: stringGetter({ key: STRING_KEYS.ACCOUNT_MANAGEMENT }),
-    dydxExport: stringGetter({ key: STRING_KEYS.REVEAL_SECRET_PHRASE }),
+    blackbottleExport: stringGetter({ key: STRING_KEYS.REVEAL_SECRET_PHRASE }),
     turnkeyExport: stringGetter({ key: STRING_KEYS.REVEAL_SECRET_PHRASE }),
   }[page];
 

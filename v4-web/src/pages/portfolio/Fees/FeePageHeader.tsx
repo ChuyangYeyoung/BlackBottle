@@ -38,7 +38,7 @@ export const FeePageHeader = () => {
   const stakingTiers = useAppSelector(BonsaiCore.configs.stakingTiers);
   const hasStakingTiers = stakingTiers != null && stakingTiers.length > 0;
   const { referredBy } = useSubaccount();
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
   const { decimal: decimalSeparator, group: groupSeparator } = useLocaleSeparators();
   const selectedLocale = useAppSelector(getSelectedLocale);
   const currentStakingDiscountLevel: number | undefined = useStakingTierLevel();
@@ -98,7 +98,7 @@ export const FeePageHeader = () => {
             }),
           },
           {
-            key: 'staked-dydx',
+            key: 'staked-blackbottle',
             label: stringGetter({ key: STRING_KEYS.STAKED_DYDX }),
             value: (
               <Output
@@ -117,10 +117,10 @@ export const FeePageHeader = () => {
           shape={ButtonShape.Pill}
           action={ButtonAction.Primary}
           css={{
-            color: dydxAddress == null ? 'var(--color-text-0)' : 'var(--color-layer-0)',
+            color: blackbottleAddress == null ? 'var(--color-text-0)' : 'var(--color-layer-0)',
           }}
           onClick={onStakeMore}
-          state={{ isDisabled: dydxAddress == null }}
+          state={{ isDisabled: blackbottleAddress == null }}
         >
           <Icon iconName={IconName.Deposit2} />
           {stringGetter({ key: STRING_KEYS.STAKE_MORE })}

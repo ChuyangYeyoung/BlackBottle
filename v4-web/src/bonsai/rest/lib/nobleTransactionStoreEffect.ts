@@ -26,7 +26,7 @@ type NobleChainTransactionConfig<T> = {
       chainId: DydxChainId;
     },
     wallet: {
-      dydxAddress: string | undefined;
+      blackbottleAddress: string | undefined;
       sourceAccount: SourceAccount;
       nobleLocalWallet: LocalWallet;
     },
@@ -109,13 +109,13 @@ export function createNobleTransactionStoreEffect<T>(
     const { network, localNobleWallet, parentSubaccountInfo, sourceAccount, data } =
       selectorResults;
     const environmentInfo = ENVIRONMENT_CONFIG_MAP[network];
-    const chainId = environmentInfo.dydxChainId as DydxChainId;
+    const chainId = environmentInfo.blackbottleChainId as DydxChainId;
     const nobleClientRpcUrl = environmentInfo.endpoints.nobleValidator;
     const tokenConfig = TOKEN_CONFIG_MAP[chainId];
 
     const wallet = {
       sourceAccount,
-      dydxAddress: parentSubaccountInfo.wallet,
+      blackbottleAddress: parentSubaccountInfo.wallet,
       nobleLocalWallet: localNobleWallet,
     };
 

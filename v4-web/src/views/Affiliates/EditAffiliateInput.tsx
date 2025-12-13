@@ -37,10 +37,10 @@ export const EditAffiliateInput = ({
   withAlertMessage?: boolean;
 }) => {
   const stringGetter = useStringGetter();
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
   const {
     affiliateMetadataQuery: { data },
-  } = useAffiliatesInfo(dydxAddress);
+  } = useAffiliatesInfo(blackbottleAddress);
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [editableReferralCode, setEditableReferralCode] = useState('');

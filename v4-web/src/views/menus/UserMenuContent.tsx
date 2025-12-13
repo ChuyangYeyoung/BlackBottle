@@ -49,7 +49,7 @@ export const UserMenuContent = () => {
 
   const {
     sourceAccount: { address },
-    dydxAddress,
+    blackbottleAddress,
   } = useAccounts();
 
   const [walletDisplay, setWalletDisplay] = useState<'chain' | 'source'>('chain');
@@ -58,9 +58,9 @@ export const UserMenuContent = () => {
 
   const onCopy = () => {
     if (walletDisplay === 'chain') {
-      if (!dydxAddress) return;
+      if (!blackbottleAddress) return;
       setCopied(true);
-      navigator.clipboard.writeText(dydxAddress);
+      navigator.clipboard.writeText(blackbottleAddress);
       setTimeout(() => setCopied(false), MODERATE_DEBOUNCE_MS);
     } else {
       if (!address) return;
@@ -136,7 +136,7 @@ export const UserMenuContent = () => {
       >
         <div tw="row gap-0.5 text-color-text-2">
           {walletDisplay === 'chain'
-            ? truncateAddress(dydxAddress)
+            ? truncateAddress(blackbottleAddress)
             : truncateAddress(address, '0x')}
           <Icon
             css={{
@@ -157,7 +157,7 @@ export const UserMenuContent = () => {
       >
         <div tw="row gap-0.5">
           {walletDisplay === 'chain'
-            ? `dYdX ${stringGetter({ key: STRING_KEYS.ADDRESS })}`
+            ? `Black Bottle ${stringGetter({ key: STRING_KEYS.ADDRESS })}`
             : stringGetter({ key: STRING_KEYS.SOURCE_ADDRESS })}
           {address != null && (
             <Icon
@@ -185,7 +185,7 @@ export const UserMenuContent = () => {
               alt="profile"
             />
             <span tw="absolute bottom-0 right-[-0.25rem] flex size-[1.375rem] min-h-[1.375rem] min-w-[1.375rem] items-center justify-center rounded-[50%] border-2 border-solid border-color-layer-1 bg-color-layer-2">
-              <img src="/logos/dydx-x.png" alt="dydx" tw="size-0.625" />
+              <img src="/logos/blackbottle-x.png" alt="blackbottle" tw="size-0.625" />
             </span>
           </div>
 

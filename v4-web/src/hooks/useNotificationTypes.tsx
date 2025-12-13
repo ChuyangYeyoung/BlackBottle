@@ -320,8 +320,8 @@ export const notificationTypes: NotificationTypeConfig[] = [
     type: NotificationType.SkipTransfer2,
     useTrigger: ({ trigger }) => {
       const stringGetter = useStringGetter();
-      const { dydxAddress } = useAccounts();
-      const userTransfers = useAppSelectorWithArgs(selectTransfersByAddress, dydxAddress);
+      const { blackbottleAddress } = useAccounts();
+      const userTransfers = useAppSelectorWithArgs(selectTransfersByAddress, blackbottleAddress);
       const { decimal: decimalSeparator, group: groupSeparator } = useLocaleSeparators();
       const selectedLocale = useAppSelector(getSelectedLocale);
 
@@ -447,17 +447,17 @@ export const notificationTypes: NotificationTypeConfig[] = [
         }> => [
           {
             market: 'SKITTEN-USD',
-            windDownProposalLink: 'https://www.mintscan.io/dydx/proposals/247',
+            windDownProposalLink: 'https://www.mintscan.io/blackbottle/proposals/247',
             windDownDate: '2025-05-23T07:25:00.000Z',
           },
           {
             market: 'EOS-USD',
-            windDownProposalLink: 'https://www.mintscan.io/dydx/proposals/247',
+            windDownProposalLink: 'https://www.mintscan.io/blackbottle/proposals/247',
             windDownDate: '2025-05-23T07:25:00.000Z',
           },
           {
             market: 'BTRUMP-USD',
-            windDownProposalLink: 'https://www.mintscan.io/dydx/proposals/247',
+            windDownProposalLink: 'https://www.mintscan.io/blackbottle/proposals/247',
             windDownDate: '2025-05-23T07:25:00.000Z',
           },
         ],
@@ -574,13 +574,13 @@ export const notificationTypes: NotificationTypeConfig[] = [
     type: NotificationType.RewardsProgramUpdates,
     useTrigger: ({ trigger }) => {
       const stringGetter = useStringGetter();
-      const dydxAddress = useAppSelector(getUserWalletAddress);
+      const blackbottleAddress = useAppSelector(getUserWalletAddress);
       const currentSeason = CURRENT_REWARDS_SEASON;
 
       const { data: rewards } = useQuery({
-        queryKey: ['dydx-surge-rewards', currentSeason, dydxAddress],
+        queryKey: ['blackbottle-surge-rewards', currentSeason, blackbottleAddress],
         enabled:
-          dydxAddress != null &&
+          blackbottleAddress != null &&
           new Date().getTime() < new Date(CURRENT_REWARDS_SEASON_EXPIRATION).getTime(),
         retry: false,
         queryFn: async () => {
@@ -588,10 +588,10 @@ export const notificationTypes: NotificationTypeConfig[] = [
             // don't take up bandwidth during sensitive loading time
             await sleep(1500);
             const data = await fetch(
-              `https://cloud.chaoslabs.co/query/api/dydx/reward-distribution?season=${currentSeason - 1}`
+              `https://cloud.chaoslabs.co/query/api/blackbottle/reward-distribution?season=${currentSeason - 1}`
             );
             const result = await data.json();
-            const maybeNumber = result.find((f: any) => f.address === dydxAddress).rewards;
+            const maybeNumber = result.find((f: any) => f.address === blackbottleAddress).rewards;
             if (isNumber(maybeNumber)) {
               return maybeNumber;
             }
@@ -624,7 +624,7 @@ export const notificationTypes: NotificationTypeConfig[] = [
               groupKey: NotificationType.RewardsProgramUpdates,
               actionAltText: stringGetter({ key: STRING_KEYS.LEARN_MORE }),
               renderActionSlot: () => (
-                <Link href="https://www.dydx.xyz/surge" isAccent>
+                <Link href="https://www.blackbottle.xyz/surge" isAccent>
                   {stringGetter({ key: STRING_KEYS.LEARN_MORE })} →
                 </Link>
               ),
@@ -662,7 +662,7 @@ export const notificationTypes: NotificationTypeConfig[] = [
               groupKey: NotificationType.RewardsProgramUpdates,
               actionAltText: stringGetter({ key: STRING_KEYS.LEARN_MORE }),
               renderActionSlot: () => (
-                <Link href="https://www.dydx.xyz/surge" isAccent>
+                <Link href="https://www.blackbottle.xyz/surge" isAccent>
                   {stringGetter({ key: STRING_KEYS.LEARN_MORE })} →
                 </Link>
               ),
@@ -694,7 +694,7 @@ export const notificationTypes: NotificationTypeConfig[] = [
               groupKey: NotificationType.RewardsProgramUpdates,
               actionAltText: stringGetter({ key: STRING_KEYS.LEARN_MORE }),
               renderActionSlot: () => (
-                <Link href="https://www.dydx.xyz/surge" isAccent>
+                <Link href="https://www.blackbottle.xyz/surge" isAccent>
                   {stringGetter({ key: STRING_KEYS.LEARN_MORE })} →
                 </Link>
               ),
@@ -721,7 +721,7 @@ export const notificationTypes: NotificationTypeConfig[] = [
               groupKey: NotificationType.RewardsProgramUpdates,
               actionAltText: stringGetter({ key: STRING_KEYS.LEARN_MORE }),
               renderActionSlot: () => (
-                <Link href="https://www.dydx.xyz/blog/pump-trading-competition" isAccent>
+                <Link href="https://www.blackbottle.xyz/blog/pump-trading-competition" isAccent>
                   {stringGetter({ key: STRING_KEYS.LEARN_MORE })} →
                 </Link>
               ),
@@ -799,7 +799,7 @@ export const notificationTypes: NotificationTypeConfig[] = [
                     <Link
                       isInline
                       isAccent
-                      href="https://www.dydx.xyz/blog/introducing-the-dydx-affiliate-booster-program"
+                      href="https://www.blackbottle.xyz/blog/introducing-the-blackbottle-affiliate-booster-program"
                     >
                       {stringGetter({ key: STRING_KEYS.HERE })}
                     </Link>
@@ -1010,7 +1010,7 @@ export const notificationTypes: NotificationTypeConfig[] = [
   {
     type: NotificationType.FeedbackRequest,
     useTrigger: ({ trigger }) => {
-      const { dydxAddress } = useAccounts();
+      const { blackbottleAddress } = useAccounts();
       const { getInTouch } = useURLConfigs();
       const stringGetter = useStringGetter();
 
@@ -1019,7 +1019,7 @@ export const notificationTypes: NotificationTypeConfig[] = [
         dynamicConfigs[StatsigDynamicConfigs.dcHighestVolumeUsers];
 
       useEffect(() => {
-        if (dydxAddress && feedbackRequestWalletAddresses?.includes(dydxAddress) && getInTouch) {
+        if (blackbottleAddress && feedbackRequestWalletAddresses?.includes(blackbottleAddress) && getInTouch) {
           trigger({
             id: FeedbackRequestNotificationIds.Top100UserSupport,
             displayData: {
@@ -1041,7 +1041,7 @@ export const notificationTypes: NotificationTypeConfig[] = [
             updateKey: ['feedback'],
           });
         }
-      }, [dydxAddress, feedbackRequestWalletAddresses, getInTouch, stringGetter, trigger]);
+      }, [blackbottleAddress, feedbackRequestWalletAddresses, getInTouch, stringGetter, trigger]);
     },
 
     useNotificationAction: () => {

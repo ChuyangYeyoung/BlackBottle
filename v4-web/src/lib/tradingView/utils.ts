@@ -123,7 +123,7 @@ export const mapCandle = ({
 
 export const getSymbol = (marketId: string): TradingViewSymbol => ({
   description: marketId,
-  exchange: 'dYdX',
+  exchange: 'Black Bottle',
   full_name: getDisplayableTickerFromMarket(marketId),
   symbol: marketId,
   type: 'crypto',

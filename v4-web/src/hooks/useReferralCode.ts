@@ -18,15 +18,15 @@ import { useReferredBy } from './useReferredBy';
 
 const HIDE_REFERRAL_DIALOG_ADDRESSES = new Set([
   // trust wallet
-  'dydx174ywhfe9ws0u0qlz0cjgnw95zjl83qcae7upza',
+  'blackbottle174ywhfe9ws0u0qlz0cjgnw95zjl83qcae7upza',
 ]);
 
 export function useReferralCode() {
   const dispatch = useAppDispatch();
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
 
   const { data: affiliateMetadata, isPending: isAffiliateMetadataPending } =
-    useAffiliateMetadata(dydxAddress);
+    useAffiliateMetadata(blackbottleAddress);
 
   const { data: referralAddress } = useReferralAddress(testFlags.referralCode);
 

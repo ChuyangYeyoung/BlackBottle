@@ -11,7 +11,7 @@ import { useDepositAddress } from './useDepositAddress';
 import { DepositStatusResponse, useDepositStatus } from './useDepositStatus';
 
 export const useAutomatedDepositNotifications = () => {
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
   const activeDialog = useAppSelector(getActiveDialog);
   const { depositAddresses } = useDepositAddress();
 
@@ -26,14 +26,14 @@ export const useAutomatedDepositNotifications = () => {
 
   useEffect(() => {
     const isDepositDialogOpen = activeDialog && DialogTypes.is.Deposit2(activeDialog);
-    if (!enabled && dydxAddress && depositAddresses && isDepositDialogOpen) {
+    if (!enabled && blackbottleAddress && depositAddresses && isDepositDialogOpen) {
       setEnabled(true);
     }
-  }, [dydxAddress, depositAddresses, activeDialog, enabled]);
+  }, [blackbottleAddress, depositAddresses, activeDialog, enabled]);
 
   // Stage 1: Watch for deposits from backend and update refs
   useEffect(() => {
-    if (!dydxAddress || !depositStatus?.deposits.results || !depositAddresses) return;
+    if (!blackbottleAddress || !depositStatus?.deposits.results || !depositAddresses) return;
 
     const incomingDeposits = depositStatus.deposits.results;
     const now = Date.now();
@@ -62,7 +62,7 @@ export const useAutomatedDepositNotifications = () => {
         (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
       )
     );
-  }, [dydxAddress, depositStatus, depositAddresses, enabled]);
+  }, [blackbottleAddress, depositStatus, depositAddresses, enabled]);
 
   // Clean up old deposit IDs every 2 minutes to prevent memory bloat, if no new deposits in queue, disable the query
   useEffect(() => {

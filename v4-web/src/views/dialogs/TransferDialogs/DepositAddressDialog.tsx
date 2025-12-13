@@ -55,7 +55,7 @@ export const DepositAddressDialog = ({ setIsOpen }: DialogProps<DepositDialog2Pr
   const stringGetter = useStringGetter();
   const isSpotEnabled = useEnableSpot();
 
-  const { dydxAddress, solanaAddress } = useAccounts();
+  const { blackbottleAddress, solanaAddress } = useAccounts();
   const { isUploadingAddress } = useTurnkeyAuth();
   const {
     depositAddresses,
@@ -70,15 +70,15 @@ export const DepositAddressDialog = ({ setIsOpen }: DialogProps<DepositDialog2Pr
   }, []);
 
   useEffect(() => {
-    if (failedToFetchDepositAddresses && dydxAddress) {
+    if (failedToFetchDepositAddresses && blackbottleAddress) {
       track(
         AnalyticsEvents.TurnkeyFetchDepositAddressError({
-          dydxAddress,
+          blackbottleAddress,
           error: fetchDepositAddressesError?.message ?? 'Unknown error',
         })
       );
     }
-  }, [failedToFetchDepositAddresses, fetchDepositAddressesError?.message, dydxAddress]);
+  }, [failedToFetchDepositAddresses, fetchDepositAddressesError?.message, blackbottleAddress]);
 
   const chains = useMemo(() => {
     if (selectedTab === 'perpetuals') {

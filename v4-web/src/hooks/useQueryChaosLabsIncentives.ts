@@ -13,29 +13,29 @@ type ChaosLabsIncentivesResponse = {
 };
 
 export const useQueryChaosLabsIncentives = ({
-  dydxAddress,
+  blackbottleAddress,
   season,
 }: {
-  dydxAddress?: DydxAddress;
+  blackbottleAddress?: DydxAddress;
   season?: number;
 }) => {
   return useQuery({
-    enabled: !!dydxAddress,
-    queryKey: ['launch_incentives_rewards', dydxAddress, season],
+    enabled: !!blackbottleAddress,
+    queryKey: ['launch_incentives_rewards', blackbottleAddress, season],
     queryFn: wrapAndLogError(
       async (): Promise<ChaosLabsIncentivesResponse | undefined> => {
-        if (!dydxAddress) return undefined;
+        if (!blackbottleAddress) return undefined;
 
         // If season is defined, fetch for a specific season
         if (season !== undefined) {
           const resp = await fetch(
-            `https://cloud.chaoslabs.co/query/api/dydx/points/${dydxAddress}?n=${season}`
+            `https://cloud.chaoslabs.co/query/api/blackbottle/points/${blackbottleAddress}?n=${season}`
           );
           return resp.json();
         }
 
         const currentSeason: number | undefined = await calc(async () => {
-          const resp = await fetch(`https://cloud.chaoslabs.co/query/api/dydx/season`);
+          const resp = await fetch(`https://cloud.chaoslabs.co/query/api/blackbottle/season`);
           return (await resp.json()).currentSeason;
         });
 
@@ -47,14 +47,14 @@ export const useQueryChaosLabsIncentives = ({
           calc(async () => {
             return (
               await fetch(
-                `https://cloud.chaoslabs.co/query/api/dydx/points/${dydxAddress}?n=${currentSeason}`
+                `https://cloud.chaoslabs.co/query/api/blackbottle/points/${blackbottleAddress}?n=${currentSeason}`
               )
             ).json();
           }),
           calc(async () => {
             return (
               await fetch(
-                `https://cloud.chaoslabs.co/query/api/dydx/fees/${dydxAddress}?month=${DateTime.utc().toFormat('yyyy-MM')}`
+                `https://cloud.chaoslabs.co/query/api/blackbottle/fees/${blackbottleAddress}?month=${DateTime.utc().toFormat('yyyy-MM')}`
               )
             ).json();
           }),

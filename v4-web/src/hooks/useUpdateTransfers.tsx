@@ -21,11 +21,11 @@ import { useAccounts } from './useAccounts';
 import { useAppSelectorWithArgs } from './useParameterizedSelector';
 
 export function useUpdateTransfers() {
-  const { dydxAddress } = useAccounts();
+  const { blackbottleAddress } = useAccounts();
   const dispatch = useAppDispatch();
   const { skipClient } = useSkipClient();
 
-  const pendingTransfers = useAppSelectorWithArgs(selectPendingTransfers, dydxAddress);
+  const pendingTransfers = useAppSelectorWithArgs(selectPendingTransfers, blackbottleAddress);
   // keep track of the transactions for which we've already started querying for statuses
   const transactionToCallback = useRef<{ [key: string]: boolean }>({});
 
@@ -42,7 +42,7 @@ export function useUpdateTransfers() {
   };
 
   useEffect(() => {
-    if (!dydxAddress || !pendingTransfers.length) return;
+    if (!blackbottleAddress || !pendingTransfers.length) return;
 
     for (let i = 0; i < pendingTransfers.length; i += 1) {
       const transfer = pendingTransfers[i]!;
@@ -62,7 +62,7 @@ export function useUpdateTransfers() {
               if (!txInfo.explorerLink) return;
               dispatch(
                 updateDeposit({
-                  dydxAddress,
+                  blackbottleAddress,
                   deposit: {
                     ...transfer,
                     explorerLink: txInfo.explorerLink,
@@ -82,7 +82,7 @@ export function useUpdateTransfers() {
 
             dispatch(
               updateDeposit({
-                dydxAddress,
+                blackbottleAddress,
                 deposit: {
                   ...transfer,
                   finalAmountUsd: finalAmount,
@@ -154,7 +154,7 @@ export function useUpdateTransfers() {
 
                   dispatch(
                     updateWithdraw({
-                      dydxAddress,
+                      blackbottleAddress,
                       withdraw: {
                         ...transfer,
                         transactions: subTransactions,
@@ -168,7 +168,7 @@ export function useUpdateTransfers() {
                   store
                     .getState()
                     .transfers.transfersByDydxAddress[
-                      dydxAddress
+                      blackbottleAddress
                     ]?.find((t): t is Withdraw => isWithdraw(t) && t.id === transfer.id) ??
                   transfer;
 
@@ -205,7 +205,7 @@ export function useUpdateTransfers() {
 
                 dispatch(
                   updateWithdraw({
-                    dydxAddress,
+                    blackbottleAddress,
                     withdraw: {
                       ...latestTransfer,
                       transactions: transactionsCopy,
@@ -244,7 +244,7 @@ export function useUpdateTransfers() {
         }
       }
     }
-  }, [dydxAddress, pendingTransfers, skipClient, dispatch]);
+  }, [blackbottleAddress, pendingTransfers, skipClient, dispatch]);
 }
 
 function handleResponseStatus(status: TransactionState | string | undefined) {
