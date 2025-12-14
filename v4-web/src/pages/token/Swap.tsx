@@ -24,7 +24,7 @@ import { useStringGetter } from '@/hooks/useStringGetter';
 
 import CardHolderIcon from '@/icons/card-holder.svg';
 import CaretDown from '@/icons/caret-down.svg';
-import DydxLogo from '@/icons/blackbottle-protocol.svg';
+import DydxLogo from '@/icons/dydx-protocol.svg';
 import ExchangeIcon from '@/icons/exchange.svg';
 import GasIcon from '@/icons/gas.svg';
 import UsdcLogo from '@/icons/usdc-inverted.svg';
